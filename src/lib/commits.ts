@@ -85,7 +85,7 @@ export async function commitParser(
   const uncategorizedCommits: Commit[] = [];
 
   const changes: string[] = [];
-  const tasks: string[] = [];
+  const tasks: Set<string> = new Set();
   const pullRequests: string[] = [];
   let nextVersionType = VersionType.patch;
 
@@ -144,7 +144,7 @@ export async function commitParser(
     // Retrieve task information
     // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
     const taskMatch = message.match(taskRegExp);
-    if (taskMatch) taskMatch.forEach((task) => tasks.push(task));
+    if (taskMatch) taskMatch.forEach((task) => tasks.add(task));
     // Retrieve specific bump key words
     const majorMatch = majorRegExp.exec(message);
     if (majorMatch) nextVersionType = VersionType.major;
@@ -201,8 +201,9 @@ export async function commitParser(
     }
   });
 
+  const taskList = [...tasks];
   core.setOutput('changes', JSON.stringify(changes));
-  core.setOutput('tasks', JSON.stringify(tasks));
+  core.setOutput('tasks', JSON.stringify(taskList));
   core.setOutput('pull_requests', JSON.stringify(pullRequests));
 
   // Set bump type to minor if there is at least one 'feat' commit
@@ -214,7 +215,7 @@ export async function commitParser(
   return {
     nextVersionType,
     changes: changesMd.trim(),
-    tasks: tasks
+    tasks: taskList
       .map((task) => `[${task}](${taskBaseUrl || `https://${owner}.atlassian.net/browse`}/${task})`)
       .join(', '),
     pullRequests: pullRequests
