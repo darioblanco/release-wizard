@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import { setOutput } from '@actions/core';
 import { getOctokit } from '@actions/github';
-import { resolve as pathResolve } from 'path';
 
 import {
   createGitTag,
@@ -57,7 +56,7 @@ describe('release', () => {
       ).toMatchSnapshot();
       expect(getContent).toBeCalledWith({
         owner: 'myorg',
-        path: pathResolve('.github', templatePath),
+        path: `.github/${templatePath}`,
         ref: 'myref',
         repo: 'myrepo',
       });
@@ -93,7 +92,7 @@ describe('release', () => {
       ).toMatchSnapshot();
       expect(getContent).toBeCalledWith({
         owner: 'myorg',
-        path: pathResolve('.github', templatePath),
+        path: `.github/${templatePath}`,
         ref: 'myref',
         repo: 'myrepo',
       });
