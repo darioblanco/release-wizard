@@ -91,8 +91,8 @@ More complex example, where the action will check for the latest published relea
 `myapp/` prefix, create a changelog for all the commits that has the `(myapp)` scope,
 and bump the version to `minor`, `major` or `patch` depending on the commit messages and if there
 was a previous `minor` or `major` bump in the diff with the latest published tag.
-As the `prerelease` parameter is `false`, the draft won't have the `prerelease` checkbox and
-the proposed tag won't have the `-rc.X` suffix.
+As the `prerelease` parameter is `true`, the draft will have the `prerelease` checkbox marked and
+the proposed tag will have the `-rc.X` suffix.
 This setting is ideal for monorepos, where multiple release scopes live.
 
 ```yaml
@@ -113,7 +113,7 @@ jobs:
         uses: darioblanco/release-wizard@main
         with:
           app: ${{ env.APP }}
-          prerelease: false
+          prerelease: true
           templatePath: RELEASE_DRAFT/default.md
           token: ${{ github.token }}
 ```
@@ -122,166 +122,38 @@ jobs:
 
 ### Inputs
 
-#### `app`
-
-- name: app
-- required: false
-- description: The name of the app involved in the release.
-  Creates tag and render commits for a specific scope, based on the given app name.
-  Scopes from commits are analyzed for commits that follow the Angular commit style.
-  e.g. `<type>(<app>): my commit title` or `(<app>): my commit title`
-
-#### `appSeparator`
-
-- name: appSeparator
-- required: false
-- default: `/`
-- description: The separator for the tags if `app` is given. For example, if `@` is provided, the
-  version calculated for such app will be based on `myapp@myversion`. Defaults to `/`,
-  as it is common to see the `myapp/myversion` format.
-
-#### `baseTag`
-
-- name: baseTag
-- required: false
-- description: The tag that will be used as base for git commit comparison,
-  instead of the automatic detection of latest published release.
-  The commits will be formatted into a Markdown list and replaced into the `$CHANGES`
-  variable for the given `templatePath` template file.
-
-#### `bumpProtection`
-
-- name: bumpProtection
-- required: false
-- default: `false`
-- description: Propose PATCH version bumps whenever a MINOR or MAJOR is detected
-  in a diff that had a previous MINOR or MAJOR bump.
-  See [multiple minor and major bump protection](#multiple-minor-and-major-bump-protection).
-
-#### `draft`
-
-- name: draft
-- required: false
-- default: `true`
-- description: Publish release draft.
-
-#### `prerelease`
-
-- name: prerelease
-- required: false
-- default: `true`
-- description: Mark release as prerelease when creating.
-  This will ignore `major`, `minor` and `patch` bump suggestions and propose a [prerelease](https://github.com/npm/node-semver#prerelease-tags).
-
-#### `pushTag`
-
-- name: pushTag
-- required: false
-- default: `false`
-- description: Creates and pushes the automatic calculated tag before creating the release.
-  Useful if you want the action to handle tags for you when publishing drafts.
-  By default, a release draft won't create the tag, which only happens when it is published.
-
-#### `releaseName`
-
-- name: releaseName
-- required: false
-- default: `<app> <version>`
-- description: The title of the release.
-
-#### `releaseTag`
-
-- name: releaseTag
-- required: true
-- description: The git tag that belongs to the release.
-
-#### `taskBaseUrl`
-
-- name: taskBaseUrl
-- required: false
-- description: The base url to append for a detected task (do not set a trailing `/`).
-  By default, it will create a url based on your Github organization.
-  (e.g. `https://myorg.atlassian.net/browse`)
-
-#### `taskPrefix`
-
-- name: taskPrefix
-- required: false
-- default: `JIRA-`
-- description: The prefix that identifies task ids in the commits
-
-#### `templatePath`
-
-- name: templatePath
-- required: false
-- default: `release-wizard.md`
-- description: The path for the Markdown template that will be used to create the release body,
-  relative to `.github/`.
-
-#### `token`
-
-- name: token
-- required: true
-- description: The token to access Github's API.
-
-#### `withV`
-
-- name: withV
-- required: false
-- default: `false`
-- description: Prefix the calculated version with `v`.
+| Name  | Required | Default | Description |
+| ----- | -------- | ------- | ----------- |
+| app | no | `null`  | The name of the app involved in the release. Creates tag and render commits for a specific scope, based on the given app name. Scopes from commits are analyzed for commits that follow the Angular commit style, e.g. `<type>(<app>): my commit title` or `(<app>): my commit title` |
+| appTagSeparator | no | `/` | The separator for the tags if `app` is given. For example, if `@` is provided, the version calculated for such app will be based on `myapp@myversion`. Defaults to `/`, as it is common to see the `myapp/myversion` format. |
+| baseTag | no | `null` | The tag that will be used as base for git commit comparison, instead of the automatic detection of latest published release. The commits will be formatted into a Markdown list and replaced into the `$CHANGES` variable for the given `templatePath` template file. |
+| bumpProtection | no | `false` | Propose PATCH version bumps whenever a MINOR or MAJOR is detected in a diff that had a previous MINOR or MAJOR bump. See [multiple minor and major bump protection](#multiple-minor-and-major-bump-protection). |
+| draft | no | `true` | Publish release draft. |
+| prerelease | no | `false` | Mark release as prerelease when creating. This will ignore `major`, `minor` and `patch` bump suggestions and propose a [prerelease](https://github.com/npm/node-semver#prerelease-tags). |
+| pushTag | no | `false` | Creates and pushes the automatic calculated tag before creating the release. Useful if you want the action to handle tags for you when publishing drafts. By default, a release draft won't create the tag, which only happens when it is published. |
+| releaseName | no | `<$app (if exists)> <$version>` | The title of the release. |
+| releaseTag | no | `<$app (if exists)><$appTagSeparator (if exists)><v (if withV is true)><$version>` | The git tag that belongs to the release. |
+| taskBaseUrl | no | `https://<mygithuborg>.atlassian.net/browse` | The base url to append for a detected task (do not set a trailing `/`). By default, it will create a url based on your Github organization. |
+| taskPrefix | no | `JIRA-` | The prefix that identifies task ids in the commits. |
+| templatePath | no | `release-wizard.md` | The path for the Markdown template that will be used to create the release body, relative to `.github/`. |
+| token | yes |  | The token to access Github's API. |
+| withV | no | `false` | Prefix the calculated version with `v` |
 
 ### Outputs
 
-#### `changes`
+| Name  | Description |
+| ----- | ----------- |
+| changes | A JSON array with the list of commit sha that are involved in the release. |
+| new_tag | The newly created tag that will reference the release. |
+| new_version | The newly created version that belongs to the tag. |
+| html_url | The browser url linking to Github's release. |
+| tasks | A JSON array with the list of project management tasks involved in the release. |
+| previous_tag | The previously detected tag that was bumped by the action. |
+| previous_version | The previously detected version that was bumped by the action. |
+| pull_requests | A JSON array with the list of Github pull requests involved in the release. |
+| release_id | The release id given by Github's API. |
+| upload_url | The url used for uploading release artifacts. |
 
-- name: changes
-- description: A JSON array with the list of commit sha that are involved in the release.
-
-#### `new_tag`
-
-- name: new_tag
-- description: The newly created tag that will reference the release.
-
-#### `new_version`
-
-- name: new_version
-- description: The newly created version that belongs to the tag.
-
-#### `html_url`
-
-- name: html_url
-- description: The browser url linking to Github's release.
-
-#### `tasks`
-
-- name: tasks
-- description: A JSON array with the list of project management tasks involved in the release.
-
-#### `previous_tag`
-
-- name: previous_tag
-- description: The previously detected tag that was bumped by the action.
-
-#### `previous_version`
-
-- name: previous_version
-- description: The previously detected version that was bumped by the action.
-
-#### `pull_requests`
-
-- name: pull_requests
-- description: A JSON array with the list of Github pull requests involved in the release.
-
-#### `release_id`
-
-- name: release_id
-- description: The release id given by Github's API.
-
-#### `upload_url`
-
-- name: upload_url
-- description: The url used for uploading release artifacts.
 
 ## Template
 
@@ -334,39 +206,7 @@ The action will replace the following variables:
 If your commits follow the expected [commit style](#commit-types)
 the action will automatically categorize them in `$CHANGES` like in the following example:
 
-```md
-## :alien: Changelog
-
-- Uncategorized commit - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
-
-**:zap: Features**
-
-- Super feature - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
-
-**:wrench: Fixes**
-
-- My fix - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
-
-**:books: Documentation**
-
-- Document everything - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
-
-**:nail_care: Style changes**
-
-- Awesome style - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
-
-**:mountain: Refactors**
-
-- One does not simply refactor - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
-
-**:traffic_light: Tests**
-
-- Tests are good - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
-
-**:construction: Maintenance**
-
-- Somebody has to keep things going - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
-```
+![Screenshot 2021-05-21 at 19 19 34](https://user-images.githubusercontent.com/1042520/119175133-c0911c80-ba69-11eb-8b59-47a623ce792a.png)
 
 In this case, all commits that will be added to the production release are displayed here. The ones
 that did not follow any commit style where at the top of the changelog without a category.
@@ -377,12 +217,7 @@ Being `<app>` the input given to the action.
 Of course, in case you do not want to follow a specific commit style at all,
 all changes will rendered without any fancy categorization:
 
-```md
-## :alien: Changelog
-
-- Uncategorized commit 1 - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
-- Uncategorized commit 2 - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
-```
+![Screenshot 2021-05-21 at 19 19 46](https://user-images.githubusercontent.com/1042520/119175166-c7b82a80-ba69-11eb-8540-986c763d19b9.png)
 
 #### Task format
 
@@ -392,24 +227,14 @@ If none of these parameters are given, a default `JIRA-` prefix and
 
 The output is a bullet list:
 
-```md
-## JIRA
-
-- [JIRA-123](https://myorg.atlassian.net/browse/JIRA-123)
-- [JIRA-456](https://myorg.atlassian.net/browse/JIRA-456)
-```
+![Screenshot 2021-05-21 at 19 19 56](https://user-images.githubusercontent.com/1042520/119175185-cd157500-ba69-11eb-9ac2-a3da83591058.png)
 
 #### PR format
 
 In addition, you can render project management tasks and PRs. The PR rendering follows Github's
 format (where squash and rebase commits output `(#<PR_ID>)`).
 
-```md
-## PRs
-
-- [#1716](https://github.com/myorg/myrepo/pull/1716)
-- [#1717](https://github.com/myorg/myrepo/pull/1717)
-```
+![Screenshot 2021-05-21 at 19 20 05](https://user-images.githubusercontent.com/1042520/119175206-d272bf80-ba69-11eb-8f78-2892e7f31b4c.png)
 
 ## Commit style
 
