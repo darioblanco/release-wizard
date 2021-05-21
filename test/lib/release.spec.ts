@@ -16,6 +16,7 @@ jest.mock('@actions/github', () => ({
       repo: 'myrepo',
     },
     sha: 'mysha',
+    ref: 'myref',
   },
   getOctokit: jest.fn(),
 }));
@@ -57,7 +58,7 @@ describe('release', () => {
       expect(getContent).toBeCalledWith({
         owner: 'myorg',
         path: pathResolve('.github', templatePath),
-        ref: 'mysha',
+        ref: 'myref',
         repo: 'myrepo',
       });
     });
@@ -93,7 +94,7 @@ describe('release', () => {
       expect(getContent).toBeCalledWith({
         owner: 'myorg',
         path: pathResolve('.github', templatePath),
-        ref: 'mysha',
+        ref: 'myref',
         repo: 'myrepo',
       });
     });

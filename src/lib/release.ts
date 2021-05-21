@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import * as path from 'path';
+import { resolve as pathResolve } from 'path';
 
 import { Release } from '../types';
 
@@ -14,13 +14,15 @@ export async function renderReleaseBody(
   pullRequests = '',
 ): Promise<string> {
   const { owner, repo } = github.context.repo;
-  const { sha } = github.context;
+  const { ref } = github.context;
   const octokit = github.getOctokit(token);
+  const path = pathResolve('.github', templatePath);
+  core.debug(`Retrieving content from repo ${repo} (${ref}) in expected path ${path}`);
   const contentResponse = await octokit.rest.repos.getContent({
     owner,
     repo,
-    path: path.resolve('.github', templatePath),
-    ref: sha,
+    path,
+    ref,
   });
   let template: string;
   if ('content' in contentResponse.data) {
