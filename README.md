@@ -122,38 +122,37 @@ jobs:
 
 ### Inputs
 
-| Name  | Required | Default | Description |
-| ----- | -------- | ------- | ----------- |
-| app | no | `null` | The name of the app involved in the release. Creates tag and render commits for a specific scope, based on the given app name. Scopes from commits are analyzed for commits that follow the Angular commit style, e.g. `<type>(<app>): my commit title` or `(<app>): my commit title` |
-| appTagSeparator | no | `/` | The separator for the tags if `app` is given. For example, if `@` is provided, the version calculated for such app will be based on `myapp@myversion`. Defaults to `/`, as it is common to see the `myapp/myversion` format. |
-| baseTag | no | `null` | The tag that will be used as base for git commit comparison, instead of the automatic detection of latest published release. The commits will be formatted into a Markdown list and replaced into the `$CHANGES` variable for the given `templatePath` template file. |
-| bumpProtection | no | `false` | Propose PATCH version bumps whenever a MINOR or MAJOR is detected in a diff that had a previous MINOR or MAJOR bump. See [multiple minor and major bump protection](#multiple-minor-and-major-bump-protection). |
-| draft | no | `true` | Publish release draft. |
-| prerelease | no | `false` | Mark release as prerelease when creating. This will ignore `major`, `minor` and `patch` bump suggestions and propose a [prerelease](https://github.com/npm/node-semver#prerelease-tags). |
-| pushTag | no | `false` | Creates and pushes the automatic calculated tag before creating the release. Useful if you want the action to handle tags for you when publishing drafts. By default, a release draft won't create the tag, which only happens when it is published. |
-| releaseName | no | `<app?> <$version>` | The title of the release in  |
-| releaseTag | no | `<app?><$appTagSeparator?><withV?v:><$version>` | The git tag that belongs to the release. |
-| taskBaseUrl | no | `https://<mygithuborg>.atlassian.net/browse` | The base url to append for a detected task (do not set a trailing `/`). By default, it will create a url based on your Github organization. |
-| taskPrefix | no | `JIRA-` | The prefix that identifies task ids in the commits. |
-| templatePath | no | `release-wizard.md` | The path for the Markdown template that will be used to create the release body, relative to `.github/`. |
-| token | yes |  | The token to access Github's API. |
-| withV | no | `false` | Prefix the calculated version with `v` |
+| Name            | Required | Default                                         | Description                                                                                                                                                                                                                                                                           |
+| --------------- | -------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| app             | no       | `null`                                          | The name of the app involved in the release. Creates tag and render commits for a specific scope, based on the given app name. Scopes from commits are analyzed for commits that follow the Angular commit style, e.g. `<type>(<app>): my commit title` or `(<app>): my commit title` |
+| appTagSeparator | no       | `/`                                             | The separator for the tags if `app` is given. For example, if `@` is provided, the version calculated for such app will be based on `myapp@myversion`. Defaults to `/`, as it is common to see the `myapp/myversion` format.                                                          |
+| baseTag         | no       | `null`                                          | The tag that will be used as base for git commit comparison, instead of the automatic detection of latest published release. The commits will be formatted into a Markdown list and replaced into the `$CHANGES` variable for the given `templatePath` template file.                 |
+| bumpProtection  | no       | `false`                                         | Propose PATCH version bumps whenever a MINOR or MAJOR is detected in a diff that had a previous MINOR or MAJOR bump. See [multiple minor and major bump protection](#multiple-minor-and-major-bump-protection).                                                                       |
+| draft           | no       | `true`                                          | Publish release draft.                                                                                                                                                                                                                                                                |
+| prerelease      | no       | `false`                                         | Mark release as prerelease when creating. This will ignore `major`, `minor` and `patch` bump suggestions and propose a [prerelease](https://github.com/npm/node-semver#prerelease-tags).                                                                                              |
+| pushTag         | no       | `false`                                         | Creates and pushes the automatic calculated tag before creating the release. Useful if you want the action to handle tags for you when publishing drafts. By default, a release draft won't create the tag, which only happens when it is published.                                  |
+| releaseName     | no       | `<app?> <$version>`                             | The title of the release                                                                                                                                                                                                                                                              |
+| releaseTag      | no       | `<app?><$appTagSeparator?><withV?v:><$version>` | The git tag that belongs to the release.                                                                                                                                                                                                                                              |
+| taskBaseUrl     | no       | `https://<mygithuborg>.atlassian.net/browse`    | The base url to append for a detected task (do not set a trailing `/`). By default, it will create a url based on your Github organization.                                                                                                                                           |
+| taskPrefix      | no       | `JIRA-`                                         | The prefix that identifies task ids in the commits.                                                                                                                                                                                                                                   |
+| templatePath    | no       | `release-wizard.md`                             | The path for the Markdown template that will be used to create the release body, relative to `.github/`.                                                                                                                                                                              |
+| token           | yes      |                                                 | The token to access Github's API.                                                                                                                                                                                                                                                     |
+| withV           | no       | `false`                                         | Prefix the calculated version with `v`                                                                                                                                                                                                                                                |
 
 ### Outputs
 
-| Name  | Description |
-| ----- | ----------- |
-| changes | A JSON array with the list of commit sha that are involved in the release. |
-| new_tag | The newly created tag that will reference the release. |
-| new_version | The newly created version that belongs to the tag. |
-| html_url | The browser url linking to Github's release. |
-| tasks | A JSON array with the list of project management tasks involved in the release. |
-| previous_tag | The previously detected tag that was bumped by the action. |
-| previous_version | The previously detected version that was bumped by the action. |
-| pull_requests | A JSON array with the list of Github pull requests involved in the release. |
-| release_id | The release id given by Github's API. |
-| upload_url | The url used for uploading release artifacts. |
-
+| Name             | Description                                                                     |
+| ---------------- | ------------------------------------------------------------------------------- |
+| changes          | A JSON array with the list of commit sha that are involved in the release.      |
+| new_tag          | The newly created tag that will reference the release.                          |
+| new_version      | The newly created version that belongs to the tag.                              |
+| html_url         | The browser url linking to Github's release.                                    |
+| tasks            | A JSON array with the list of project management tasks involved in the release. |
+| previous_tag     | The previously detected tag that was bumped by the action.                      |
+| previous_version | The previously detected version that was bumped by the action.                  |
+| pull_requests    | A JSON array with the list of Github pull requests involved in the release.     |
+| release_id       | The release id given by Github's API.                                           |
+| upload_url       | The url used for uploading release artifacts.                                   |
 
 ## Template
 

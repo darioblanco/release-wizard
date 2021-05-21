@@ -7,7 +7,6 @@ import {
   createGitTag,
   createGithubRelease,
   renderReleaseBody,
-  renderReleaseName,
 } from '@darioblanco/release-wizard/lib/release';
 
 jest.mock('@actions/github', () => ({
@@ -32,15 +31,6 @@ const createReleaseResponse = {
 
 describe('release', () => {
   const token = 'secret';
-
-  describe('render release name', () => {
-    test('without app', () => {
-      expect(renderReleaseName('0.0.1')).toBe('0.0.1');
-    });
-    test('with app', () => {
-      expect(renderReleaseName('0.0.1', 'myapp')).toBe('myapp@0.0.1');
-    });
-  });
 
   describe('render release template', () => {
     const app = 'myapp';

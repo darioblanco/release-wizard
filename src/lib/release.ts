@@ -4,10 +4,6 @@ import * as path from 'path';
 
 import { Release } from '../types';
 
-export function renderReleaseName(releaseVersion: string, app?: string): string {
-  return `${app ? `${app}@` : ''}${releaseVersion}`.trim();
-}
-
 export async function renderReleaseBody(
   token: string,
   templatePath: string,

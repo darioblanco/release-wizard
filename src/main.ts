@@ -1,12 +1,7 @@
 import * as core from '@actions/core';
 
 import { commitParser } from './lib/commits';
-import {
-  createGitTag,
-  createGithubRelease,
-  renderReleaseBody,
-  renderReleaseName,
-} from './lib/release';
+import { createGitTag, createGithubRelease, renderReleaseBody } from './lib/release';
 import { bumpVersion, retrieveLastReleasedVersion } from './lib/version';
 import { VersionType } from './types';
 
@@ -45,8 +40,7 @@ export async function run(): Promise<void> {
     if (pushTag) await createGitTag(token, releaseTag);
     // Won't replace it if release tag is given manually
     const releaseVersion = releaseTag.replace(tagPrefix, '');
-    const releaseName =
-      core.getInput('releaseName', { required: false }) || renderReleaseName(releaseVersion, app);
+    const releaseName = core.getInput('releaseName', { required: false }) || releaseTag;
     const body = await renderReleaseBody(
       token,
       templatePath,
