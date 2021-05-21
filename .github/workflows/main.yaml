@@ -1,26 +1,26 @@
-name: "main"
+name: 'main'
 
 on:
   push:
     branches:
-      - "*"
+      - '*'
     paths:
-      - ".github/workflows/main.yaml"
-      - ".github/RELEASE_DRAFT*"
-      - "package.json"
-      - "src/**"
-      - "tests/*"
-      - "tsconfig.json"
-      - "tslint.json"
+      - '.github/workflows/main.yaml'
+      - '.github/RELEASE_DRAFT*'
+      - 'package.json'
+      - 'src/**'
+      - 'tests/*'
+      - 'tsconfig.json'
+      - 'tslint.json'
   pull_request:
     paths:
-      - ".github/workflows/main.yaml"
-      - ".github/RELEASE_DRAFT*"
-      - "package.json"
-      - "src/**"
-      - "tests/*"
-      - "tsconfig.json"
-      - "tslint.json"
+      - '.github/workflows/main.yaml'
+      - '.github/RELEASE_DRAFT*'
+      - 'package.json'
+      - 'src/**'
+      - 'tests/*'
+      - 'tsconfig.json'
+      - 'tslint.json'
 
 jobs:
   unit_test:
@@ -41,7 +41,8 @@ jobs:
       - name: Checkout git repository
         uses: actions/checkout@v1.2.0
       - name: Create Release
-        uses: darioblanco/release-wizard@v0.0.1
+        uses: darioblanco/release-wizard@main
         with:
           templatePath: RELEASE_DRAFT/default.md
           token: ${{ github.token }}
+          withV: true

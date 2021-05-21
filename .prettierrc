@@ -1,9 +1,53 @@
 {
-    "singleQuote": true,
-    "trailingComma": "all",
-    "bracketSpacing": true,
-    "parser": "typescript",
-    "printWidth": 100,
-    "useTabs": false,
-    "tabWidth": 2
+  "bracketSpacing": true,
+  "overrides": [
+    {
+      "files": "**/*.json",
+      "options": {
+        "parser": "json"
+      }
+    },
+    {
+      "files": "**/*.md",
+      "options": {
+        "parser": "markdown"
+      }
+    },
+    {
+      "files": "**/*.{yaml,yml}",
+      "options": {
+        "parser": "yaml"
+      }
+    },
+    {
+      "files": "**/*.html",
+      "options": {
+        "parser": "html"
+      }
+    },
+    {
+      "files": "**/*.css",
+      "options": {
+        "parser": "css"
+      }
+    },
+    {
+      "files": "**/*.less",
+      "options": {
+        "parser": "less"
+      }
+    },
+    {
+      "files": "**/*.scss",
+      "options": {
+        "parser": "scss"
+      }
+    }
+  ],
+  "parser": "typescript",
+  "printWidth": 100,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "useTabs": false
 }

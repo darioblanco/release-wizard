@@ -26,7 +26,7 @@ describe('run', () => {
   // Default input values
   const taskPrefix = 'JIRA-';
   const draft = true;
-  const prerelease = true;
+  const prerelease = false;
   // Template stubs
   const changes = '';
   const nextVersionType = VersionType.patch;
@@ -79,13 +79,7 @@ describe('run', () => {
     await run();
 
     expect(retrieveLastReleasedVersion).toBeCalledWith(token, tagPrefix);
-    expect(commitParser).toBeCalledWith(
-      token,
-      baseTag,
-      taskPrefix,
-      undefined,
-      undefined,
-    );
+    expect(commitParser).toBeCalledWith(token, baseTag, taskPrefix, undefined, undefined);
     expect(renderReleaseName).toBeCalledWith(releaseVersion, undefined);
     expect(renderReleaseBody).toBeCalledWith(
       templatePath,
@@ -95,7 +89,7 @@ describe('run', () => {
       tasks,
       pullRequests,
     );
-    expect(bumpVersion).toBeCalledWith(token, tagPrefix, VersionType.prerelease, baseTag);
+    expect(bumpVersion).toBeCalledWith(token, tagPrefix, VersionType.patch, baseTag);
     expect(createGitTag).not.toBeCalled();
     expect(createGithubRelease).toBeCalledWith(
       token,
@@ -113,7 +107,7 @@ describe('run', () => {
     const appTagSeparator = '@';
     const baseTag = 'v1.0.4';
     const givenDraft = false;
-    const givenPrerelease = false;
+    const givenPrerelease = true;
     const releaseName = 'fake-app';
     const releaseTag = `mycustomprefix-1.0.6`;
     const taskBaseUrl = 'https://myfaketask.url';
@@ -182,7 +176,9 @@ describe('run', () => {
 
   test('unexpected error', async () => {
     const errorMsg = 'fake';
-    (getInput as jest.Mock).mockImplementation(() => { throw new Error(errorMsg); });
+    (getInput as jest.Mock).mockImplementation(() => {
+      throw new Error(errorMsg);
+    });
 
     await run();
     expect(setFailed).toBeCalledWith(errorMsg);

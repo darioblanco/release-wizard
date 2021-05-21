@@ -1,4 +1,4 @@
-# $APP $VERSION
+# $APP $VERSION :muscle:
 
 ## :alien: Changelog
 
