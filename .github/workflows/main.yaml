@@ -1,0 +1,47 @@
+name: "main"
+
+on:
+  push:
+    branches:
+      - "*"
+    paths:
+      - ".github/workflows/main.yaml"
+      - ".github/RELEASE_DRAFT*"
+      - "package.json"
+      - "src/**"
+      - "tests/*"
+      - "tsconfig.json"
+      - "tslint.json"
+  pull_request:
+    paths:
+      - ".github/workflows/main.yaml"
+      - ".github/RELEASE_DRAFT*"
+      - "package.json"
+      - "src/**"
+      - "tests/*"
+      - "tsconfig.json"
+      - "tslint.json"
+
+jobs:
+  unit_test:
+    name: unit test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@v1.2.0
+      - name: Lint code
+        run: yarn lint
+      - name: Test code
+        run: yarn test
+  integration_test:
+    if: github.ref == 'refs/heads/main'
+    name: integration test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@v1.2.0
+      - name: Create Release
+        uses: darioblanco/release-wizard@main
+        with:
+          templatePath: RELEASE_DRAFT/default.md
+          token: ${{ github.token }}

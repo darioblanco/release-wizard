@@ -1,0 +1,106 @@
+name: "Release Wizard"
+description: "Create a Github release with parsed commits into a given Markdown template"
+author: "Dario Blanco"
+branding:
+  icon: "cloud"
+  color: "blue"
+inputs:
+  app:
+    description: >-
+      The name of the app involved in the release (monorepo mode).
+      Creates tag and render commits for a specific scope, based on the given app name.
+      Scopes from commits are analyzed for commits that follow the Angular commit style.
+      e.g. `<type>(<app>): my commit title` or `(<app>): my commit title`
+    required: false
+  appTagSeparator:
+    description: >-
+      The separator for the tags if `app` is given. For example, if `@` is provided, the
+      version calculated for such app will be based on `myapp@myversion`. Defaults to `/`,
+      as it is common to see the `myapp/myversion` format.
+    required: false
+    default: /
+  baseTag:
+    description: >-
+      The tag that will be used as base for git commit comparison, instead of
+      the automatic detection of latest published release.
+      The commits will be formatted into a Markdown list and replaced into the `$CHANGES` variable
+      for the given `templatePath` template file.
+    required: false
+  bumpProtection:
+    description: >-
+      Propose PATCH version bumps whenever a MINOR or MAJOR is detected in a diff that had a
+      previous MINOR or MAJOR bump.
+    required: false
+    default: "false"
+  draft:
+    description: "Publish release draft"
+    required: false
+    default: "true"
+  prerelease:
+    description: "Mark release as prerelease when creating"
+    required: false
+    default: "true"
+  pushTag:
+    description: >-
+      Creates and pushes the automatic calculated tag before creating the release.
+      Useful if you want the action to handle tags for you when publishing drafts.
+      By default, a release draft won't create the tag, which only happens when it is published.
+    required: false
+    default: "false"
+  releaseName:
+    description: "The release title"
+    required: false
+  releaseTag:
+    description: >-
+      The git tag that will be linked to the release.
+      If undefined, it will detect the latest tag and bump it.
+    required: false
+  taskBaseUrl:
+    description: >-
+      The base url to append for a detected task (do not set a trailing `/`).
+      By default, it will create a url based on your Github organization.
+      (e.g. https://myorg.atlassian.net/browse)
+    required: false
+  taskPrefix:
+    description: "The prefix that identifies task ids in the commits"
+    required: false
+    default: JIRA-
+  templatePath:
+    description: >-
+      The path for the Markdown template that will be used to create the release body,
+      relative to `.github/`.
+    default: release-wizard.md
+    required: false
+  token:
+    description: "The token to access Github's API"
+    required: true
+  withV:
+    description: "Prefix the calculated version with `v`"
+    required: false
+    default: "false"
+outputs:
+  change_type:
+    description: "The semantic type of change: major, minor, patch or prerelease"
+  changes:
+    description: "A JSON array with the list of commit sha that are involved in the release"
+  new_tag:
+    description: "The newly created tag that will reference the release"
+  new_version:
+    description: "The newly created version that belongs to the tag"
+  html_url:
+    description: "The browser url linking to Github's release"
+  tasks:
+    description: "A JSON array with the list of project management tasks involved in the release"
+  previous_tag:
+    description: "The previously detected tag that was bumped by the action"
+  previous_version:
+    description: "The previously detected version that was bumped by the action"
+  pull_requests:
+    description: "A JSON array with the list of Github pull requests involved in the release"
+  release_id:
+    description: "The release id given by Github's API"
+  upload_url:
+    description: "The url used for uploading release artifacts"
+runs:
+  using: "node12"
+  main: "dist/run.js"

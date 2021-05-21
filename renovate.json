@@ -1,0 +1,43 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "branchPrefix": "chore/renovate/",
+  "commitBodyTable": true,
+  "commitMessageAction": "Pin",
+  "commitMessageExtra": "{{#if isMajor}}v{{{newMajor}}}{{else}}{{#if isSingleVersion}}v{{{toVersion}}}{{else}}{{{newValue}}}{{/if}}{{/if}}",
+  "commitMessageTopic": "{{depName}}",
+  "enabledManagers": [
+    "bundler",
+    "docker-compose",
+    "dockerfile",
+    "github-actions",
+    "gradle",
+    "helmfile",
+    "helm-requirements",
+    "helm-values",
+    "homebrew",
+    "html",
+    "kubernetes",
+    "npm",
+    "regex",
+    "ruby-version",
+    "swift",
+    "terraform"
+  ],
+  "semanticCommits": true,
+  "semanticCommitScope": "{{parentDir}}",
+  "packageRules": [
+    {
+      "depTypeList": [
+        "devDependencies"
+      ],
+      "commitMessageSuffix": "dev",
+      "automerge": true
+    }
+  ],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 3,
+  "rangeStrategy": "bump"
+}

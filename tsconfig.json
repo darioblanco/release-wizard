@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "paths": {
+      "@darioblanco/release-wizard/*": ["./src/*"],
+      "@darioblanco/release-wizard/test/*": ["./test/*"]
+    },
+    "rootDir": ".",
+    "strict": true,
+    "target": "es2017",
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+  ],
+  "types": ["jest", "node"]
+}
