@@ -47,7 +47,15 @@ export async function run(): Promise<void> {
     const releaseVersion = releaseTag.replace(tagPrefix, '');
     const releaseName =
       core.getInput('releaseName', { required: false }) || renderReleaseName(releaseVersion, app);
-    const body = renderReleaseBody(templatePath, app, releaseVersion, changes, tasks, pullRequests);
+    const body = await renderReleaseBody(
+      token,
+      templatePath,
+      app,
+      releaseVersion,
+      changes,
+      tasks,
+      pullRequests,
+    );
     await createGithubRelease(token, releaseTag, releaseName, body, draft, prerelease, tagPrefix);
   } catch (error) {
     core.setFailed((error as Error).message);

@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import { setOutput } from '@actions/core';
 import { getOctokit } from '@actions/github';
 import { resolve as pathResolve } from 'path';
@@ -9,7 +10,6 @@ import {
   renderReleaseName,
 } from '@darioblanco/release-wizard/lib/release';
 
-jest.mock('path');
 jest.mock('@actions/github', () => ({
   context: {
     repo: {
@@ -47,23 +47,34 @@ describe('release', () => {
     const releaseVersion = '1.0.0';
     const templatePath = 'myTemplatePath.md';
 
-    test('render release template', () => {
-      (pathResolve as jest.Mock).mockImplementation(() => `${__dirname}/fixtures/basic.md`);
-      expect(renderReleaseBody('myTemplatePath.md', app, releaseVersion)).toMatchSnapshot();
-      expect(pathResolve).toBeCalledWith(
-        '/home/runner/work',
-        'myrepo',
-        'myrepo',
-        '.github',
-        templatePath,
-      );
+    const mockTemplate = (path?: string) => {
+      let getContent: jest.Mock;
+      if (path) {
+        const content = fs.readFileSync(path, 'utf8');
+        getContent = jest.fn().mockResolvedValue({ data: { content } });
+      } else {
+        getContent = jest.fn().mockResolvedValue({ data: {} });
+      }
+      (getOctokit as jest.Mock).mockReturnValueOnce({ rest: { repos: { getContent } } });
+      return getContent;
+    };
+
+    test('render release template', async () => {
+      const getContent = mockTemplate(`${__dirname}/fixtures/basic.md`);
+      expect(
+        await renderReleaseBody(token, 'myTemplatePath.md', app, releaseVersion),
+      ).toMatchSnapshot();
+      expect(getContent).toBeCalledWith({
+        owner: 'myorg',
+        path: pathResolve('.github', templatePath),
+        ref: 'mysha',
+        repo: 'myrepo',
+      });
     });
 
-    test('render release template with changes, tasks and pull requests', () => {
-      (pathResolve as jest.Mock).mockImplementation(
-        () => `${__dirname}/fixtures/with-changelog.md`,
-      );
-
+    test('render release template with changes, tasks and pull requests', async () => {
+      const templatePath = 'with-changelog.md';
+      const getContent = mockTemplate(`${__dirname}/fixtures/${templatePath}`);
       const changes =
         '' +
         '- [#1](https://commiturl) First commit message ' +
@@ -79,15 +90,30 @@ describe('release', () => {
         '- [#1716](https://github.com/myorg/myrepo/pull/1716)\n' +
         '- [#1717](https://github.com/myorg/myrepo/pull/1717)';
       expect(
-        renderReleaseBody('myTemplatePath.md', app, releaseVersion, changes, tasks, pullRequests),
+        await renderReleaseBody(
+          token,
+          templatePath,
+          app,
+          releaseVersion,
+          changes,
+          tasks,
+          pullRequests,
+        ),
       ).toMatchSnapshot();
-      expect(pathResolve).toBeCalledWith(
-        '/home/runner/work',
-        'myrepo',
-        'myrepo',
-        '.github',
-        templatePath,
-      );
+      expect(getContent).toBeCalledWith({
+        owner: 'myorg',
+        path: pathResolve('.github', templatePath),
+        ref: 'mysha',
+        repo: 'myrepo',
+      });
+    });
+
+    test('throw error when template is not found', async () => {
+      const templatePath = 'not-found.md';
+      mockTemplate();
+      await expect(
+        renderReleaseBody(token, templatePath, app, releaseVersion),
+      ).rejects.toThrowError(new Error(`Unable to find template in ${templatePath}`));
     });
   });
 

@@ -38,7 +38,7 @@ describe('run', () => {
       tasks,
       pullRequests,
     }));
-    (renderReleaseBody as jest.Mock).mockImplementation(() => body);
+    (renderReleaseBody as jest.Mock).mockImplementation().mockResolvedValue(body);
   });
 
   test('with required params', async () => {
@@ -79,6 +79,7 @@ describe('run', () => {
     expect(commitParser).toBeCalledWith(token, baseTag, taskPrefix, undefined, undefined);
     expect(renderReleaseName).toBeCalledWith(releaseVersion, undefined);
     expect(renderReleaseBody).toBeCalledWith(
+      token,
       templatePath,
       undefined,
       releaseVersion,
@@ -152,6 +153,7 @@ describe('run', () => {
     expect(retrieveLastReleasedVersion).not.toBeCalled();
     expect(commitParser).toBeCalledWith(token, baseTag, taskPrefix, taskBaseUrl, app);
     expect(renderReleaseBody).toBeCalledWith(
+      token,
       templatePath,
       app,
       releaseTag,

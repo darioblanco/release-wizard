@@ -1,6 +1,5 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import * as fs from 'fs';
 import * as path from 'path';
 
 import { Release } from '../types';
@@ -9,19 +8,31 @@ export function renderReleaseName(releaseVersion: string, app?: string): string 
   return `${app ? `${app}@` : ''}${releaseVersion}`.trim();
 }
 
-export function renderReleaseBody(
+export async function renderReleaseBody(
+  token: string,
   templatePath: string,
   app: string,
   releaseVersion: string,
   changes = '',
   tasks = '',
   pullRequests = '',
-): string {
-  const { repo } = github.context.repo;
-  let body = fs
-    .readFileSync(path.resolve('/home/runner/work', repo, repo, '.github', templatePath), 'utf8')
-    .replace(/\$APP/g, app)
-    .replace(/\$VERSION/g, releaseVersion);
+): Promise<string> {
+  const { owner, repo } = github.context.repo;
+  const { sha } = github.context;
+  const octokit = github.getOctokit(token);
+  const contentResponse = await octokit.rest.repos.getContent({
+    owner,
+    repo,
+    path: path.resolve('.github', templatePath),
+    ref: sha,
+  });
+  let template: string;
+  if ('content' in contentResponse.data) {
+    template = contentResponse.data.content;
+  } else {
+    throw new Error(`Unable to find template in ${templatePath}`);
+  }
+  let body = template.replace(/\$APP/g, app).replace(/\$VERSION/g, releaseVersion);
   body = body.replace(/\$CHANGES/g, changes);
   body = body.replace(/\$TASKS/g, tasks);
   body = body.replace(/\$PULL_REQUESTS/g, pullRequests);
