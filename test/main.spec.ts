@@ -5,7 +5,6 @@ import {
   createGitTag,
   createGithubRelease,
   renderReleaseBody,
-  renderReleaseName,
 } from '@darioblanco/release-wizard/lib/release';
 import { bumpVersion, retrieveLastReleasedVersion } from '@darioblanco/release-wizard/lib/version';
 import { run } from '@darioblanco/release-wizard/main';
@@ -67,8 +66,6 @@ describe('run', () => {
     const baseTag = 'v1.0.0';
     (retrieveLastReleasedVersion as jest.Mock).mockImplementation(() => baseTag);
 
-    const releaseName = `draft prerelease`;
-    (renderReleaseName as jest.Mock).mockImplementation(() => releaseName);
     const releaseVersion = '1.0.5';
     const releaseTag = `${tagPrefix}${releaseVersion}`;
     (bumpVersion as jest.Mock).mockImplementation(() => releaseTag);
@@ -77,7 +74,6 @@ describe('run', () => {
 
     expect(retrieveLastReleasedVersion).toBeCalledWith(token, tagPrefix);
     expect(commitParser).toBeCalledWith(token, baseTag, taskPrefix, undefined, undefined);
-    expect(renderReleaseName).toBeCalledWith(releaseVersion, undefined);
     expect(renderReleaseBody).toBeCalledWith(
       token,
       templatePath,
@@ -92,7 +88,7 @@ describe('run', () => {
     expect(createGithubRelease).toBeCalledWith(
       token,
       releaseTag,
-      releaseName,
+      releaseTag,
       body,
       draft,
       prerelease,
