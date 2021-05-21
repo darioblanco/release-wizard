@@ -2,7 +2,7 @@ import { setOutput } from '@actions/core';
 import { getOctokit } from '@actions/github';
 
 import { commitParser } from '@darioblanco/release-wizard/lib/commits';
-import { VersionType } from '@darioblanco/release-wizard/lib/version';
+import { VersionType } from '@darioblanco/release-wizard/types';
 
 jest.mock('@actions/github', () => ({
   context: {
@@ -102,12 +102,10 @@ describe('commit', () => {
 
   test('render commits diff for each category', async () => {
     (getOctokit as jest.Mock).mockReturnValue({ rest: { repos: { compareCommits } } });
-    const { changes, nextVersionType, tasks, pullRequests } = await commitParser(
-      token
-    );
+    const { changes, nextVersionType, tasks, pullRequests } = await commitParser(token);
     expect(setOutput).toBeCalledWith(
       'changes',
-      JSON.stringify(compareCommitsResponse.data.commits.map(commit => commit.sha)), // 8 commits
+      JSON.stringify(compareCommitsResponse.data.commits.map((commit) => commit.sha)), // 8 commits
     );
     expect(setOutput).toBeCalledWith('tasks', '[]');
     expect(setOutput).toBeCalledWith('pull_requests', '[]');
@@ -138,8 +136,10 @@ describe('commit', () => {
     expect(pullRequests).toBe('');
   });
 
-  [undefined, 'http://my-task-url'].forEach(taskBaseUrl =>
-    test(`render gh squashed commits with scope, PRs and tasks for ${taskBaseUrl || 'undefined'}`, async () => {
+  [undefined, 'http://my-task-url'].forEach((taskBaseUrl) =>
+    test(`render gh squashed commits with scope, PRs and tasks for ${
+      taskBaseUrl || 'undefined'
+    }`, async () => {
       const commitMessage =
         'feat(auth): main commit of my PR (#1716)\n\n' +
         '* feat(auth): set login endpoint controller\n\n' +
@@ -229,8 +229,8 @@ describe('commit', () => {
     expect(setOutput).toBeCalledWith(
       'changes',
       '["62ec8ea713fdf14e4abaef3d7d5138194dec49ce",' +
-      '"62ec8ea713fdf14e4abaef3d7d5138194dec49ce",' +
-      '"62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]',
+        '"62ec8ea713fdf14e4abaef3d7d5138194dec49ce",' +
+        '"62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]',
     );
     expect(setOutput).toBeCalledWith('tasks', '[]');
     expect(setOutput).toBeCalledWith('pull_requests', '[]');

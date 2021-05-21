@@ -3,6 +3,8 @@ import * as github from '@actions/github';
 import * as fs from 'fs';
 import * as path from 'path';
 
+import { Release } from '../types';
+
 export function renderReleaseName(releaseVersion: string, app?: string): string {
   return `${app ? `${app}@` : ''}${releaseVersion}`.trim();
 }
@@ -46,9 +48,30 @@ export async function createGithubRelease(
   body: string,
   draft: boolean,
   prerelease: boolean,
+  tagPrefix: string,
 ): Promise<void> {
   const { owner, repo } = github.context.repo;
   const octokit = github.getOctokit(token);
+
+  if (draft) {
+    // Detect if there was a previous release draft that must be removed,
+    // looking for all previous release drafts that matches the given tag prefix
+    const listReleasesOptions = octokit.rest.repos.listReleases.endpoint.merge({
+      owner,
+      repo,
+    });
+    for await (const response of octokit.paginate.iterator<Release>(listReleasesOptions)) {
+      for (const release of response.data) {
+        if (release.draft && release.tag_name.startsWith(tagPrefix)) {
+          await octokit.rest.repos.deleteRelease({
+            owner,
+            repo,
+            release_id: release.id,
+          });
+        }
+      }
+    }
+  }
 
   // Create a release
   // API Documentation: https://developer.github.com/v3/repos/releases/#create-a-release

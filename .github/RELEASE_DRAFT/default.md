@@ -1,6 +1,4 @@
-# $APP $VERSION :muscle:
-
-## :alien: Changelog
+## :alien: $VERSION Changelog
 
 $CHANGES
 

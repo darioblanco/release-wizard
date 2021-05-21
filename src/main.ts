@@ -7,7 +7,8 @@ import {
   renderReleaseBody,
   renderReleaseName,
 } from './lib/release';
-import { VersionType, bumpVersion, retrieveLastReleasedVersion } from './lib/version';
+import { bumpVersion, retrieveLastReleasedVersion } from './lib/version';
+import { VersionType } from './types';
 
 export async function run(): Promise<void> {
   try {
@@ -17,7 +18,7 @@ export async function run(): Promise<void> {
     const token = core.getInput('token', { required: true });
     const withV = core.getInput('withV', { required: false });
     const versionPrefix = withV ? 'v' : '';
-    const tagPrefix = app ? `${app}${appTagSeparator}${versionPrefix}` :versionPrefix;
+    const tagPrefix = app ? `${app}${appTagSeparator}${versionPrefix}` : versionPrefix;
 
     // Commit loading config
     const baseTag =
@@ -46,15 +47,8 @@ export async function run(): Promise<void> {
     const releaseVersion = releaseTag.replace(tagPrefix, '');
     const releaseName =
       core.getInput('releaseName', { required: false }) || renderReleaseName(releaseVersion, app);
-    const body = renderReleaseBody(
-      templatePath,
-      app,
-      releaseVersion,
-      changes,
-      tasks,
-      pullRequests,
-    );
-    await createGithubRelease(token, releaseTag, releaseName, body, draft, prerelease);
+    const body = renderReleaseBody(templatePath, app, releaseVersion, changes, tasks, pullRequests);
+    await createGithubRelease(token, releaseTag, releaseName, body, draft, prerelease, tagPrefix);
   } catch (error) {
     core.setFailed((error as Error).message);
   }

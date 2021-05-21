@@ -7,12 +7,9 @@ import {
   renderReleaseBody,
   renderReleaseName,
 } from '@darioblanco/release-wizard/lib/release';
-import {
-  VersionType,
-  bumpVersion,
-  retrieveLastReleasedVersion,
-} from '@darioblanco/release-wizard/lib/version';
+import { bumpVersion, retrieveLastReleasedVersion } from '@darioblanco/release-wizard/lib/version';
 import { run } from '@darioblanco/release-wizard/main';
+import { VersionType } from '@darioblanco/release-wizard/types';
 
 jest.mock('@actions/core');
 jest.mock('@darioblanco/release-wizard/lib/commits');
@@ -98,6 +95,7 @@ describe('run', () => {
       body,
       draft,
       prerelease,
+      tagPrefix,
     );
     expect(setFailed).not.toBeCalled();
   });
@@ -170,6 +168,7 @@ describe('run', () => {
       body,
       givenDraft,
       givenPrerelease,
+      `${app}${appTagSeparator}v`,
     );
     expect(setFailed).not.toBeCalled();
   });

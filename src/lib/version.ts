@@ -2,21 +2,11 @@ import semver from 'semver';
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
+import { Release, VersionType } from '../types';
+
 // See semver.ReleaseType
-export enum VersionType {
-  major = 'major',
-  minor = 'minor',
-  patch = 'patch',
-  prerelease = 'prerelease',
-}
 
-export interface ReleaseResponse {
-  draft: boolean;
-  prerelease: boolean;
-  tag_name: string;
-}
-
-const findReleaseTag = async (token: string, matchFunction: (release: ReleaseResponse) => unknown) => {
+const findReleaseTag = async (token: string, matchFunction: (release: Release) => unknown) => {
   const { owner, repo } = github.context.repo;
 
   const octokit = github.getOctokit(token);
@@ -29,7 +19,7 @@ const findReleaseTag = async (token: string, matchFunction: (release: ReleaseRes
 
   // Look for the earliest release that matches the given condition
   /* eslint-disable no-restricted-syntax */
-  for await (const response of octokit.paginate.iterator<ReleaseResponse>(listReleasesOptions)) {
+  for await (const response of octokit.paginate.iterator<Release>(listReleasesOptions)) {
     for (const release of response.data) {
       if (matchFunction(release)) return release.tag_name;
     }
@@ -47,9 +37,9 @@ export async function bumpVersion(
 ): Promise<string> {
   const publishedVersion = publishedTag ? publishedTag.replace(tagPrefix, '') : undefined;
 
-  const matchesTagPrefix = (release: ReleaseResponse) => release.tag_name.startsWith(tagPrefix);
+  const matchesTagPrefix = (release: Release) => release.tag_name.startsWith(tagPrefix);
   // Load latest production tag from published releases
-  const lastTag = (await findReleaseTag(token, matchesTagPrefix));
+  const lastTag = await findReleaseTag(token, matchesTagPrefix);
   const lastVersion = lastTag ? lastTag.replace(tagPrefix, '') : '0.0.0';
 
   let releaseType = nextVersionType;
@@ -101,12 +91,15 @@ export async function bumpVersion(
   return newTag;
 }
 
-export async function retrieveLastReleasedVersion(token: string, tagPrefix: string): Promise<string | undefined> {
-  const isVersionReleased = (release: ReleaseResponse) => {
+export async function retrieveLastReleasedVersion(
+  token: string,
+  tagPrefix: string,
+): Promise<string | undefined> {
+  const isVersionReleased = (release: Release) => {
     const { prerelease, draft, tag_name: tagName } = release;
     return !draft && !prerelease && tagName.startsWith(tagPrefix);
   };
-  const lastPublishedTag  = await findReleaseTag(token, isVersionReleased);
+  const lastPublishedTag = await findReleaseTag(token, isVersionReleased);
   core.setOutput('base_tag', lastPublishedTag || '');
   return lastPublishedTag;
 }

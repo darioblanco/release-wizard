@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-import { VersionType } from './version';
+import { VersionType } from '../types';
 
 // Octokit's commit type subset
 interface Commit {
@@ -110,7 +110,7 @@ export async function commitParser(
     }
     // Check if commit message matches to any of the defined categories
     let categoryMatch = false;
-    Object.keys(commitGroups).some(category => {
+    Object.keys(commitGroups).some((category) => {
       // Match with or without scope
       if (message.startsWith(`${category}:`) || message.startsWith(`${category}(`)) {
         commitGroups[category].commits.push(commit);
@@ -125,7 +125,7 @@ export async function commitParser(
   const prRegExp = new RegExp('(\\(#\\d+\\))', 'gmi');
   const taskRegExp = new RegExp(`${taskPrefix}\\d+`, 'gmi');
   const majorRegExp = new RegExp(`(#MAJOR$)`, 'gmi');
-  commits.forEach(githubCommit => {
+  commits.forEach((githubCommit) => {
     const {
       html_url: commitUrl,
       commit: { message },
@@ -140,12 +140,11 @@ export async function commitParser(
 
     // Retrieve PR link information
     const prMatch = prRegExp.exec(message);
-    if (prMatch)
-      prMatch.slice(1).forEach(pr => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
+    if (prMatch) prMatch.slice(1).forEach((pr) => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
     // Retrieve task information
     // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
     const taskMatch = message.match(taskRegExp);
-    if (taskMatch) taskMatch.forEach(task => tasks.push(task));
+    if (taskMatch) taskMatch.forEach((task) => tasks.push(task));
     // Retrieve specific bump key words
     const majorMatch = majorRegExp.exec(message);
     if (majorMatch) nextVersionType = VersionType.major;
@@ -155,16 +154,15 @@ export async function commitParser(
     if (/\* .*\n/.test(message)) {
       const messageLines = message.split('* ');
       // Categorize all commits except first one
-      messageLines
-        .forEach(messageLine =>
-          categorizeCommit({
-            username,
-            userUrl,
-            commitUrl,
-            sha,
-            message: messageLine.trim(),
-          }),
-        );
+      messageLines.forEach((messageLine) =>
+        categorizeCommit({
+          username,
+          userUrl,
+          commitUrl,
+          sha,
+          message: messageLine.trim(),
+        }),
+      );
     } else {
       categorizeCommit(commit);
     }
@@ -195,7 +193,7 @@ export async function commitParser(
 
   uncategorizedCommits.forEach(formatCommit);
 
-  Object.keys(commitGroups).forEach(category => {
+  Object.keys(commitGroups).forEach((category) => {
     const { title, commits: groupCommits } = commitGroups[category];
     if (groupCommits.length !== 0) {
       changesMd = `${changesMd}\n${title}\n`;
@@ -217,13 +215,10 @@ export async function commitParser(
     nextVersionType,
     changes: changesMd.trim(),
     tasks: tasks
-      .map(
-        task =>
-          `[${task}](${taskBaseUrl || `https://${owner}.atlassian.net/browse`}/${task})`,
-      )
+      .map((task) => `[${task}](${taskBaseUrl || `https://${owner}.atlassian.net/browse`}/${task})`)
       .join(', '),
     pullRequests: pullRequests
-      .map(pr => `[#${pr}](https://github.com/${owner}/${repo}/pull/${pr})`)
+      .map((pr) => `[#${pr}](https://github.com/${owner}/${repo}/pull/${pr})`)
       .join(', '),
   };
 }
