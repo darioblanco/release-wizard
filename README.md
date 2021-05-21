@@ -4,6 +4,8 @@ Creates a Github release with parsed commits into a given Markdown template. Thi
 inspired and forked from [Release Drafter](https://github.com/marketplace/actions/release-drafter),
 and a continuation of [MOU Release](https://github.com/minddocdev/mou-release-action).
 
+![Screenshot 2021-05-21 at 18 59 53](https://user-images.githubusercontent.com/1042520/119172981-dea94d80-ba66-11eb-83a7-b4278b15d5ec.png)
+
 Release Drafter is awesome, but it lacks support for monorepos or the JavaScript ecosystem, which
 usually stores different `package.json` in a single repository and development teams might want
 to release such packages independently.
@@ -55,7 +57,7 @@ name: 'myrelease'
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   bump:
     runs-on: ubuntu-latest
@@ -94,7 +96,7 @@ name: 'myrelease'
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   bump:
     runs-on: ubuntu-latest
