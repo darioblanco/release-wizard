@@ -1,14 +1,15 @@
 # Release Wizard
 
 Creates a Github release with parsed commits into a given Markdown template. This project is
-inspired and forked from [Release Drafter](https://github.com/marketplace/actions/release-drafter),
+inspired by [Release Drafter](https://github.com/marketplace/actions/release-drafter),
 and a continuation of [MOU Release](https://github.com/minddocdev/mou-release-action).
 
 ![Screenshot 2021-05-21 at 18 59 53](https://user-images.githubusercontent.com/1042520/119172981-dea94d80-ba66-11eb-83a7-b4278b15d5ec.png)
 
 Release Drafter is awesome, but it lacks support for monorepos or the JavaScript ecosystem, which
 usually stores different `package.json` in a single repository and development teams might want
-to release such packages independently.
+to release such packages independently. In addition, if you want to generate Changelogs for
+different areas of your repository, you will need to use a PR autolabeler.
 
 Release Wizard tries to cover a few problems for monorepos or repositories with more than one
 application (like it is usual to see in JavaScript with backend and frontend code):
@@ -21,6 +22,9 @@ application (like it is usual to see in JavaScript with backend and frontend cod
   structure of one app = one repo.
 - Calculate versions independently for each application in the repository. In Release Drafter, the
   version calculation is shared.
+- No need to define PR labelers, the version calculation is done solely by conventional commits.
+  Developers have full control about which commits will go to the release changelog in a monorepo
+  scenario.
 - Improve version calculation based on commit diffs, with an optional bump protection in case
   several MAJOR tags are found in the difference.
 
