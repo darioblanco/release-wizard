@@ -29,7 +29,7 @@ export async function run(): Promise<void> {
 
     // Release config
     const pushTag = core.getInput('pushTag', { required: false }) === 'true';
-    const templatePath = core.getInput('templatePath', { required: true });
+    const templatePath = core.getInput('templatePath', { required: false });
     const draft = core.getInput('draft', { required: false }) === 'true' || false;
     const prerelease = core.getInput('prerelease', { required: false }) === 'true' || false;
 
