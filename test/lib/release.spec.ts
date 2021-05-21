@@ -40,7 +40,7 @@ describe('release', () => {
     const mockTemplate = (path?: string) => {
       let getContent: jest.Mock;
       if (path) {
-        const content = fs.readFileSync(path, 'utf8');
+        const content = fs.readFileSync(path, 'base64');
         getContent = jest.fn().mockResolvedValue({ data: { content } });
       } else {
         getContent = jest.fn().mockResolvedValue({ data: {} });

@@ -26,7 +26,7 @@ export async function renderReleaseBody(
   });
   let template: string;
   if ('content' in contentResponse.data) {
-    template = contentResponse.data.content;
+    template = Buffer.from(contentResponse.data.content, 'base64').toString('utf8');
   } else {
     throw new Error(`Unable to find template in ${templatePath}`);
   }
