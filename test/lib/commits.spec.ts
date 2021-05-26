@@ -102,7 +102,7 @@ describe('commit', () => {
 
   test('render commits diff for each category', async () => {
     (getOctokit as jest.Mock).mockReturnValue({ rest: { repos: { compareCommits } } });
-    const { changes, nextVersionType, tasks, pullRequests } = await commitParser(token);
+    const { changes, nextVersionType, tasks, pullRequests } = await commitParser(token, 'main');
     expect(setOutput).toBeCalledWith(
       'changes',
       JSON.stringify(compareCommitsResponse.data.commits.map((commit) => commit.sha)), // 8 commits

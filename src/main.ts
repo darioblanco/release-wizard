@@ -14,6 +14,15 @@ export async function run(): Promise<void> {
     const withV = core.getInput('withV', { required: false });
     const versionPrefix = withV ? 'v' : '';
     const tagPrefix = app ? `${app}${appTagSeparator}${versionPrefix}` : versionPrefix;
+    core.debug(
+      `Global configuration: ${JSON.stringify({
+        app,
+        appTagSeparator,
+        withV,
+        versionPrefix,
+        tagPrefix,
+      })}`,
+    );
 
     // Commit loading config
     const baseTag =
@@ -21,13 +30,29 @@ export async function run(): Promise<void> {
       (await retrieveLastReleasedVersion(token, tagPrefix));
     const taskBaseUrl = core.getInput('taskBaseUrl', { required: false });
     const taskPrefix = core.getInput('taskPrefix', { required: false });
+    core.debug(
+      `Commit configuration: ${JSON.stringify({
+        baseTag,
+        taskBaseUrl,
+        taskPrefix,
+      })}`,
+    );
 
     // Release config
     const pushTag = core.getInput('pushTag', { required: false }) === 'true';
     const templatePath = core.getInput('templatePath', { required: false });
     const draft = core.getInput('draft', { required: false }) === 'true' || false;
     const prerelease = core.getInput('prerelease', { required: false }) === 'true' || false;
+    core.debug(
+      `Release configuration: ${JSON.stringify({
+        pushTag,
+        templatePath,
+        draft,
+        prerelease,
+      })}`,
+    );
 
+    core.debug(`Parse commits from ${baseTag} to current sha`);
     const diffInfo = await commitParser(token, baseTag, taskPrefix, taskBaseUrl, app);
     const { changes, tasks, pullRequests } = diffInfo;
 

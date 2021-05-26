@@ -100,13 +100,18 @@ export async function bumpVersion(
 export async function retrieveLastReleasedVersion(
   token: string,
   tagPrefix: string,
-): Promise<string | undefined> {
+): Promise<string> {
   const isVersionReleased = (release: Release) => {
     const { prerelease, draft, tag_name: tagName } = release;
     core.debug(`Evaluating if "${release.tag_name}" has been released`);
     return !draft && !prerelease && tagName.startsWith(tagPrefix);
   };
-  const lastPublishedTag = await findReleaseTag(token, isVersionReleased);
-  core.setOutput('base_tag', lastPublishedTag || '');
+  core.debug('Discover latest published release, which serves as base tag for commit comparison');
+  let lastPublishedTag = await findReleaseTag(token, isVersionReleased);
+  if (lastPublishedTag === undefined) {
+    core.debug('Unable to find last published tag, calculating diff from current reference');
+    lastPublishedTag = github.context.ref.split('/').pop() as string;
+  }
+  core.setOutput('base_tag', lastPublishedTag);
   return lastPublishedTag;
 }

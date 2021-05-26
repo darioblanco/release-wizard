@@ -6,6 +6,7 @@ import { VersionType } from '@darioblanco/release-wizard/types';
 
 jest.mock('@actions/github', () => ({
   context: {
+    ref: 'refs/heads/main',
     repo: {
       owner: 'theowner',
       repo: 'therepo',
@@ -283,7 +284,7 @@ describe('version', () => {
     expect(setOutput).toBeCalledWith('base_tag', expectedTag);
   });
 
-  test('retrieve no release', async () => {
+  test('retrieve no release gives current ref', async () => {
     const releaseFixtureOverride = [
       {
         data: [{ prerelease: true, draft: true, tag_name: `${tagPrefix}0.0.4` }],
@@ -298,7 +299,7 @@ describe('version', () => {
 
     mockGithub(releaseFixtureOverride);
 
-    expect(await retrieveLastReleasedVersion(token, tagPrefix)).toBe(undefined);
-    expect(setOutput).toBeCalledWith('base_tag', '');
+    expect(await retrieveLastReleasedVersion(token, tagPrefix)).toBe('main');
+    expect(setOutput).toBeCalledWith('base_tag', 'main');
   });
 });
