@@ -127,7 +127,6 @@ jobs:
 | app             | no       | `null`                                          | The name of the app involved in the release. Creates tag and render commits for a specific scope, based on the given app name. Scopes from commits are analyzed for commits that follow the Angular commit style, e.g. `<type>(<app>): my commit title` or `(<app>): my commit title` |
 | appTagSeparator | no       | `/`                                             | The separator for the tags if `app` is given. For example, if `@` is provided, the version calculated for such app will be based on `myapp@myversion`. Defaults to `/`, as it is common to see the `myapp/myversion` format.                                                          |
 | baseTag         | no       | `null`                                          | The tag that will be used as base for git commit comparison, instead of the automatic detection of latest published release. The commits will be formatted into a Markdown list and replaced into the `$CHANGES` variable for the given `templatePath` template file.                 |
-| bumpProtection  | no       | `false`                                         | Propose PATCH version bumps whenever a MINOR or MAJOR is detected in a diff that had a previous MINOR or MAJOR bump. See [multiple minor and major bump protection](#multiple-minor-and-major-bump-protection).                                                                       |
 | draft           | no       | `true`                                          | Publish release draft.                                                                                                                                                                                                                                                                |
 | prerelease      | no       | `false`                                         | Mark release as prerelease when creating. This will ignore `major`, `minor` and `patch` bump suggestions and propose a [prerelease](https://github.com/npm/node-semver#prerelease-tags).                                                                                              |
 | pushTag         | no       | `false`                                         | Creates and pushes the automatic calculated tag before creating the release. Useful if you want the action to handle tags for you when publishing drafts. By default, a release draft won't create the tag, which only happens when it is published.                                  |
@@ -289,46 +288,6 @@ in any commit message from the diff.
 If there is a `#MAJOR` string found in any commit message from the diff, the action will suggest
 a `MAJOR` release bump. As this release type involves backwards incompatible changes, the behavior
 should be fully controlled by the user.
-
-#### Multiple `MINOR` and `MAJOR` bump protection
-
-**Bump protection is disabled by default, but you can enable passing the `bumpProtection` input.**
-
-For teams with a slower production release cadence that push a lot of tags automatically,
-it would be easy to end up with a production deployment that has a big diff between
-`MINOR` and `MAJOR` versions.
-As we believe users are the ones who should get the biggest benefit from semantic versioning,
-it might not make sense if they see a big number gap in those.
-
-Therefore, the release type protection will do a `PATCH` if there was already an **unreleased**
-`MAJOR` or `MINOR` bump in the diff.
-
-For example, `MINOR` protection:
-
-- `1.1.0` -> published release (`baseTag`)
-- `1.2.0` -> `MINOR` bump (two new features)
-- `1.2.1` -> it detected a `MINOR` bump, but it is default to `PATCH` (one new feature)
-- `1.2.3` -> it detected a `MINOR` bump, but it is default to `PATCH` (three new features)
-- `1.2.4` -> newly published released with three backwards compatible changes, it would be
-  `1.4.0` without the protection, losing `1.2.0` and `1.3.0` on the way. As we want to avoid
-  those big gaps while encouraging small branches, the protection limits the `MINOR` bump to 1,
-  patching the rest. Users would still see that there are new features in the release.
-
-Users have seen `1.1.0` going up to `1.2.4`, instead of `1.4.0`.
-Truncated would be `1.1` and `1.2`.
-
-And a `MAJOR` protection example:
-
-- `1.1.0` -> published release (`baseTag`)
-- `1.2.0` -> `MINOR` bump (two new features)
-- `1.2.1` -> it detected a `MINOR` bump, but it is default to `PATCH` (one new feature)
-- `2.0.0` -> it detected a `MAJOR` bump, overrides the `MINOR` protection (manual `#MAJOR` message)
-- `2.0.1` -> it detected a `MINOR` bump, but it is default to `PATCH` (three new features)
-- `2.0.2` -> it detected a `MAJOR` bump, but protection defaults to `PATCH`
-- `2.0.3` -> newly published release (one bugfix before releasing)
-
-Users have seen `1.1.0` going up to `2.0.3` instead of `3.0.1`.
-Truncated would be `1.1` and `2.0`.
 
 ## Development
 

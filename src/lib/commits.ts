@@ -102,7 +102,6 @@ export async function commitParser(
   const {
     data: { commits },
   } = compareCommitsResponse;
-  core.debug(`Commits to be analyzed: ${commits.toString()}`);
 
   const categorizeCommit = (commit: Commit) => {
     const { message } = commit;
@@ -118,7 +117,7 @@ export async function commitParser(
       if (message.startsWith(`${category}:`) || message.startsWith(`${category}(`)) {
         commitGroups[category].commits.push(commit);
         categoryMatch = true;
-        core.debug(`Commit matches category -> "${message}"`);
+        core.debug(`Commit matches category ${category} -> "${message}"`);
         return true;
       }
       return false;

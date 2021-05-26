@@ -11,6 +11,16 @@ import { run } from '@darioblanco/release-wizard/main';
 import { VersionType } from '@darioblanco/release-wizard/types';
 
 jest.mock('@actions/core');
+jest.mock('@actions/github', () => ({
+  context: {
+    ref: 'refs/heads/main',
+    repo: {
+      owner: 'theowner',
+      repo: 'therepo',
+    },
+  },
+  getOctokit: jest.fn(),
+}));
 jest.mock('@darioblanco/release-wizard/lib/commits');
 jest.mock('@darioblanco/release-wizard/lib/release');
 jest.mock('@darioblanco/release-wizard/lib/version');
@@ -43,8 +53,6 @@ describe('run', () => {
   test('with required params', async () => {
     (getInput as jest.Mock).mockImplementation((name: string) => {
       switch (name) {
-        case 'bumpProtection':
-          return 'false';
         case 'draft':
           return draft.toString();
         case 'prerelease':
@@ -63,8 +71,8 @@ describe('run', () => {
     });
     const tagPrefix = '';
 
-    const baseTag = 'v1.0.0';
-    (retrieveLastReleasedVersion as jest.Mock).mockImplementation(() => baseTag);
+    const baseTag = 'main';
+    (retrieveLastReleasedVersion as jest.Mock).mockImplementation().mockResolvedValue(undefined);
 
     const releaseVersion = '1.0.5';
     const releaseTag = `${tagPrefix}${releaseVersion}`;
@@ -83,7 +91,7 @@ describe('run', () => {
       tasks,
       pullRequests,
     );
-    expect(bumpVersion).toBeCalledWith(token, tagPrefix, VersionType.patch, baseTag);
+    expect(bumpVersion).toBeCalledWith(token, tagPrefix, VersionType.patch);
     expect(createGitTag).not.toBeCalled();
     expect(createGithubRelease).toBeCalledWith(
       token,
@@ -115,8 +123,6 @@ describe('run', () => {
           return appTagSeparator;
         case 'baseTag':
           return baseTag;
-        case 'bumpProtection':
-          return 'true';
         case 'draft':
           return givenDraft.toString();
         case 'monorepo':

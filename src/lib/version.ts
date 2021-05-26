@@ -32,86 +32,51 @@ export async function bumpVersion(
   token: string,
   tagPrefix: string,
   nextVersionType = VersionType.patch,
-  publishedTag?: string,
-  bumpProtection = false,
 ): Promise<string> {
-  const publishedVersion = publishedTag ? publishedTag.replace(tagPrefix, '') : undefined;
-
-  const matchesTagPrefix = (release: Release) => release.tag_name.startsWith(tagPrefix);
   // Load latest production tag from published releases
-  const lastTag = await findReleaseTag(token, matchesTagPrefix);
-  core.debug(`Detected "${lastTag || 'undefined'}" as the latest tag`);
-  const lastVersion = lastTag ? lastTag.replace(tagPrefix, '') : '0.0.0';
+  const fallbackVersion = '0.0.0';
+  const lastTag =
+    (await retrieveLastReleasedVersion(token, tagPrefix)) || `${tagPrefix}${fallbackVersion}`;
+  core.debug(`Detected "${lastTag}" as the latest tag`);
+  const lastVersion = lastTag.replace(tagPrefix, '');
   core.debug(`Calculated "${lastVersion}" as the latest version`);
 
-  let releaseType = nextVersionType;
-  let newVersion: string | null = null;
-  if (releaseType === VersionType.prerelease) {
+  let newVersion: string;
+  if (nextVersionType === VersionType.prerelease) {
     // Bump release candidate as 'prerelease' if detected as next release type
-    newVersion = semver.inc(lastVersion, releaseType, 'rc') as string;
+    newVersion = semver.inc(lastVersion, nextVersionType, 'rc') as string;
     core.debug(`Bump as prerelease, new calculated version: ${newVersion}`);
   } else {
     // 'major', 'minor' or 'patch' needs to be bumped
-    // Override to 'patch' if bump protection is triggered
-    if (
-      bumpProtection &&
-      publishedVersion &&
-      // MINOR protection (if there was already a previous MINOR bump)
-      ((nextVersionType === VersionType.minor &&
-        !semver.satisfies(
-          lastVersion,
-          // ^1.2	is >=1.2.0 <2.0.0
-          `^${semver.major(publishedVersion)}.${semver.minor(publishedVersion)}`,
-        )) ||
-        // MAJOR protection (if there was already a previous MAJOR bump)
-        (nextVersionType === VersionType.major &&
-          !semver.satisfies(
-            lastVersion,
-            // ^1	is >=1.0.0 <2.0.0
-            `^${semver.major(publishedVersion)}`,
-          )))
-    ) {
-      // Detect if there was a minor or major update between the latest production tag (baseTag)
-      // and the latest tag (the one that will be bumped), if bump is not a patch.
-      // If a major or minor update already happened, perform a patch instead.
-      // Production deployments will never bump a minor or major more than once, while internal
-      // tags can be bumped
-      core.debug('Bump protection triggered, defining release type as PATCH');
-      releaseType = VersionType.patch;
-    }
-    newVersion = semver.inc(lastVersion, releaseType);
-    core.debug(`Bump as published release, new calculated version: ${newVersion || 'undefined'}`);
+    newVersion = semver.inc(lastVersion, nextVersionType) as string;
+    core.debug(`Bump as published release, new calculated version: ${newVersion}`);
   }
 
-  if (newVersion === null) {
-    throw new Error(`Unable to perform a ${releaseType} bump to version ${lastVersion}`);
-  }
   const newTag = `${tagPrefix}${newVersion}`;
   core.debug(`New tag: ${newTag}`);
 
-  core.setOutput('previous_tag', lastTag || '');
+  core.setOutput('previous_tag', lastTag);
   core.setOutput('previous_version', lastVersion);
   core.setOutput('new_tag', newTag);
   core.setOutput('new_version', newVersion);
-  core.setOutput('release_type', releaseType);
+  core.setOutput('release_type', nextVersionType);
   return newTag;
 }
 
 export async function retrieveLastReleasedVersion(
   token: string,
   tagPrefix: string,
-): Promise<string> {
+): Promise<string | undefined> {
   const isVersionReleased = (release: Release) => {
     const { prerelease, draft, tag_name: tagName } = release;
-    core.debug(`Evaluating if "${release.tag_name}" has been released`);
+    core.debug(
+      `Evaluating if "${release.tag_name}" has been released: ${JSON.stringify({
+        prerelease,
+        draft,
+      })}`,
+    );
     return !draft && !prerelease && tagName.startsWith(tagPrefix);
   };
   core.debug('Discover latest published release, which serves as base tag for commit comparison');
-  let lastPublishedTag = await findReleaseTag(token, isVersionReleased);
-  if (lastPublishedTag === undefined) {
-    core.debug('Unable to find last published tag, calculating diff from current reference');
-    lastPublishedTag = github.context.ref.split('/').pop() as string;
-  }
-  core.setOutput('base_tag', lastPublishedTag);
-  return lastPublishedTag;
+  return findReleaseTag(token, isVersionReleased);
 }

@@ -1,4 +1,5 @@
 import * as core from '@actions/core';
+import * as github from '@actions/github';
 
 import { commitParser } from './lib/commits';
 import { createGitTag, createGithubRelease, renderReleaseBody } from './lib/release';
@@ -27,7 +28,9 @@ export async function run(): Promise<void> {
     // Commit loading config
     const baseTag =
       core.getInput('baseTag', { required: false }) ||
-      (await retrieveLastReleasedVersion(token, tagPrefix));
+      (await retrieveLastReleasedVersion(token, tagPrefix)) ||
+      (github.context.ref.split('/').pop() as string);
+    core.setOutput('base_tag', baseTag);
     const taskBaseUrl = core.getInput('taskBaseUrl', { required: false });
     const taskPrefix = core.getInput('taskPrefix', { required: false });
     core.debug(
@@ -65,7 +68,7 @@ export async function run(): Promise<void> {
 
     const releaseTag =
       core.getInput('releaseTag', { required: false }) ||
-      (await bumpVersion(token, tagPrefix, nextVersionType, baseTag));
+      (await bumpVersion(token, tagPrefix, nextVersionType));
     if (pushTag) {
       core.debug('Automatic push of git tag triggered');
       await createGitTag(token, releaseTag);
