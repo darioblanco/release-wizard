@@ -92,6 +92,7 @@ export async function commitParser(
   const { owner, repo } = github.context.repo;
   const octokit = github.getOctokit(token);
 
+  core.debug(`Retrieving commit diff between ${baseRef} and ${github.context.sha}`);
   const compareCommitsResponse = await octokit.rest.repos.compareCommits({
     owner,
     repo,
@@ -101,11 +102,13 @@ export async function commitParser(
   const {
     data: { commits },
   } = compareCommitsResponse;
+  core.debug(`Commits to be analyzed: ${commits.toString()}`);
 
   const categorizeCommit = (commit: Commit) => {
     const { message } = commit;
     // Skip if scope check is required and commit does not have it
     if (commitScope && !message.includes(`(${commitScope}):`)) {
+      core.debug(`Commit has no scope when it is required -> "${message}"`);
       return;
     }
     // Check if commit message matches to any of the defined categories
@@ -115,11 +118,15 @@ export async function commitParser(
       if (message.startsWith(`${category}:`) || message.startsWith(`${category}(`)) {
         commitGroups[category].commits.push(commit);
         categoryMatch = true;
+        core.debug(`Commit matches category -> "${message}"`);
         return true;
       }
       return false;
     });
-    if (!categoryMatch) uncategorizedCommits.push(commit);
+    if (!categoryMatch) {
+      core.debug(`Commit has no category -> "${message}"`);
+      uncategorizedCommits.push(commit);
+    }
   };
 
   const prRegExp = new RegExp('(\\(#\\d+\\))', 'gmi');
@@ -140,18 +147,28 @@ export async function commitParser(
 
     // Retrieve PR link information
     const prMatch = prRegExp.exec(message);
-    if (prMatch) prMatch.slice(1).forEach((pr) => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
+    if (prMatch) {
+      core.debug(`Found PRs: ${prMatch.toString()}`);
+      prMatch.slice(1).forEach((pr) => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
+    }
     // Retrieve task information
     // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
     const taskMatch = message.match(taskRegExp);
-    if (taskMatch) taskMatch.forEach((task) => tasks.add(task));
+    if (taskMatch) {
+      core.debug(`Found tasks: ${taskMatch.toString()}`);
+      taskMatch.forEach((task) => tasks.add(task));
+    }
     // Retrieve specific bump key words
     const majorMatch = majorRegExp.exec(message);
-    if (majorMatch) nextVersionType = VersionType.major;
+    if (majorMatch) {
+      core.debug('MAJOR bump detected');
+      nextVersionType = VersionType.major;
+    }
 
     // Detect if commit is a Github squash. In that case, convert body
     // in multiple single line commits and parse
     if (/\* .*\n/.test(message)) {
+      core.debug('Commit is a Github squash, analyzing content...');
       const messageLines = message.split('* ');
       // Categorize all commits except first one
       messageLines.forEach((messageLine) =>

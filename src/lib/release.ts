@@ -30,6 +30,7 @@ export async function renderReleaseBody(
   } else {
     throw new Error(`Unable to find template in ${templatePath}`);
   }
+  core.debug(`Retrieved template data: ${template}`);
   let body = template.replace(/\$APP/g, app).replace(/\$VERSION/g, releaseVersion);
   body = body.replace(/\$CHANGES/g, changes);
   body = body.replace(/\$TASKS/g, tasks);
@@ -42,6 +43,7 @@ export async function createGitTag(token: string, tag: string): Promise<void> {
   const { sha } = github.context;
   const octokit = github.getOctokit(token);
 
+  core.debug(`Push git tag ${tag}`);
   await octokit.rest.git.createRef({
     owner,
     repo,
@@ -77,6 +79,7 @@ export async function createGithubRelease(
             repo,
             release_id: release.id,
           });
+          core.debug(`Deleted previous draft release "${release.name || 'undefined'}"`);
         }
       }
     }
@@ -94,6 +97,7 @@ export async function createGithubRelease(
     draft,
     prerelease,
   });
+  core.debug(`Created release "${name}"`);
 
   // Get the ID, html_url, and upload URL for the created Release from the response
   const {

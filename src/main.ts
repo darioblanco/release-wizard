@@ -30,17 +30,26 @@ export async function run(): Promise<void> {
 
     const diffInfo = await commitParser(token, baseTag, taskPrefix, taskBaseUrl, app);
     const { changes, tasks, pullRequests } = diffInfo;
+
     let { nextVersionType } = diffInfo;
     // Force next version as release candidate if prerelease draft is created
-    if (prerelease) nextVersionType = VersionType.prerelease;
+    if (prerelease) {
+      core.debug('Pre release detected');
+      nextVersionType = VersionType.prerelease;
+    }
 
     const releaseTag =
       core.getInput('releaseTag', { required: false }) ||
       (await bumpVersion(token, tagPrefix, nextVersionType, baseTag));
-    if (pushTag) await createGitTag(token, releaseTag);
+    if (pushTag) {
+      core.debug('Automatic push of git tag triggered');
+      await createGitTag(token, releaseTag);
+    }
+
     // Won't replace it if release tag is given manually
     const releaseVersion = releaseTag.replace(tagPrefix, '');
     const releaseName = core.getInput('releaseName', { required: false }) || releaseTag;
+    core.debug(`Generate release body from template ${templatePath}`);
     const body = await renderReleaseBody(
       token,
       templatePath,
@@ -50,6 +59,7 @@ export async function run(): Promise<void> {
       tasks,
       pullRequests,
     );
+    core.debug(`Create Github release for ${releaseTag} tag with ${releaseName} title`);
     await createGithubRelease(token, releaseTag, releaseName, body, draft, prerelease, tagPrefix);
   } catch (error) {
     core.setFailed((error as Error).message);
