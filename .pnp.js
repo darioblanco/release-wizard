@@ -35,7 +35,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {
           "packageLocation": "./",
           "packageDependencies": [
-            ["@actions/core", "npm:1.2.7"],
+            ["@actions/core", "npm:1.3.0"],
             ["@actions/github", "npm:5.0.0"],
             ["@commitlint/cli", "npm:12.1.4"],
             ["@commitlint/config-conventional", "npm:12.1.4"],
@@ -75,10 +75,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@actions/core", [
-        ["npm:1.2.7", {
-          "packageLocation": "./.yarn/cache/@actions-core-npm-1.2.7-73b9b70d91-2.zip/node_modules/@actions/core/",
+        ["npm:1.3.0", {
+          "packageLocation": "./.yarn/cache/@actions-core-npm-1.3.0-7027bd9b82-2.zip/node_modules/@actions/core/",
           "packageDependencies": [
-            ["@actions/core", "npm:1.2.7"]
+            ["@actions/core", "npm:1.3.0"]
           ],
           "linkType": "HARD",
         }]
@@ -8161,7 +8161,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",
           "packageDependencies": [
             ["release-wizard", "workspace:."],
-            ["@actions/core", "npm:1.2.7"],
+            ["@actions/core", "npm:1.3.0"],
             ["@actions/github", "npm:5.0.0"],
             ["@commitlint/cli", "npm:12.1.4"],
             ["@commitlint/config-conventional", "npm:12.1.4"],

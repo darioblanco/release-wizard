@@ -1,4 +1,4 @@
-import { getInput, setFailed } from '@actions/core';
+import { getBooleanInput, getInput, setFailed } from '@actions/core';
 
 import { commitParser } from '@darioblanco/release-wizard/lib/commits';
 import {
@@ -143,6 +143,12 @@ describe('run', () => {
           return templatePath;
         case 'token':
           return token;
+        default:
+          return undefined;
+      }
+    });
+    (getBooleanInput as jest.Mock).mockImplementation((name: string) => {
+      switch (name) {
         case 'withV':
           return withV;
         default:

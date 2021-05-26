@@ -12,7 +12,7 @@ export async function run(): Promise<void> {
     const app = core.getInput('app', { required: false });
     const appTagSeparator = core.getInput('appTagSeparator', { required: false });
     const token = core.getInput('token', { required: true });
-    const withV = core.getInput('withV', { required: false }) || false;
+    const withV = core.getBooleanInput('withV', { required: false });
     const versionPrefix = withV ? 'v' : '';
     const tagPrefix = app ? `${app}${appTagSeparator}${versionPrefix}` : versionPrefix;
     core.debug(
