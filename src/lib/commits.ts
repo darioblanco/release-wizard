@@ -18,7 +18,7 @@ interface Commit {
  */
 export async function commitParser(
   token: string,
-  baseRef = 'master',
+  baseRef = github.context.ref,
   taskPrefix = 'JIRA-',
   taskBaseUrl?: string,
   commitScope?: string,
