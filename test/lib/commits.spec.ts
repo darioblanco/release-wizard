@@ -141,10 +141,10 @@ describe('commit', () => {
       taskBaseUrl || 'undefined'
     }`, async () => {
       const commitMessage =
-        'feat(auth): main commit of my PR (#1716)\n\n' +
+        'feat(auth): main commit of my PR [JIRA-2772] (#1716)\n\n' +
         '* feat(auth): set login endpoint controller\n\n' +
         '* test(auth): add integration test for login endpoint #MAJOR\n\n' +
-        '* fix(auth): set secure and http only options\n\n' +
+        '* fix(auth): set secure and http only options [JIRA-2773]\n\n' +
         '* perf(auth): add additional fake performance\n\n' +
         'This is the body of the previous commit\n\n' +
         'And this is the footer\n\n' +
@@ -152,8 +152,7 @@ describe('commit', () => {
         '* Address comment from PR\n\n' +
         'This is the body of the previous commit\n\n' +
         '* feat(auth): set expiration of the cookie to the amount of time of the token\n\n' +
-        '* fix(auth): remove joi validation since it does not accept localhost\n\n' +
-        'Closes: JIRA-2772,JIRA-2773';
+        '* fix(auth): remove joi validation since it does not accept localhost\n\n';
       const compareSquashedCommitsResponse = {
         data: {
           commits: [

@@ -129,7 +129,7 @@ export async function commitParser(
   };
 
   const prRegExp = new RegExp('(\\(#\\d+\\))', 'gmi');
-  const taskRegExp = new RegExp(`${taskPrefix}\\d+`, 'gmi');
+  const taskRegExp = new RegExp(`\\[${taskPrefix}\\d+\\]`, 'gmi');
   const majorRegExp = new RegExp(`(#MAJOR$)`, 'gmi');
   commits.forEach((githubCommit) => {
     const {
@@ -177,14 +177,6 @@ export async function commitParser(
       prMatch.slice(1).forEach((pr) => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
     }
 
-    // Retrieve task information
-    // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
-    const taskMatch = message.match(taskRegExp);
-    if (taskMatch) {
-      core.debug(`Found tasks: ${taskMatch.toString()}`);
-      taskMatch.forEach((task) => tasks.add(task));
-    }
-
     // Retrieve specific bump key words
     const majorMatch = majorRegExp.exec(message);
     if (majorMatch) {
@@ -203,6 +195,21 @@ export async function commitParser(
 
     // Always capitalize commit messages
     message = `${message[0].toUpperCase()}${message.slice(1)}`;
+
+    // Retrieve task information
+    // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
+    const taskMatch = message.match(taskRegExp);
+    if (taskMatch) {
+      const rawTask = taskMatch[0];
+      const task = rawTask.replace('[', '').replace(']', '');
+      core.debug(`Found task: ${rawTask}`);
+      tasks.add(task);
+      message = message.replace(
+        rawTask,
+        `[${task}](${taskBaseUrl || `https://${owner}.atlassian.net/browse`}/${task})`,
+      );
+    }
+
     // Add to global change markdown
     changesMd = `${changesMd}- ${message} - [${sha.substring(
       0,

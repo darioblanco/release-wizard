@@ -46,12 +46,12 @@ exports[`commit render gh squashed commits with scope, PRs and tasks for http://
 "- Set values for staging and production - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:zap: Features**
-- Main commit of my PR (#1716) - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+- Main commit of my PR [JIRA-2772](http://my-task-url/JIRA-2772) (#1716) - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 - Set login endpoint controller - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 - Set expiration of the cookie to the amount of time of the token - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:wrench: Fixes**
-- Set secure and http only options - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+- Set secure and http only options [JIRA-2773](http://my-task-url/JIRA-2773) - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 - Remove joi validation since it does not accept localhost - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:runner: Performance**
@@ -65,12 +65,12 @@ exports[`commit render gh squashed commits with scope, PRs and tasks for undefin
 "- Set values for staging and production - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:zap: Features**
-- Main commit of my PR (#1716) - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+- Main commit of my PR [JIRA-2772](https://theowner.atlassian.net/browse/JIRA-2772) (#1716) - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 - Set login endpoint controller - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 - Set expiration of the cookie to the amount of time of the token - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:wrench: Fixes**
-- Set secure and http only options - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
+- Set secure and http only options [JIRA-2773](https://theowner.atlassian.net/browse/JIRA-2773) - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 - Remove joi validation since it does not accept localhost - [62ec8ea7](https://commiturl)([@darioblanco](https://authorurl))
 
 **:runner: Performance**
