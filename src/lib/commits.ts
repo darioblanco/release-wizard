@@ -144,26 +144,6 @@ export async function commitParser(
     }
     const commit: Commit = { username, userUrl, commitUrl, message, sha };
 
-    // Retrieve PR link information
-    const prMatch = prRegExp.exec(message);
-    if (prMatch) {
-      core.debug(`Found PRs: ${prMatch.toString()}`);
-      prMatch.slice(1).forEach((pr) => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
-    }
-    // Retrieve task information
-    // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
-    const taskMatch = message.match(taskRegExp);
-    if (taskMatch) {
-      core.debug(`Found tasks: ${taskMatch.toString()}`);
-      taskMatch.forEach((task) => tasks.add(task));
-    }
-    // Retrieve specific bump key words
-    const majorMatch = majorRegExp.exec(message);
-    if (majorMatch) {
-      core.debug('MAJOR bump detected');
-      nextVersionType = VersionType.major;
-    }
-
     // Detect if commit is a Github squash. In that case, convert body
     // in multiple single line commits and parse
     if (/\* .*\n/.test(message)) {
@@ -189,13 +169,38 @@ export async function commitParser(
   const formatCommit = (commit: Commit) => {
     const { username, userUrl, sha, commitUrl } = commit;
     let { message } = commit;
+
+    // Retrieve PR link information
+    const prMatch = prRegExp.exec(message);
+    if (prMatch) {
+      core.debug(`Found PRs: ${prMatch.toString()}`);
+      prMatch.slice(1).forEach((pr) => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
+    }
+
+    // Retrieve task information
+    // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
+    const taskMatch = message.match(taskRegExp);
+    if (taskMatch) {
+      core.debug(`Found tasks: ${taskMatch.toString()}`);
+      taskMatch.forEach((task) => tasks.add(task));
+    }
+
+    // Retrieve specific bump key words
+    const majorMatch = majorRegExp.exec(message);
+    if (majorMatch) {
+      core.debug('MAJOR bump detected');
+      nextVersionType = VersionType.major;
+    }
+
     // Only take into account the commit title
     [message] = message.split('\n');
+
     // Detect if commit message has Angular format
     if (/(\w+\([a-zA-Z_-]+\)|\w+|\([a-zA-Z_-]+\)):/.test(message)) {
       // Remove group information for changelog (e.g. messages with categories)
       message = message.split(':')[1].trim();
     }
+
     // Always capitalize commit messages
     message = `${message[0].toUpperCase()}${message.slice(1)}`;
     // Add to global change markdown

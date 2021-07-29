@@ -35,6 +35,7 @@ export async function renderReleaseBody(
   body = body.replace(/\$CHANGES/g, changes);
   body = body.replace(/\$TASKS/g, tasks);
   body = body.replace(/\$PULL_REQUESTS/g, pullRequests);
+  core.setOutput('body', body);
   return body;
 }
 
