@@ -1,5 +1,14 @@
-# .yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
 coverage
 .DS_Store
+
+## Yarn
+package-lock.json
+node_modules/
+yarn-debug.log*
+yarn-error.log*
+.yarn/*
+!.yarn/cache
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
