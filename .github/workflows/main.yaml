@@ -21,6 +21,7 @@ on:
       - 'tests/*'
       - 'tsconfig.json'
       - 'tslint.json'
+  workflow_dispatch:
 
 jobs:
   unit_test:
