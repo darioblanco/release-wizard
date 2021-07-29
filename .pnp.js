@@ -39,7 +39,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@actions/github", "npm:5.0.0"],
             ["@commitlint/cli", "npm:12.1.4"],
             ["@commitlint/config-conventional", "npm:12.1.4"],
-            ["@octokit/types", "npm:6.14.2"],
+            ["@octokit/types", "npm:6.21.1"],
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],
             ["@types/jest", "npm:26.0.23"],
             ["@types/node", "npm:15.6.0"],
@@ -1039,6 +1039,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/openapi-types", "npm:7.0.0"]
           ],
           "linkType": "HARD",
+        }],
+        ["npm:9.1.1", {
+          "packageLocation": "./.yarn/cache/@octokit-openapi-types-npm-9.1.1-c541cbc980-2.zip/node_modules/@octokit/openapi-types/",
+          "packageDependencies": [
+            ["@octokit/openapi-types", "npm:9.1.1"]
+          ],
+          "linkType": "HARD",
         }]
       ]],
       ["@octokit/plugin-paginate-rest", [
@@ -1136,6 +1143,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@octokit/types", "npm:6.14.2"],
             ["@octokit/openapi-types", "npm:7.0.0"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:6.21.1", {
+          "packageLocation": "./.yarn/cache/@octokit-types-npm-6.21.1-0996d4797c-2.zip/node_modules/@octokit/types/",
+          "packageDependencies": [
+            ["@octokit/types", "npm:6.21.1"],
+            ["@octokit/openapi-types", "npm:9.1.1"]
           ],
           "linkType": "HARD",
         }]
@@ -8165,7 +8180,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@actions/github", "npm:5.0.0"],
             ["@commitlint/cli", "npm:12.1.4"],
             ["@commitlint/config-conventional", "npm:12.1.4"],
-            ["@octokit/types", "npm:6.14.2"],
+            ["@octokit/types", "npm:6.21.1"],
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],
             ["@types/jest", "npm:26.0.23"],
             ["@types/node", "npm:15.6.0"],

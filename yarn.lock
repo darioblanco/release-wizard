@@ -876,6 +876,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@octokit/openapi-types@npm:^9.1.1":
+  version: 9.1.1
+  resolution: "@octokit/openapi-types@npm:9.1.1"
+  checksum: 2/8ac3644033d6f220696856cee0928fb4f7b22355c4afe024e0ef79428ed1827c89fb3b6e785cda6076005bd63cf60b3063bdacf67f6f25e4e7076061e5edaf0a
+  languageName: node
+  linkType: hard
+
 "@octokit/plugin-paginate-rest@npm:^2.13.3":
   version: 2.13.3
   resolution: "@octokit/plugin-paginate-rest@npm:2.13.3"
@@ -960,12 +967,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@octokit/types@npm:^6.0.3, @octokit/types@npm:^6.11.0, @octokit/types@npm:^6.14.1, @octokit/types@npm:^6.14.2, @octokit/types@npm:^6.7.1":
+"@octokit/types@npm:^6.0.3, @octokit/types@npm:^6.11.0, @octokit/types@npm:^6.14.1, @octokit/types@npm:^6.7.1":
   version: 6.14.2
   resolution: "@octokit/types@npm:6.14.2"
   dependencies:
     "@octokit/openapi-types": ^7.0.0
   checksum: 2/b717cb855c7ea65b721452e278d6543a0cbe9729f9dc1fa02da93d726202e6526f95f21870ef0c67d7dceeb769e4ff183f650f362aceb6bd6b766caa781ca025
+  languageName: node
+  linkType: hard
+
+"@octokit/types@npm:^6.16.2":
+  version: 6.21.1
+  resolution: "@octokit/types@npm:6.21.1"
+  dependencies:
+    "@octokit/openapi-types": ^9.1.1
+  checksum: 2/77efc7b809bac330b1009be460b484102ff13a82f2fcaff1e30fa8c7f709bde5461914368366470161e89f6b8d3735451fcbb8353a290d9b1100165432ac6ffd
   languageName: node
   linkType: hard
 
@@ -7289,7 +7305,7 @@ fsevents@^2.1.2:
     "@actions/github": ^5.0.0
     "@commitlint/cli": ^12.1.1
     "@commitlint/config-conventional": ^12.1.1
-    "@octokit/types": ^6.14.2
+    "@octokit/types": ^6.16.2
     "@types/eslint-plugin-prettier": ^3.1.0
     "@types/jest": ^26.0.23
     "@types/node": ^15.6.0
