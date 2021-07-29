@@ -29,7 +29,7 @@
     "@types/jest": "^26.0.23",
     "@types/node": "^15.6.0",
     "@types/prettier": "2.2.3",
-    "@types/semver": "^7.3.6",
+    "@types/semver": "^7.3.8",
     "@typescript-eslint/eslint-plugin": "^4.24.0",
     "@typescript-eslint/parser": "^4.24.0",
     "@yarnpkg/pnpify": "^3.0.0-rc.3",
