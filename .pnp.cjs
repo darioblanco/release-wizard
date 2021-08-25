@@ -56,7 +56,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-jest", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:24.4.0"],
             ["eslint-plugin-node", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:11.1.0"],
             ["eslint-plugin-ordered-imports", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:0.5.0"],
-            ["husky", "npm:7.0.1"],
+            ["husky", "npm:7.0.2"],
             ["jest", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.0.6"],
             ["jest-config", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.0.6"],
             ["jest-environment-node", "npm:27.0.6"],
@@ -6056,10 +6056,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["husky", [
-        ["npm:7.0.1", {
-          "packageLocation": "./.yarn/cache/husky-npm-7.0.1-b59747cd86-b2ea1460f1.zip/node_modules/husky/",
+        ["npm:7.0.2", {
+          "packageLocation": "./.yarn/cache/husky-npm-7.0.2-f2a671a0c6-2ccfe6ddc5.zip/node_modules/husky/",
           "packageDependencies": [
-            ["husky", "npm:7.0.1"]
+            ["husky", "npm:7.0.2"]
           ],
           "linkType": "HARD",
         }]
@@ -8973,7 +8973,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-jest", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:24.4.0"],
             ["eslint-plugin-node", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:11.1.0"],
             ["eslint-plugin-ordered-imports", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:0.5.0"],
-            ["husky", "npm:7.0.1"],
+            ["husky", "npm:7.0.2"],
             ["jest", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.0.6"],
             ["jest-config", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.0.6"],
             ["jest-environment-node", "npm:27.0.6"],
