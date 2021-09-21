@@ -41,7 +41,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@commitlint/config-conventional", "npm:13.1.0"],
             ["@octokit/types", "npm:6.21.1"],
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],
-            ["@types/jest", "npm:27.0.1"],
+            ["@types/jest", "npm:27.0.2"],
             ["@types/node", "npm:16.4.7"],
             ["@types/prettier", "npm:2.3.2"],
             ["@types/semver", "npm:7.3.8"],
@@ -2054,10 +2054,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@types/jest", [
-        ["npm:27.0.1", {
-          "packageLocation": "./.yarn/cache/@types-jest-npm-27.0.1-a860f5c797-972aaae341.zip/node_modules/@types/jest/",
+        ["npm:27.0.2", {
+          "packageLocation": "./.yarn/cache/@types-jest-npm-27.0.2-f9ba43c7f9-814ad5f5d2.zip/node_modules/@types/jest/",
           "packageDependencies": [
-            ["@types/jest", "npm:27.0.1"],
+            ["@types/jest", "npm:27.0.2"],
             ["jest-diff", "npm:27.0.6"],
             ["pretty-format", "npm:27.0.6"]
           ],
@@ -9017,7 +9017,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@commitlint/config-conventional", "npm:13.1.0"],
             ["@octokit/types", "npm:6.21.1"],
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],
-            ["@types/jest", "npm:27.0.1"],
+            ["@types/jest", "npm:27.0.2"],
             ["@types/node", "npm:16.4.7"],
             ["@types/prettier", "npm:2.3.2"],
             ["@types/semver", "npm:7.3.8"],
@@ -10066,7 +10066,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", null],
             ["@types/babel-jest", null],
             ["@types/babel__core", null],
-            ["@types/jest", "npm:27.0.1"],
+            ["@types/jest", "npm:27.0.2"],
             ["@types/typescript", null],
             ["babel-jest", null],
             ["bs-logger", "npm:0.2.6"],
