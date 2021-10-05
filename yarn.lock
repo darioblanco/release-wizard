@@ -7570,7 +7570,7 @@ fsevents@^2.3.2:
     ts-loader: ^9.2.6
     tsconfig-paths-webpack-plugin: ^3.5.1
     typescript: ^4.3.5
-    webpack: ^5.56.1
+    webpack: ^5.57.0
     webpack-cli: ^4.8.0
   languageName: unknown
   linkType: soft
@@ -9022,9 +9022,9 @@ typescript@^4.3.5:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.56.1":
-  version: 5.56.1
-  resolution: "webpack@npm:5.56.1"
+"webpack@npm:^5.57.0":
+  version: 5.57.0
+  resolution: "webpack@npm:5.57.0"
   dependencies:
     "@types/eslint-scope": ^3.7.0
     "@types/estree": ^0.0.50
@@ -9055,7 +9055,7 @@ typescript@^4.3.5:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: e5ead673155a5e9667c8ae5413af18739335b067e03ae4e6daefbf9bf648321267abc706d3c756b17c9224c5e31762c0de212e700cca34ab4ee1e069e7806b8a
+  checksum: 06baeca4399326cbb08aa5503b52ff06dbc1311a170597873a11d5b34e362409666f618515ad0c4daf28d9bf0fe5ec43eeffb56273ed550b99d88eb975ab3e21
   languageName: node
   linkType: hard
 
