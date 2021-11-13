@@ -66,7 +66,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["semver", "npm:7.3.5"],
             ["ts-jest", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.0.7"],
             ["ts-loader", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:9.2.6"],
-            ["tsconfig-paths-webpack-plugin", "npm:3.5.1"],
+            ["tsconfig-paths-webpack-plugin", "npm:3.5.2"],
             ["typescript", "patch:typescript@npm%3A4.3.5#~builtin<compat/typescript>::version=4.3.5&hash=d8b4e7"],
             ["webpack", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:5.64.0"],
             ["webpack-cli", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:4.9.1"]
@@ -9186,7 +9186,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["semver", "npm:7.3.5"],
             ["ts-jest", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.0.7"],
             ["ts-loader", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:9.2.6"],
-            ["tsconfig-paths-webpack-plugin", "npm:3.5.1"],
+            ["tsconfig-paths-webpack-plugin", "npm:3.5.2"],
             ["typescript", "patch:typescript@npm%3A4.3.5#~builtin<compat/typescript>::version=4.3.5&hash=d8b4e7"],
             ["webpack", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:5.64.0"],
             ["webpack-cli", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:4.9.1"]
@@ -10338,10 +10338,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["tsconfig-paths-webpack-plugin", [
-        ["npm:3.5.1", {
-          "packageLocation": "./.yarn/cache/tsconfig-paths-webpack-plugin-npm-3.5.1-f1a5ca3b27-86a58fc9ab.zip/node_modules/tsconfig-paths-webpack-plugin/",
+        ["npm:3.5.2", {
+          "packageLocation": "./.yarn/cache/tsconfig-paths-webpack-plugin-npm-3.5.2-7d7e8a5739-e7872f45b1.zip/node_modules/tsconfig-paths-webpack-plugin/",
           "packageDependencies": [
-            ["tsconfig-paths-webpack-plugin", "npm:3.5.1"],
+            ["tsconfig-paths-webpack-plugin", "npm:3.5.2"],
             ["chalk", "npm:4.1.1"],
             ["enhanced-resolve", "npm:5.8.2"],
             ["tsconfig-paths", "npm:3.9.0"]
