@@ -43,7 +43,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],
             ["@types/jest", "npm:27.0.2"],
             ["@types/node", "npm:16.11.7"],
-            ["@types/prettier", "npm:2.4.1"],
+            ["@types/prettier", "npm:2.4.2"],
             ["@types/semver", "npm:7.3.9"],
             ["@typescript-eslint/eslint-plugin", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:5.3.1"],
             ["@typescript-eslint/parser", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:5.3.1"],
@@ -2219,10 +2219,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "HARD",
         }],
-        ["npm:2.4.1", {
-          "packageLocation": "./.yarn/cache/@types-prettier-npm-2.4.1-d83bd651f7-df330c2d6f.zip/node_modules/@types/prettier/",
+        ["npm:2.4.2", {
+          "packageLocation": "./.yarn/cache/@types-prettier-npm-2.4.2-290f200354-76e230b2d1.zip/node_modules/@types/prettier/",
           "packageDependencies": [
-            ["@types/prettier", "npm:2.4.1"]
+            ["@types/prettier", "npm:2.4.2"]
           ],
           "linkType": "HARD",
         }]
@@ -8879,7 +8879,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/__virtual__/pretty-quick-virtual-917b3cc18e/0/cache/pretty-quick-npm-3.1.1-3b4db7dc65-d535500aca.zip/node_modules/pretty-quick/",
           "packageDependencies": [
             ["pretty-quick", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:3.1.1"],
-            ["@types/prettier", "npm:2.4.1"],
+            ["@types/prettier", "npm:2.4.2"],
             ["chalk", "npm:3.0.0"],
             ["execa", "npm:4.1.0"],
             ["find-up", "npm:4.1.0"],
@@ -9163,7 +9163,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],
             ["@types/jest", "npm:27.0.2"],
             ["@types/node", "npm:16.11.7"],
-            ["@types/prettier", "npm:2.4.1"],
+            ["@types/prettier", "npm:2.4.2"],
             ["@types/semver", "npm:7.3.9"],
             ["@typescript-eslint/eslint-plugin", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:5.3.1"],
             ["@typescript-eslint/parser", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:5.3.1"],
