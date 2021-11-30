@@ -3919,12 +3919,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-ordered-imports@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "eslint-plugin-ordered-imports@npm:0.5.0"
+"eslint-plugin-ordered-imports@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "eslint-plugin-ordered-imports@npm:0.6.0"
   peerDependencies:
-    eslint: ^7.0.0
-  checksum: a2987f6c088d88471bffdc8ddb2e48135e5ba004354e0e3c28b13f072ad7a5587b3a5a68b9f68debf9b0f8bc2c89f417c438619509b2b65a67997feb34779437
+    eslint: ^7.0.0 || ^8.0.0
+  checksum: 5faf91110f85ff67f639c13f2063f7aef31322bcf6a1894f850d57edc62ceba7c091a7bf46c7e14123fbe840f62ddc49988a6f0a0af21f8ae4930ee537190816
   languageName: node
   linkType: hard
 
@@ -7668,7 +7668,7 @@ fsevents@^2.3.2:
     eslint-plugin-import: ^2.25.3
     eslint-plugin-jest: ^25.3.0
     eslint-plugin-node: ^11.1.0
-    eslint-plugin-ordered-imports: ^0.5.0
+    eslint-plugin-ordered-imports: ^0.6.0
     husky: ^7.0.4
     jest: ^27.4.1
     jest-config: ^27.4.1
