@@ -64,7 +64,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier-eslint", "npm:13.0.0"],
             ["pretty-quick", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:3.1.2"],
             ["semver", "npm:7.3.5"],
-            ["ts-jest", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.0.7"],
+            ["ts-jest", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.1.1"],
             ["ts-loader", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:9.2.6"],
             ["tsconfig-paths-webpack-plugin", "npm:3.5.2"],
             ["typescript", "patch:typescript@npm%3A4.3.5#~builtin<compat/typescript>::version=4.3.5&hash=d8b4e7"],
@@ -9199,7 +9199,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier-eslint", "npm:13.0.0"],
             ["pretty-quick", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:3.1.2"],
             ["semver", "npm:7.3.5"],
-            ["ts-jest", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.0.7"],
+            ["ts-jest", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.1.1"],
             ["ts-loader", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:9.2.6"],
             ["tsconfig-paths-webpack-plugin", "npm:3.5.2"],
             ["typescript", "patch:typescript@npm%3A4.3.5#~builtin<compat/typescript>::version=4.3.5&hash=d8b4e7"],
@@ -10229,24 +10229,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["ts-jest", [
-        ["npm:27.0.7", {
-          "packageLocation": "./.yarn/cache/ts-jest-npm-27.0.7-ed0add2515-3711361cb5.zip/node_modules/ts-jest/",
+        ["npm:27.1.1", {
+          "packageLocation": "./.yarn/cache/ts-jest-npm-27.1.1-e3e86ec65d-3aea680833.zip/node_modules/ts-jest/",
           "packageDependencies": [
-            ["ts-jest", "npm:27.0.7"]
+            ["ts-jest", "npm:27.1.1"]
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.0.7", {
-          "packageLocation": "./.yarn/__virtual__/ts-jest-virtual-ac86d63636/0/cache/ts-jest-npm-27.0.7-ed0add2515-3711361cb5.zip/node_modules/ts-jest/",
+        ["virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.1.1", {
+          "packageLocation": "./.yarn/__virtual__/ts-jest-virtual-9bb0ae7b6a/0/cache/ts-jest-npm-27.1.1-e3e86ec65d-3aea680833.zip/node_modules/ts-jest/",
           "packageDependencies": [
-            ["ts-jest", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.0.7"],
+            ["ts-jest", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.1.1"],
             ["@babel/core", null],
             ["@types/babel-jest", null],
             ["@types/babel__core", null],
+            ["@types/esbuild", null],
             ["@types/jest", "npm:27.0.3"],
             ["@types/typescript", null],
             ["babel-jest", null],
             ["bs-logger", "npm:0.2.6"],
+            ["esbuild", null],
             ["fast-json-stable-stringify", "npm:2.1.0"],
             ["jest", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.4.3"],
             ["jest-util", "npm:27.0.6"],
@@ -10261,9 +10263,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "@babel/core",
             "@types/babel-jest",
             "@types/babel__core",
+            "@types/esbuild",
             "@types/jest",
             "@types/typescript",
             "babel-jest",
+            "esbuild",
             "jest",
             "typescript"
           ],
