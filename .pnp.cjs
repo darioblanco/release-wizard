@@ -42,7 +42,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/types", "npm:6.21.1"],
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],
             ["@types/jest", "npm:27.0.3"],
-            ["@types/node", "npm:16.11.13"],
+            ["@types/node", "npm:16.11.14"],
             ["@types/prettier", "npm:2.4.2"],
             ["@types/semver", "npm:7.3.9"],
             ["@typescript-eslint/eslint-plugin", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:5.7.0"],
@@ -2185,10 +2185,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "HARD",
         }],
-        ["npm:16.11.13", {
-          "packageLocation": "./.yarn/cache/@types-node-npm-16.11.13-c2e2cce406-7c9d62c024.zip/node_modules/@types/node/",
+        ["npm:16.11.14", {
+          "packageLocation": "./.yarn/cache/@types-node-npm-16.11.14-6c86c6e905-0bd4333fb4.zip/node_modules/@types/node/",
           "packageDependencies": [
-            ["@types/node", "npm:16.11.13"]
+            ["@types/node", "npm:16.11.14"]
           ],
           "linkType": "HARD",
         }]
@@ -9177,7 +9177,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/types", "npm:6.21.1"],
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],
             ["@types/jest", "npm:27.0.3"],
-            ["@types/node", "npm:16.11.13"],
+            ["@types/node", "npm:16.11.14"],
             ["@types/prettier", "npm:2.4.2"],
             ["@types/semver", "npm:7.3.9"],
             ["@typescript-eslint/eslint-plugin", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:5.7.0"],
