@@ -62,7 +62,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest-environment-node", "npm:27.4.4"],
             ["prettier", "npm:2.5.1"],
             ["prettier-eslint", "npm:13.0.0"],
-            ["pretty-quick", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:3.1.2"],
+            ["pretty-quick", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:3.1.3"],
             ["semver", "npm:7.3.5"],
             ["ts-jest", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.1.2"],
             ["ts-loader", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:9.2.6"],
@@ -8883,17 +8883,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["pretty-quick", [
-        ["npm:3.1.2", {
-          "packageLocation": "./.yarn/cache/pretty-quick-npm-3.1.2-6ccebfa5a2-c4b0de1829.zip/node_modules/pretty-quick/",
+        ["npm:3.1.3", {
+          "packageLocation": "./.yarn/cache/pretty-quick-npm-3.1.3-b3fdb9cf9e-28bdc32571.zip/node_modules/pretty-quick/",
           "packageDependencies": [
-            ["pretty-quick", "npm:3.1.2"]
+            ["pretty-quick", "npm:3.1.3"]
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:3.1.2", {
-          "packageLocation": "./.yarn/__virtual__/pretty-quick-virtual-c13df08ed5/0/cache/pretty-quick-npm-3.1.2-6ccebfa5a2-c4b0de1829.zip/node_modules/pretty-quick/",
+        ["virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:3.1.3", {
+          "packageLocation": "./.yarn/__virtual__/pretty-quick-virtual-662b7f621b/0/cache/pretty-quick-npm-3.1.3-b3fdb9cf9e-28bdc32571.zip/node_modules/pretty-quick/",
           "packageDependencies": [
-            ["pretty-quick", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:3.1.2"],
+            ["pretty-quick", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:3.1.3"],
             ["@types/prettier", "npm:2.4.2"],
             ["chalk", "npm:3.0.0"],
             ["execa", "npm:4.1.0"],
@@ -9197,7 +9197,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest-environment-node", "npm:27.4.4"],
             ["prettier", "npm:2.5.1"],
             ["prettier-eslint", "npm:13.0.0"],
-            ["pretty-quick", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:3.1.2"],
+            ["pretty-quick", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:3.1.3"],
             ["semver", "npm:7.3.5"],
             ["ts-jest", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:27.1.2"],
             ["ts-loader", "virtual:db4d415374b224ad6d6a966873ac58f8276987fb8d089f500554b9dfdfc6d807d96a834b49e877e0a3d415e44675b9c630c851a488fc00a6041a5d4ed4f00833#npm:9.2.6"],
