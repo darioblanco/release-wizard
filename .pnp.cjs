@@ -37,7 +37,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@actions/core", "npm:1.4.0"],
             ["@actions/github", "npm:5.0.0"],
-            ["@commitlint/cli", "npm:16.0.0"],
+            ["@commitlint/cli", "npm:16.0.1"],
             ["@commitlint/config-conventional", "npm:16.0.0"],
             ["@octokit/types", "npm:6.21.1"],
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],
@@ -1076,10 +1076,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@commitlint/cli", [
-        ["npm:16.0.0", {
-          "packageLocation": "./.yarn/cache/@commitlint-cli-npm-16.0.0-6bdf4d8543-203d1a02bd.zip/node_modules/@commitlint/cli/",
+        ["npm:16.0.1", {
+          "packageLocation": "./.yarn/cache/@commitlint-cli-npm-16.0.1-a43d26e49a-a4ec182911.zip/node_modules/@commitlint/cli/",
           "packageDependencies": [
-            ["@commitlint/cli", "npm:16.0.0"],
+            ["@commitlint/cli", "npm:16.0.1"],
             ["@commitlint/format", "npm:16.0.0"],
             ["@commitlint/lint", "npm:16.0.0"],
             ["@commitlint/load", "npm:16.0.0"],
@@ -9242,7 +9242,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["release-wizard", "workspace:."],
             ["@actions/core", "npm:1.4.0"],
             ["@actions/github", "npm:5.0.0"],
-            ["@commitlint/cli", "npm:16.0.0"],
+            ["@commitlint/cli", "npm:16.0.1"],
             ["@commitlint/config-conventional", "npm:16.0.0"],
             ["@octokit/types", "npm:6.21.1"],
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],
