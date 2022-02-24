@@ -27,7 +27,7 @@
     "@commitlint/config-conventional": "^16.2.1",
     "@types/eslint-plugin-prettier": "^3.1.0",
     "@types/jest": "^27.4.1",
-    "@types/node": "^16.11.25",
+    "@types/node": "^16.11.26",
     "@types/prettier": "2.4.4",
     "@types/semver": "^7.3.9",
     "@typescript-eslint/eslint-plugin": "^5.12.1",
