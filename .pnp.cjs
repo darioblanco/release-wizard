@@ -35,7 +35,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {
           "packageLocation": "./",
           "packageDependencies": [
-            ["@actions/core", "npm:1.4.0"],
+            ["@actions/core", "npm:1.9.0"],
             ["@actions/github", "npm:5.0.0"],
             ["@commitlint/cli", "npm:16.2.1"],
             ["@commitlint/config-conventional", "npm:16.2.1"],
@@ -75,10 +75,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@actions/core", [
-        ["npm:1.4.0", {
-          "packageLocation": "./.yarn/cache/@actions-core-npm-1.4.0-82fe1c0286-bdad9fedeb.zip/node_modules/@actions/core/",
+        ["npm:1.9.0", {
+          "packageLocation": "./.yarn/cache/@actions-core-npm-1.9.0-39abc3e88d-801dde1da9.zip/node_modules/@actions/core/",
           "packageDependencies": [
-            ["@actions/core", "npm:1.4.0"]
+            ["@actions/core", "npm:1.9.0"],
+            ["@actions/http-client", "npm:2.0.1"]
           ],
           "linkType": "HARD",
         }]
@@ -101,6 +102,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@actions-http-client-npm-1.0.11-f7fe88143c-2c72834ec3.zip/node_modules/@actions/http-client/",
           "packageDependencies": [
             ["@actions/http-client", "npm:1.0.11"],
+            ["tunnel", "npm:0.0.6"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:2.0.1", {
+          "packageLocation": "./.yarn/cache/@actions-http-client-npm-2.0.1-8d69921341-799ec3df91.zip/node_modules/@actions/http-client/",
+          "packageDependencies": [
+            ["@actions/http-client", "npm:2.0.1"],
             ["tunnel", "npm:0.0.6"]
           ],
           "linkType": "HARD",
@@ -9492,7 +9501,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",
           "packageDependencies": [
             ["release-wizard", "workspace:."],
-            ["@actions/core", "npm:1.4.0"],
+            ["@actions/core", "npm:1.9.0"],
             ["@actions/github", "npm:5.0.0"],
             ["@commitlint/cli", "npm:16.2.1"],
             ["@commitlint/config-conventional", "npm:16.2.1"],
