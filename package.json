@@ -19,7 +19,7 @@
   "dependencies": {
     "@actions/core": "^1.4.0",
     "@actions/github": "^5.0.0",
-    "@octokit/types": "^6.21.1",
+    "@octokit/types": "^6.37.0",
     "semver": "^7.3.5"
   },
   "devDependencies": {

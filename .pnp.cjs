@@ -39,7 +39,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@actions/github", "npm:5.0.0"],
             ["@commitlint/cli", "npm:16.2.1"],
             ["@commitlint/config-conventional", "npm:16.2.1"],
-            ["@octokit/types", "npm:6.21.1"],
+            ["@octokit/types", "npm:6.37.0"],
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],
             ["@types/jest", "npm:27.4.1"],
             ["@types/node", "npm:16.11.26"],
@@ -1942,17 +1942,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@octokit/openapi-types", [
+        ["npm:12.4.0", {
+          "packageLocation": "./.yarn/cache/@octokit-openapi-types-npm-12.4.0-cb5cc57f10-80c45bb8a6.zip/node_modules/@octokit/openapi-types/",
+          "packageDependencies": [
+            ["@octokit/openapi-types", "npm:12.4.0"]
+          ],
+          "linkType": "HARD",
+        }],
         ["npm:7.0.0", {
           "packageLocation": "./.yarn/cache/@octokit-openapi-types-npm-7.0.0-13d5739029-8d31edad70.zip/node_modules/@octokit/openapi-types/",
           "packageDependencies": [
             ["@octokit/openapi-types", "npm:7.0.0"]
-          ],
-          "linkType": "HARD",
-        }],
-        ["npm:9.1.1", {
-          "packageLocation": "./.yarn/cache/@octokit-openapi-types-npm-9.1.1-c541cbc980-e6ab01cc3f.zip/node_modules/@octokit/openapi-types/",
-          "packageDependencies": [
-            ["@octokit/openapi-types", "npm:9.1.1"]
           ],
           "linkType": "HARD",
         }]
@@ -2073,11 +2073,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "HARD",
         }],
-        ["npm:6.21.1", {
-          "packageLocation": "./.yarn/cache/@octokit-types-npm-6.21.1-0996d4797c-7178a2b057.zip/node_modules/@octokit/types/",
+        ["npm:6.37.0", {
+          "packageLocation": "./.yarn/cache/@octokit-types-npm-6.37.0-236ca6b745-7de86fbe0d.zip/node_modules/@octokit/types/",
           "packageDependencies": [
-            ["@octokit/types", "npm:6.21.1"],
-            ["@octokit/openapi-types", "npm:9.1.1"]
+            ["@octokit/types", "npm:6.37.0"],
+            ["@octokit/openapi-types", "npm:12.4.0"]
           ],
           "linkType": "HARD",
         }]
@@ -9496,7 +9496,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@actions/github", "npm:5.0.0"],
             ["@commitlint/cli", "npm:16.2.1"],
             ["@commitlint/config-conventional", "npm:16.2.1"],
-            ["@octokit/types", "npm:6.21.1"],
+            ["@octokit/types", "npm:6.37.0"],
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],
             ["@types/jest", "npm:27.4.1"],
             ["@types/node", "npm:16.11.26"],

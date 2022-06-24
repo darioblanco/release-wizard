@@ -1455,17 +1455,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@octokit/openapi-types@npm:^12.4.0":
+  version: 12.4.0
+  resolution: "@octokit/openapi-types@npm:12.4.0"
+  checksum: 80c45bb8a63acd58c752b366915ed34c79948722eaf8bb018845949b3871ba3eaa7b8f629f4cb0c9e7eb564225a85116ffd6ae470c1cc17683bf707ae361c200
+  languageName: node
+  linkType: hard
+
 "@octokit/openapi-types@npm:^7.0.0":
   version: 7.0.0
   resolution: "@octokit/openapi-types@npm:7.0.0"
   checksum: 8d31edad70a913c5695c05f5f0b5b609b08f6207904bed5b4f27825bb2e7245579101cb85a42f31f6e11761fce6cd2dcaad8559c7fa75c0eec089e08a00e38a9
-  languageName: node
-  linkType: hard
-
-"@octokit/openapi-types@npm:^9.1.1":
-  version: 9.1.1
-  resolution: "@octokit/openapi-types@npm:9.1.1"
-  checksum: e6ab01cc3f2bbc34a448bd7fe5fdcdbb548a0ededdebdb5f8ab7c63984b1534d3caa28a3ce1239f08e877b031f069cb0955774ae7c6a1308ca0305a25f68d7bc
   languageName: node
   linkType: hard
 
@@ -1562,12 +1562,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@octokit/types@npm:^6.21.1":
-  version: 6.21.1
-  resolution: "@octokit/types@npm:6.21.1"
+"@octokit/types@npm:^6.37.0":
+  version: 6.37.0
+  resolution: "@octokit/types@npm:6.37.0"
   dependencies:
-    "@octokit/openapi-types": ^9.1.1
-  checksum: 7178a2b057e85c7e3ba9f127a180356e2f9ced1851f172085d4157fa9b5781edfdf422f1aa1421e5e4e897ddd89b041972b5487e1a4a682ff76de7af76cd9264
+    "@octokit/openapi-types": ^12.4.0
+  checksum: 7de86fbe0de8c3ec72cdf0b95f6abb1f088d5bc76c8a130ec2d139897470821559726b092399f3dd0a3540d97393dd2088a6c12778411129d0879781f314445d
   languageName: node
   linkType: hard
 
@@ -7923,7 +7923,7 @@ fsevents@^2.3.2:
     "@actions/github": ^5.0.0
     "@commitlint/cli": ^16.2.1
     "@commitlint/config-conventional": ^16.2.1
-    "@octokit/types": ^6.21.1
+    "@octokit/types": ^6.37.0
     "@types/eslint-plugin-prettier": ^3.1.0
     "@types/jest": ^27.4.1
     "@types/node": ^16.11.26
