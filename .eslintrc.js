@@ -11,20 +11,18 @@ module.exports = {
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
   },
-  plugins: ['@typescript-eslint', 'jest', 'ordered-imports'],
+  plugins: ['@typescript-eslint', 'jest'],
   extends: [
-    'plugin:eslint-comments/recommended',
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'prettier',
     'plugin:jest/recommended',
     'plugin:node/recommended',
+    'prettier',
   ],
-  ignorePatterns: ['.yarn', 'dist', 'coverage', 'jest.config.js', 'webpack.config.js'],
   rules: {
     'object-curly-spacing': [2, 'always'],
     '@typescript-eslint/interface-name-prefix': 'off',
@@ -35,24 +33,6 @@ module.exports = {
     'import/no-unresolved': 'off',
     'node/no-unsupported-features/es-syntax': 'off',
     'node/no-missing-import': 'off',
-    'ordered-imports/ordered-imports': [
-      'error',
-      {
-        'declaration-ordering': [
-          'type',
-          {
-            ordering: ['side-effect', 'default', 'namespace', 'destructured'],
-            secondaryOrdering: ['source', 'case-insensitive'],
-          },
-        ],
-        'specifier-ordering': 'lowercase-last',
-        'group-ordering': [
-          { name: 'internal libraries', match: '^@darioblanco-?.*/', order: 20 },
-          { name: 'parent directories', match: '^\\.\\.?', order: 30 },
-          { name: 'third-party', match: '.*', order: 10 },
-        ],
-      },
-    ],
     'one-var': 'off',
     semi: ['error', 'always'],
   },

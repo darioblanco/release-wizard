@@ -1,14 +1,10 @@
 import { getBooleanInput, getInput, setFailed } from '@actions/core';
 
-import { commitParser } from '@darioblanco/release-wizard/lib/commits';
-import {
-  createGitTag,
-  createGithubRelease,
-  renderReleaseBody,
-} from '@darioblanco/release-wizard/lib/release';
-import { bumpVersion, retrieveLastReleasedVersion } from '@darioblanco/release-wizard/lib/version';
-import { run } from '@darioblanco/release-wizard/main';
-import { VersionType } from '@darioblanco/release-wizard/types';
+import { commitParser } from '@/lib/commits';
+import { createGitTag, createGithubRelease, renderReleaseBody } from '@/lib/release';
+import { bumpVersion, retrieveLastReleasedVersion } from '@/lib/version';
+import { run } from '@/main';
+import { VersionType } from '@/types';
 
 jest.mock('@actions/core');
 jest.mock('@actions/github', () => ({
@@ -21,9 +17,9 @@ jest.mock('@actions/github', () => ({
   },
   getOctokit: jest.fn(),
 }));
-jest.mock('@darioblanco/release-wizard/lib/commits');
-jest.mock('@darioblanco/release-wizard/lib/release');
-jest.mock('@darioblanco/release-wizard/lib/version');
+jest.mock('@/lib/commits');
+jest.mock('@/lib/release');
+jest.mock('@/lib/version');
 
 describe('run', () => {
   // Required input values

@@ -2,11 +2,7 @@ import * as fs from 'fs';
 import { setOutput } from '@actions/core';
 import { getOctokit } from '@actions/github';
 
-import {
-  createGitTag,
-  createGithubRelease,
-  renderReleaseBody,
-} from '@darioblanco/release-wizard/lib/release';
+import { createGitTag, createGithubRelease, renderReleaseBody } from '@/lib/release';
 
 jest.mock('@actions/github', () => ({
   context: {

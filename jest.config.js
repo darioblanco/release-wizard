@@ -14,8 +14,8 @@ module.exports = {
   },
   moduleFileExtensions: ['js', 'ts'],
   moduleNameMapper: {
-    '^@darioblanco/release-wizard/(.*)$': '<rootDir>/src/$1',
-    '^@darioblanco/release-wizard/test/(.*)$': '<rootDir>/test/$1',
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^#/test/(.*)$': '<rootDir>/test/$1',
   },
   preset: 'ts-jest',
   rootDir: path.resolve(__dirname),

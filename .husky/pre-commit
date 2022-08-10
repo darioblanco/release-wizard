@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn pretty-quick --staged
-yarn build && git add dist/run.js
+npm run build && git add dist
+npx lint-staged

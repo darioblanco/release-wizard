@@ -6,16 +6,13 @@
     "moduleResolution": "node",
     "noImplicitAny": false,
     "paths": {
-      "@darioblanco/release-wizard/*": ["./src/*"],
-      "@darioblanco/release-wizard/test/*": ["./test/*"]
+      "@/*": ["./src/*"],
+      "#/test/*": ["./test/*"]
     },
     "rootDir": ".",
     "strict": true,
-    "target": "es2017",
+    "target": "es2017"
   },
-  "include": [
-    "src/**/*.ts",
-    "test/**/*.ts",
-  ],
+  "include": ["**/*.ts", "**/*.js", ".eslintrc.js"],
   "types": ["jest", "node"]
 }

@@ -1,8 +1,8 @@
 import { setOutput } from '@actions/core';
 import { getOctokit } from '@actions/github';
 
-import { commitParser } from '@darioblanco/release-wizard/lib/commits';
-import { VersionType } from '@darioblanco/release-wizard/types';
+import { commitParser } from '@/lib/commits';
+import { VersionType } from '@/types';
 
 jest.mock('@actions/github', () => ({
   context: {

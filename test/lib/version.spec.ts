@@ -1,8 +1,8 @@
 import { setOutput } from '@actions/core';
 import { getOctokit } from '@actions/github';
 
-import { bumpVersion, retrieveLastReleasedVersion } from '@darioblanco/release-wizard/lib/version';
-import { VersionType } from '@darioblanco/release-wizard/types';
+import { bumpVersion, retrieveLastReleasedVersion } from '@/lib/version';
+import { VersionType } from '@/types';
 
 jest.mock('@actions/github', () => ({
   context: {

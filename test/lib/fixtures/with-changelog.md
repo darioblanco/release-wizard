@@ -15,6 +15,7 @@ $PULL_REQUESTS
 ## Checklist
 
 - [ ] Check 1
+
   - [ ] Check 1.2
 
 - [ ] Check 2
