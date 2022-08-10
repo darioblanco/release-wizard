@@ -32,7 +32,7 @@
     "@types/semver": "^7.3.9",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",
-    "@yarnpkg/pnpify": "^3.1.1",
+    "@yarnpkg/pnpify": "^3.1.4",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.4.0",
     "eslint-import-resolver-node": "^0.3.6",
