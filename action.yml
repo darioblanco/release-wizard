@@ -71,7 +71,7 @@ inputs:
   withV:
     description: 'Prefix the calculated version with `v`'
     required: false
-    default: 'false'
+    default: 'true'
 outputs:
   change_type:
     description: 'The semantic type of change: major, minor, patch or prerelease'

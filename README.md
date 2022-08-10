@@ -9,7 +9,10 @@ and a continuation of [MOU Release](https://github.com/minddocdev/mou-release-ac
 Release Drafter is awesome, but it lacks support for monorepos or the JavaScript ecosystem, which
 usually stores different `package.json` in a single repository and development teams might want
 to release such packages independently. In addition, if you want to generate Changelogs for
-different areas of your repository, you will need to use a PR autolabeler.
+different areas of your repository, you will need to use a PR autolabeler. In addition, even
+if you do not use a monorepo and have a `rebase and merge` strategy, or just want to categorize
+your types of development efforts based on conventional commits, this project could fit your
+use case.
 
 Release Wizard tries to cover a few problems for monorepos or repositories with more than one
 application (like it is usual to see in JavaScript with backend and frontend code):
@@ -42,7 +45,7 @@ name: 'myrelease'
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   bump:
     runs-on: ubuntu-latest
@@ -133,10 +136,10 @@ jobs:
 | releaseName     | no       | `<app?> <$version>`                             | The title of the release                                                                                                                                                                                                                                                              |
 | releaseTag      | no       | `<app?><$appTagSeparator?><withV?v:><$version>` | The git tag that belongs to the release.                                                                                                                                                                                                                                              |
 | taskBaseUrl     | no       | `https://<mygithuborg>.atlassian.net/browse`    | The base url to append for a detected task (do not set a trailing `/`). By default, it will create a url based on your Github organization.                                                                                                                                           |
-| taskPrefix      | no       | `JIRA-`                                         | The prefix that identifies task ids in the commits.                                                                                                                                                                                                                                   |
+| taskPrefix      | no       | `JIR-`                                          | The prefix that identifies task ids in the commits.                                                                                                                                                                                                                                   |
 | templatePath    | no       | `release-wizard.md`                             | The path for the Markdown template that will be used to create the release body, relative to `.github/`.                                                                                                                                                                              |
 | token           | yes      |                                                 | The token to access Github's API.                                                                                                                                                                                                                                                     |
-| withV           | no       | `false`                                         | Prefix the calculated version with `v`                                                                                                                                                                                                                                                |
+| withV           | no       | `true`                                          | Prefix the calculated version with `v`                                                                                                                                                                                                                                                |
 
 ### Outputs
 

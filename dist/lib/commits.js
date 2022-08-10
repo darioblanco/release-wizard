@@ -27,46 +27,46 @@ exports.commitParser = void 0;
 const core = __importStar(require("@actions/core"));
 const github = __importStar(require("@actions/github"));
 const types_1 = require("../types");
-async function commitParser(token, baseRef, taskPrefix = 'JIRA-', taskBaseUrl, commitScope) {
+async function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitScope) {
     const commitGroups = {
         feat: {
-            title: '**:zap: Features**',
+            title: '## **:zap: Features**',
             commits: [],
         },
         fix: {
-            title: '**:wrench: Fixes**',
+            title: '## **:wrench: Fixes**',
             commits: [],
         },
         perf: {
-            title: '**:runner: Performance**',
+            title: '## **:runner: Performance**',
             commits: [],
         },
         docs: {
-            title: '**:books: Documentation**',
+            title: '## **:books: Documentation**',
             commits: [],
         },
         style: {
-            title: '**:nail_care: Style**',
+            title: '## **:nail_care: Style**',
             commits: [],
         },
         refactor: {
-            title: '**:mountain: Refactors**',
+            title: '## **:mountain: Refactors**',
             commits: [],
         },
         test: {
-            title: '**:traffic_light: Tests**',
+            title: '## **:traffic_light: Tests**',
             commits: [],
         },
         chore: {
-            title: '**:construction: Maintenance**',
+            title: '## **:construction: Maintenance**',
             commits: [],
         },
         build: {
-            title: '**:construction_worker: Build**',
+            title: '## **:construction_worker: Build**',
             commits: [],
         },
         ci: {
-            title: '**:runner: CI**',
+            title: '## **:traffic_light: CI**',
             commits: [],
         },
     };
