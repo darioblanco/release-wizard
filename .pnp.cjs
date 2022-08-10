@@ -36,7 +36,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",
           "packageDependencies": [
             ["@actions/core", "npm:1.4.0"],
-            ["@actions/github", "npm:5.0.0"],
+            ["@actions/github", "npm:5.0.3"],
             ["@commitlint/cli", "npm:16.2.1"],
             ["@commitlint/config-conventional", "npm:16.2.1"],
             ["@octokit/types", "npm:6.21.1"],
@@ -84,23 +84,23 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@actions/github", [
-        ["npm:5.0.0", {
-          "packageLocation": "./.yarn/cache/@actions-github-npm-5.0.0-903c87c756-d107bca856.zip/node_modules/@actions/github/",
+        ["npm:5.0.3", {
+          "packageLocation": "./.yarn/cache/@actions-github-npm-5.0.3-057d4f5b0e-1d8e8c5c35.zip/node_modules/@actions/github/",
           "packageDependencies": [
-            ["@actions/github", "npm:5.0.0"],
-            ["@actions/http-client", "npm:1.0.11"],
-            ["@octokit/core", "npm:3.4.0"],
-            ["@octokit/plugin-paginate-rest", "virtual:903c87c756ff376993db7d0e5ac595612aee1f0826ca5f6d69a72b53e5fb45e6f84b226ae6952ecc8230bec80c0bcf90f41589a458e0189d0a6908414588bea6#npm:2.13.3"],
-            ["@octokit/plugin-rest-endpoint-methods", "virtual:903c87c756ff376993db7d0e5ac595612aee1f0826ca5f6d69a72b53e5fb45e6f84b226ae6952ecc8230bec80c0bcf90f41589a458e0189d0a6908414588bea6#npm:5.1.1"]
+            ["@actions/github", "npm:5.0.3"],
+            ["@actions/http-client", "npm:2.0.1"],
+            ["@octokit/core", "npm:3.6.0"],
+            ["@octokit/plugin-paginate-rest", "virtual:057d4f5b0e1773b88fee327527bda94035e77b017881da172cb09d0636bf02db237310717fb3462f4fc79ee5bdd6985db064d043ccf0e292ea2a319fd09fd7c0#npm:2.21.3"],
+            ["@octokit/plugin-rest-endpoint-methods", "virtual:057d4f5b0e1773b88fee327527bda94035e77b017881da172cb09d0636bf02db237310717fb3462f4fc79ee5bdd6985db064d043ccf0e292ea2a319fd09fd7c0#npm:5.16.2"]
           ],
           "linkType": "HARD",
         }]
       ]],
       ["@actions/http-client", [
-        ["npm:1.0.11", {
-          "packageLocation": "./.yarn/cache/@actions-http-client-npm-1.0.11-f7fe88143c-2c72834ec3.zip/node_modules/@actions/http-client/",
+        ["npm:2.0.1", {
+          "packageLocation": "./.yarn/cache/@actions-http-client-npm-2.0.1-8d69921341-799ec3df91.zip/node_modules/@actions/http-client/",
           "packageDependencies": [
-            ["@actions/http-client", "npm:1.0.11"],
+            ["@actions/http-client", "npm:2.0.1"],
             ["tunnel", "npm:0.0.6"]
           ],
           "linkType": "HARD",
@@ -1892,13 +1892,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@octokit/core", [
-        ["npm:3.4.0", {
-          "packageLocation": "./.yarn/cache/@octokit-core-npm-3.4.0-0e242eba8e-162102ae98.zip/node_modules/@octokit/core/",
+        ["npm:3.6.0", {
+          "packageLocation": "./.yarn/cache/@octokit-core-npm-3.6.0-1273c50268-f811601290.zip/node_modules/@octokit/core/",
           "packageDependencies": [
-            ["@octokit/core", "npm:3.4.0"],
+            ["@octokit/core", "npm:3.6.0"],
             ["@octokit/auth-token", "npm:2.4.5"],
             ["@octokit/graphql", "npm:4.6.2"],
-            ["@octokit/request", "npm:5.4.15"],
+            ["@octokit/request", "npm:5.6.3"],
             ["@octokit/request-error", "npm:2.0.5"],
             ["@octokit/types", "npm:6.14.2"],
             ["before-after-hook", "npm:2.2.1"],
@@ -1942,6 +1942,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@octokit/openapi-types", [
+        ["npm:12.11.0", {
+          "packageLocation": "./.yarn/cache/@octokit-openapi-types-npm-12.11.0-cc40f04bc8-8a7d4bd628.zip/node_modules/@octokit/openapi-types/",
+          "packageDependencies": [
+            ["@octokit/openapi-types", "npm:12.11.0"]
+          ],
+          "linkType": "HARD",
+        }],
         ["npm:7.0.0", {
           "packageLocation": "./.yarn/cache/@octokit-openapi-types-npm-7.0.0-13d5739029-8d31edad70.zip/node_modules/@octokit/openapi-types/",
           "packageDependencies": [
@@ -1958,19 +1965,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@octokit/plugin-paginate-rest", [
-        ["npm:2.13.3", {
-          "packageLocation": "./.yarn/cache/@octokit-plugin-paginate-rest-npm-2.13.3-1ccb944a93-68d99a66e5.zip/node_modules/@octokit/plugin-paginate-rest/",
+        ["npm:2.21.3", {
+          "packageLocation": "./.yarn/cache/@octokit-plugin-paginate-rest-npm-2.21.3-82d2ad1bba-acf31de2ba.zip/node_modules/@octokit/plugin-paginate-rest/",
           "packageDependencies": [
-            ["@octokit/plugin-paginate-rest", "npm:2.13.3"]
+            ["@octokit/plugin-paginate-rest", "npm:2.21.3"]
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:903c87c756ff376993db7d0e5ac595612aee1f0826ca5f6d69a72b53e5fb45e6f84b226ae6952ecc8230bec80c0bcf90f41589a458e0189d0a6908414588bea6#npm:2.13.3", {
-          "packageLocation": "./.yarn/__virtual__/@octokit-plugin-paginate-rest-virtual-7ae238d462/0/cache/@octokit-plugin-paginate-rest-npm-2.13.3-1ccb944a93-68d99a66e5.zip/node_modules/@octokit/plugin-paginate-rest/",
+        ["virtual:057d4f5b0e1773b88fee327527bda94035e77b017881da172cb09d0636bf02db237310717fb3462f4fc79ee5bdd6985db064d043ccf0e292ea2a319fd09fd7c0#npm:2.21.3", {
+          "packageLocation": "./.yarn/__virtual__/@octokit-plugin-paginate-rest-virtual-1eb2c2572e/0/cache/@octokit-plugin-paginate-rest-npm-2.21.3-82d2ad1bba-acf31de2ba.zip/node_modules/@octokit/plugin-paginate-rest/",
           "packageDependencies": [
-            ["@octokit/plugin-paginate-rest", "virtual:903c87c756ff376993db7d0e5ac595612aee1f0826ca5f6d69a72b53e5fb45e6f84b226ae6952ecc8230bec80c0bcf90f41589a458e0189d0a6908414588bea6#npm:2.13.3"],
-            ["@octokit/core", "npm:3.4.0"],
-            ["@octokit/types", "npm:6.14.2"],
+            ["@octokit/plugin-paginate-rest", "virtual:057d4f5b0e1773b88fee327527bda94035e77b017881da172cb09d0636bf02db237310717fb3462f4fc79ee5bdd6985db064d043ccf0e292ea2a319fd09fd7c0#npm:2.21.3"],
+            ["@octokit/core", "npm:3.6.0"],
+            ["@octokit/types", "npm:6.41.0"],
             ["@types/octokit__core", null]
           ],
           "packagePeers": [
@@ -1981,19 +1988,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@octokit/plugin-rest-endpoint-methods", [
-        ["npm:5.1.1", {
-          "packageLocation": "./.yarn/cache/@octokit-plugin-rest-endpoint-methods-npm-5.1.1-7ef83c5a69-0fb5d9762d.zip/node_modules/@octokit/plugin-rest-endpoint-methods/",
+        ["npm:5.16.2", {
+          "packageLocation": "./.yarn/cache/@octokit-plugin-rest-endpoint-methods-npm-5.16.2-f54316c392-30fcc50c33.zip/node_modules/@octokit/plugin-rest-endpoint-methods/",
           "packageDependencies": [
-            ["@octokit/plugin-rest-endpoint-methods", "npm:5.1.1"]
+            ["@octokit/plugin-rest-endpoint-methods", "npm:5.16.2"]
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:903c87c756ff376993db7d0e5ac595612aee1f0826ca5f6d69a72b53e5fb45e6f84b226ae6952ecc8230bec80c0bcf90f41589a458e0189d0a6908414588bea6#npm:5.1.1", {
-          "packageLocation": "./.yarn/__virtual__/@octokit-plugin-rest-endpoint-methods-virtual-3f453229e8/0/cache/@octokit-plugin-rest-endpoint-methods-npm-5.1.1-7ef83c5a69-0fb5d9762d.zip/node_modules/@octokit/plugin-rest-endpoint-methods/",
+        ["virtual:057d4f5b0e1773b88fee327527bda94035e77b017881da172cb09d0636bf02db237310717fb3462f4fc79ee5bdd6985db064d043ccf0e292ea2a319fd09fd7c0#npm:5.16.2", {
+          "packageLocation": "./.yarn/__virtual__/@octokit-plugin-rest-endpoint-methods-virtual-e16b7d01e5/0/cache/@octokit-plugin-rest-endpoint-methods-npm-5.16.2-f54316c392-30fcc50c33.zip/node_modules/@octokit/plugin-rest-endpoint-methods/",
           "packageDependencies": [
-            ["@octokit/plugin-rest-endpoint-methods", "virtual:903c87c756ff376993db7d0e5ac595612aee1f0826ca5f6d69a72b53e5fb45e6f84b226ae6952ecc8230bec80c0bcf90f41589a458e0189d0a6908414588bea6#npm:5.1.1"],
-            ["@octokit/core", "npm:3.4.0"],
-            ["@octokit/types", "npm:6.14.2"],
+            ["@octokit/plugin-rest-endpoint-methods", "virtual:057d4f5b0e1773b88fee327527bda94035e77b017881da172cb09d0636bf02db237310717fb3462f4fc79ee5bdd6985db064d043ccf0e292ea2a319fd09fd7c0#npm:5.16.2"],
+            ["@octokit/core", "npm:3.6.0"],
+            ["@octokit/types", "npm:6.41.0"],
             ["@types/octokit__core", null],
             ["deprecation", "npm:2.3.1"]
           ],
@@ -2020,15 +2027,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "HARD",
         }],
-        ["npm:5.4.15", {
-          "packageLocation": "./.yarn/cache/@octokit-request-npm-5.4.15-2cd9523802-31114ccce7.zip/node_modules/@octokit/request/",
+        ["npm:5.6.3", {
+          "packageLocation": "./.yarn/cache/@octokit-request-npm-5.6.3-25a5f5382d-c0b4542eb4.zip/node_modules/@octokit/request/",
           "packageDependencies": [
-            ["@octokit/request", "npm:5.4.15"],
+            ["@octokit/request", "npm:5.6.3"],
             ["@octokit/endpoint", "npm:6.0.11"],
-            ["@octokit/request-error", "npm:2.0.5"],
-            ["@octokit/types", "npm:6.14.2"],
+            ["@octokit/request-error", "npm:2.1.0"],
+            ["@octokit/types", "npm:6.41.0"],
             ["is-plain-object", "npm:5.0.0"],
-            ["node-fetch", "npm:2.6.1"],
+            ["node-fetch", "virtual:25a5f5382d53dbf298bf7a1191760bc2e0a523a619eeb0e667b99a8649e8ad183f9e2e0b45f6fb831b92f4078b61622aa567cf79565f6aa5af9597e3c84864f6#npm:2.6.7"],
             ["universal-user-agent", "npm:6.0.0"]
           ],
           "linkType": "HARD",
@@ -2049,6 +2056,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@octokit-request-error-npm-2.0.5-cfd366d8eb-61aef8e3c4.zip/node_modules/@octokit/request-error/",
           "packageDependencies": [
             ["@octokit/request-error", "npm:2.0.5"],
+            ["@octokit/types", "npm:6.14.2"],
+            ["deprecation", "npm:2.3.1"],
+            ["once", "npm:1.4.0"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:2.1.0", {
+          "packageLocation": "./.yarn/cache/@octokit-request-error-npm-2.1.0-51ac624306-baec2b5700.zip/node_modules/@octokit/request-error/",
+          "packageDependencies": [
+            ["@octokit/request-error", "npm:2.1.0"],
             ["@octokit/types", "npm:6.14.2"],
             ["deprecation", "npm:2.3.1"],
             ["once", "npm:1.4.0"]
@@ -2078,6 +2095,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@octokit/types", "npm:6.21.1"],
             ["@octokit/openapi-types", "npm:9.1.1"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:6.41.0", {
+          "packageLocation": "./.yarn/cache/@octokit-types-npm-6.41.0-5788f32962-fd6f75e0b1.zip/node_modules/@octokit/types/",
+          "packageDependencies": [
+            ["@octokit/types", "npm:6.41.0"],
+            ["@octokit/openapi-types", "npm:12.11.0"]
           ],
           "linkType": "HARD",
         }]
@@ -8510,11 +8535,23 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "HARD",
         }],
-        ["npm:2.6.1", {
-          "packageLocation": "./.yarn/cache/node-fetch-npm-2.6.1-46c670dbc1-91075bedd5.zip/node_modules/node-fetch/",
+        ["npm:2.6.7", {
+          "packageLocation": "./.yarn/cache/node-fetch-npm-2.6.7-777aa2a6df-8d816ffd1e.zip/node_modules/node-fetch/",
           "packageDependencies": [
-            ["node-fetch", "npm:2.6.1"],
-            ["encoding", "npm:0.1.12"]
+            ["node-fetch", "npm:2.6.7"]
+          ],
+          "linkType": "SOFT",
+        }],
+        ["virtual:25a5f5382d53dbf298bf7a1191760bc2e0a523a619eeb0e667b99a8649e8ad183f9e2e0b45f6fb831b92f4078b61622aa567cf79565f6aa5af9597e3c84864f6#npm:2.6.7", {
+          "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-d3846f8e12/0/cache/node-fetch-npm-2.6.7-777aa2a6df-8d816ffd1e.zip/node_modules/node-fetch/",
+          "packageDependencies": [
+            ["node-fetch", "virtual:25a5f5382d53dbf298bf7a1191760bc2e0a523a619eeb0e667b99a8649e8ad183f9e2e0b45f6fb831b92f4078b61622aa567cf79565f6aa5af9597e3c84864f6#npm:2.6.7"],
+            ["@types/encoding", null],
+            ["encoding", "npm:0.1.12"],
+            ["whatwg-url", "npm:5.0.0"]
+          ],
+          "packagePeers": [
+            "@types/encoding"
           ],
           "linkType": "HARD",
         }]
@@ -9493,7 +9530,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["release-wizard", "workspace:."],
             ["@actions/core", "npm:1.4.0"],
-            ["@actions/github", "npm:5.0.0"],
+            ["@actions/github", "npm:5.0.3"],
             ["@commitlint/cli", "npm:16.2.1"],
             ["@commitlint/config-conventional", "npm:16.2.1"],
             ["@octokit/types", "npm:6.21.1"],
@@ -10514,6 +10551,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["tr46", [
+        ["npm:0.0.3", {
+          "packageLocation": "./.yarn/cache/tr46-npm-0.0.3-de53018915-726321c5ea.zip/node_modules/tr46/",
+          "packageDependencies": [
+            ["tr46", "npm:0.0.3"]
+          ],
+          "linkType": "HARD",
+        }],
         ["npm:2.0.2", {
           "packageLocation": "./.yarn/cache/tr46-npm-2.0.2-9a9c502938-2b2b3dfa6b.zip/node_modules/tr46/",
           "packageDependencies": [
@@ -11107,6 +11151,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["webidl-conversions", [
+        ["npm:3.0.1", {
+          "packageLocation": "./.yarn/cache/webidl-conversions-npm-3.0.1-60310f6a2b-c92a0a6ab9.zip/node_modules/webidl-conversions/",
+          "packageDependencies": [
+            ["webidl-conversions", "npm:3.0.1"]
+          ],
+          "linkType": "HARD",
+        }],
         ["npm:5.0.0", {
           "packageLocation": "./.yarn/cache/webidl-conversions-npm-5.0.0-9649787484-ccf1ec2ca7.zip/node_modules/webidl-conversions/",
           "packageDependencies": [
@@ -11248,6 +11299,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["whatwg-url", [
+        ["npm:5.0.0", {
+          "packageLocation": "./.yarn/cache/whatwg-url-npm-5.0.0-374fb45e60-b8daed4ad3.zip/node_modules/whatwg-url/",
+          "packageDependencies": [
+            ["whatwg-url", "npm:5.0.0"],
+            ["tr46", "npm:0.0.3"],
+            ["webidl-conversions", "npm:3.0.1"]
+          ],
+          "linkType": "HARD",
+        }],
         ["npm:8.5.0", {
           "packageLocation": "./.yarn/cache/whatwg-url-npm-8.5.0-10be05312c-3bda9bfd98.zip/node_modules/whatwg-url/",
           "packageDependencies": [
