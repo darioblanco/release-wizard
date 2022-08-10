@@ -1,5 +1,4 @@
-name: 'main'
-
+name: 'test'
 on:
   push:
     branches:
@@ -10,8 +9,8 @@ on:
       - 'package.json'
       - 'src/**'
       - 'tests/*'
+      - 'tsconfig.build.json'
       - 'tsconfig.json'
-      - 'tslint.json'
   pull_request:
     paths:
       - '.github/workflows/main.yaml'
@@ -19,10 +18,9 @@ on:
       - 'package.json'
       - 'src/**'
       - 'tests/*'
+      - 'tsconfig.build.json'
       - 'tsconfig.json'
-      - 'tslint.json'
   workflow_dispatch:
-
 jobs:
   unit_test:
     name: unit test
@@ -31,9 +29,9 @@ jobs:
       - name: Checkout git repository
         uses: actions/checkout@v2.3.4
       - name: Lint code
-        run: yarn lint
+        run: npm run lint
       - name: Test code
-        run: yarn test
+        run: npm run test
   integration_test:
     if: github.ref == 'refs/heads/main'
     name: integration test
@@ -46,4 +44,3 @@ jobs:
         with:
           templatePath: RELEASE_DRAFT/default.md
           token: ${{ github.token }}
-          withV: true
