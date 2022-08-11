@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "description": "Create a Github release with parsed commits into a given Markdown template",
-  "main": "src/index.ts",
+  "main": "lib/main.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/darioblanco/release-wizard.git"
@@ -32,6 +32,7 @@
     "@types/semver": "^7.3.10",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
+    "@vercel/ncc": "^0.34.0",
     "eslint": "^8.21.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-node": "^0.3.6",
@@ -50,15 +51,18 @@
     "typescript": "^4.7.4"
   },
   "scripts": {
+    "all": "npm run build && npm run format && npm run lint && npm run package && npm test",
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint --ext .ts,.tsx,.js,.jsx",
     "lint:commit": "commitlint -x @commitlint/config-conventional --edit",
-    "lint:format": "prettier --write --ignore-unknown .",
+    "format": "prettier --write --ignore-unknown .",
+    "format:check": "prettier --check --ignore-unknown .",
+    "package": "ncc build --source-map --license licenses.txt",
     "prepare": "is-ci || husky install",
     "test": "jest --coverage"
   },
   "lint-staged": {
-    "*": "npm run lint:format",
+    "*": "npm run format",
     "*.{js,jsx,ts,tsx}": "eslint --fix"
   }
 }
