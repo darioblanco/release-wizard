@@ -5,11 +5,11 @@ import { VersionType } from '../types';
 
 // Octokit's commit type subset
 interface Commit {
-  username: string;
-  userUrl: string;
-  commitUrl: string;
-  message: string;
-  sha: string;
+  username: string
+  userUrl: string
+  commitUrl: string
+  message: string
+  sha: string
 }
 
 /**
@@ -21,66 +21,66 @@ export async function commitParser(
   baseRef: string,
   taskPrefix = 'JIR-',
   taskBaseUrl?: string,
-  commitScope?: string,
+  commitScope?: string
 ): Promise<{
-  nextVersionType: VersionType;
-  changes: string;
-  tasks: string;
-  pullRequests: string;
+  nextVersionType: VersionType
+  changes: string
+  tasks: string
+  pullRequests: string
 }> {
   const commitGroups: {
-    [index: string]: { title: string; commits: Commit[] };
+    [index: string]: {title: string; commits: Commit[]}
   } = {
     // A new feature
     feat: {
       title: '## **:zap: Features**',
-      commits: [],
+      commits: []
     },
     // A bug fix
     fix: {
       title: '## **:wrench: Fixes**',
-      commits: [],
+      commits: []
     },
     // A code change that improves performance
     perf: {
       title: '## **:runner: Performance**',
-      commits: [],
+      commits: []
     },
     // Documentation only changes
     docs: {
       title: '## **:books: Documentation**',
-      commits: [],
+      commits: []
     },
     // Changes that do not affect the meaning of the code (lint changes)
     style: {
       title: '## **:nail_care: Style**',
-      commits: [],
+      commits: []
     },
     // A code change that neither fixes a bug nor adds a feature
     refactor: {
       title: '## **:mountain: Refactors**',
-      commits: [],
+      commits: []
     },
     // Adding missing tests or correcting existing tests
     test: {
       title: '## **:traffic_light: Tests**',
-      commits: [],
+      commits: []
     },
     // Changes that affect the build system or external development dependencies
     chore: {
       title: '## **:construction: Maintenance**',
-      commits: [],
+      commits: []
     },
     // As an alternative to 'chore', but with very similar meaning
     build: {
       title: '## **:construction_worker: Build**',
-      commits: [],
+      commits: []
     },
     // Changes for CI configuration files and scripts (e.g. Github CI, helm values...)
     ci: {
       title: '## **:traffic_light: CI**',
-      commits: [],
-    },
+      commits: []
+    }
   };
   const uncategorizedCommits: Commit[] = [];
 
@@ -92,15 +92,17 @@ export async function commitParser(
   const { owner, repo } = github.context.repo;
   const octokit = github.getOctokit(token);
 
-  core.debug(`Retrieving commit diff between ${baseRef} and ${github.context.sha}`);
+  core.debug(
+    `Retrieving commit diff between ${baseRef} and ${github.context.sha}`
+  );
   const compareCommitsResponse = await octokit.rest.repos.compareCommits({
     owner,
     repo,
     base: baseRef,
-    head: github.context.sha,
+    head: github.context.sha
   });
   const {
-    data: { commits },
+    data: { commits }
   } = compareCommitsResponse;
 
   const categorizeCommit = (commit: Commit) => {
@@ -112,9 +114,12 @@ export async function commitParser(
     }
     // Check if commit message matches to any of the defined categories
     let categoryMatch = false;
-    Object.keys(commitGroups).some((category) => {
+    Object.keys(commitGroups).some(category => {
       // Match with or without scope
-      if (message.startsWith(`${category}:`) || message.startsWith(`${category}(`)) {
+      if (
+        message.startsWith(`${category}:`) ||
+        message.startsWith(`${category}(`)
+      ) {
         commitGroups[category].commits.push(commit);
         categoryMatch = true;
         core.debug(`Commit matches category ${category} -> "${message}"`);
@@ -131,16 +136,16 @@ export async function commitParser(
   const prRegExp = new RegExp('(\\(#\\d+\\))', 'gmi');
   const taskRegExp = new RegExp(`\\[${taskPrefix}\\d+\\]`, 'gmi');
   const majorRegExp = new RegExp(`(#MAJOR$)`, 'gmi');
-  commits.forEach((githubCommit) => {
+  commits.forEach(githubCommit => {
     const {
       html_url: commitUrl,
       commit: { message },
-      sha,
+      sha
     } = githubCommit;
     let username = '';
     let userUrl = '';
     if (githubCommit.author) {
-      ({ login: username, html_url: userUrl } = githubCommit.author);
+      ;({ login: username, html_url: userUrl } = githubCommit.author);
     }
     const commit: Commit = { username, userUrl, commitUrl, message, sha };
 
@@ -150,14 +155,14 @@ export async function commitParser(
       core.debug('Commit is a Github squash, analyzing content...');
       const messageLines = message.split('* ');
       // Categorize all commits except first one
-      messageLines.forEach((messageLine) =>
+      messageLines.forEach(messageLine =>
         categorizeCommit({
           username,
           userUrl,
           commitUrl,
           sha,
-          message: messageLine.trim(),
-        }),
+          message: messageLine.trim()
+        })
       );
     } else {
       categorizeCommit(commit);
@@ -174,7 +179,9 @@ export async function commitParser(
     const prMatch = prRegExp.exec(message);
     if (prMatch) {
       core.debug(`Found PRs: ${prMatch.toString()}`);
-      prMatch.slice(1).forEach((pr) => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
+      prMatch
+        .slice(1)
+        .forEach(pr => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
     }
 
     // Retrieve specific bump key words
@@ -185,7 +192,7 @@ export async function commitParser(
     }
 
     // Only take into account the commit title
-    [message] = message.split('\n');
+    ;[message] = message.split('\n');
 
     // Detect if commit message has Angular format
     if (/(\w+\([a-zA-Z_-]+\)|\w+|\([a-zA-Z_-]+\)):/.test(message)) {
@@ -206,14 +213,16 @@ export async function commitParser(
       tasks.add(task);
       message = message.replace(
         rawTask,
-        `[${task}](${taskBaseUrl || `https://${owner}.atlassian.net/browse`}/${task})`,
+        `[${task}](${
+          taskBaseUrl || `https://${owner}.atlassian.net/browse`
+        }/${task})`
       );
     }
 
     // Add to global change markdown
     changesMd = `${changesMd}- ${message} - [${sha.substring(
       0,
-      8,
+      8
     )}](${commitUrl})([@${username}](${userUrl}))\n`;
     // Add to global commit sha list
     changes.push(sha);
@@ -221,7 +230,7 @@ export async function commitParser(
 
   uncategorizedCommits.forEach(formatCommit);
 
-  Object.keys(commitGroups).forEach((category) => {
+  Object.keys(commitGroups).forEach(category => {
     const { title, commits: groupCommits } = commitGroups[category];
     if (groupCommits.length !== 0) {
       changesMd = `${changesMd}\n${title}\n`;
@@ -235,7 +244,10 @@ export async function commitParser(
   core.setOutput('pull_requests', JSON.stringify(pullRequests));
 
   // Set bump type to minor if there is at least one 'feat' commit
-  if (nextVersionType === VersionType.patch && commitGroups.feat.commits.length > 0) {
+  if (
+    nextVersionType === VersionType.patch &&
+    commitGroups.feat.commits.length > 0
+  ) {
     nextVersionType = VersionType.minor;
   }
   core.setOutput('change_type', nextVersionType);
@@ -244,10 +256,15 @@ export async function commitParser(
     nextVersionType,
     changes: changesMd.trim(),
     tasks: taskList
-      .map((task) => `[${task}](${taskBaseUrl || `https://${owner}.atlassian.net/browse`}/${task})`)
+      .map(
+        task =>
+          `[${task}](${
+            taskBaseUrl || `https://${owner}.atlassian.net/browse`
+          }/${task})`
+      )
       .join(', '),
     pullRequests: pullRequests
-      .map((pr) => `[#${pr}](https://github.com/${owner}/${repo}/pull/${pr})`)
-      .join(', '),
+      .map(pr => `[#${pr}](https://github.com/${owner}/${repo}/pull/${pr})`)
+      .join(', ')
   };
 }

@@ -2,7 +2,11 @@ import * as core from '@actions/core';
 import * as github from '@actions/github';
 
 import { commitParser } from './lib/commits';
-import { createGitTag, createGithubRelease, renderReleaseBody } from './lib/release';
+import {
+  createGitTag,
+  createGithubRelease,
+  renderReleaseBody
+} from './lib/release';
 import { bumpVersion, retrieveLastReleasedVersion } from './lib/version';
 import { VersionType } from './types';
 
@@ -14,15 +18,17 @@ export async function run(): Promise<void> {
     const token = core.getInput('token', { required: true });
     const withV = core.getBooleanInput('withV', { required: false });
     const versionPrefix = withV ? 'v' : '';
-    const tagPrefix = app ? `${app}${appTagSeparator}${versionPrefix}` : versionPrefix;
+    const tagPrefix = app
+      ? `${app}${appTagSeparator}${versionPrefix}`
+      : versionPrefix;
     core.debug(
       `Global configuration: ${JSON.stringify({
         app,
         appTagSeparator,
         withV,
         versionPrefix,
-        tagPrefix,
-      })}`,
+        tagPrefix
+      })}`
     );
 
     // Commit loading config
@@ -37,26 +43,33 @@ export async function run(): Promise<void> {
       `Commit configuration: ${JSON.stringify({
         baseTag,
         taskBaseUrl,
-        taskPrefix,
-      })}`,
+        taskPrefix
+      })}`
     );
 
     // Release config
     const pushTag = core.getInput('pushTag', { required: false }) === 'true';
     const templatePath = core.getInput('templatePath', { required: false });
     const draft = core.getInput('draft', { required: false }) === 'true' || false;
-    const prerelease = core.getInput('prerelease', { required: false }) === 'true' || false;
+    const prerelease =
+      core.getInput('prerelease', { required: false }) === 'true' || false;
     core.debug(
       `Release configuration: ${JSON.stringify({
         pushTag,
         templatePath,
         draft,
-        prerelease,
-      })}`,
+        prerelease
+      })}`
     );
 
     core.debug(`Parse commits from ${baseTag} to current sha`);
-    const diffInfo = await commitParser(token, baseTag, taskPrefix, taskBaseUrl, app);
+    const diffInfo = await commitParser(
+      token,
+      baseTag,
+      taskPrefix,
+      taskBaseUrl,
+      app
+    );
     const { changes, tasks, pullRequests } = diffInfo;
 
     let { nextVersionType } = diffInfo;
@@ -76,7 +89,8 @@ export async function run(): Promise<void> {
 
     // Won't replace it if release tag is given manually
     const releaseVersion = releaseTag.replace(tagPrefix, '');
-    const releaseName = core.getInput('releaseName', { required: false }) || releaseTag;
+    const releaseName =
+      core.getInput('releaseName', { required: false }) || releaseTag;
     core.debug(`Generate release body from template ${templatePath}`);
     const body = await renderReleaseBody(
       token,
@@ -85,10 +99,20 @@ export async function run(): Promise<void> {
       releaseVersion,
       changes,
       tasks,
-      pullRequests,
+      pullRequests
     );
-    core.debug(`Create Github release for ${releaseTag} tag with ${releaseName} title`);
-    await createGithubRelease(token, releaseTag, releaseName, body, draft, prerelease, tagPrefix);
+    core.debug(
+      `Create Github release for ${releaseTag} tag with ${releaseName} title`
+    );
+    await createGithubRelease(
+      token,
+      releaseTag,
+      releaseName,
+      body,
+      draft,
+      prerelease,
+      tagPrefix
+    );
   } catch (error) {
     core.setFailed((error as Error).message);
   }

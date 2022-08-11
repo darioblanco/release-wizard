@@ -1,7 +1,11 @@
 import { getBooleanInput, getInput, setFailed } from '@actions/core';
 
 import { commitParser } from '@/lib/commits';
-import { createGitTag, createGithubRelease, renderReleaseBody } from '@/lib/release';
+import {
+  createGitTag,
+  createGithubRelease,
+  renderReleaseBody
+} from '@/lib/release';
 import { bumpVersion, retrieveLastReleasedVersion } from '@/lib/version';
 import { run } from '@/main';
 import { VersionType } from '@/types';
@@ -12,10 +16,10 @@ jest.mock('@actions/github', () => ({
     ref: 'refs/heads/main',
     repo: {
       owner: 'theowner',
-      repo: 'therepo',
-    },
+      repo: 'therepo'
+    }
   },
-  getOctokit: jest.fn(),
+  getOctokit: jest.fn()
 }));
 jest.mock('@/lib/commits');
 jest.mock('@/lib/release');
@@ -37,17 +41,19 @@ describe('run', () => {
   const body = 'releaseBody';
 
   beforeEach(() => {
-    (commitParser as jest.Mock).mockImplementation(() => ({
+    ;(commitParser as jest.Mock).mockImplementation(() => ({
       changes,
       nextVersionType,
       tasks,
-      pullRequests,
-    }));
-    (renderReleaseBody as jest.Mock).mockImplementation().mockResolvedValue(body);
+      pullRequests
+    }))
+    ;(renderReleaseBody as jest.Mock)
+      .mockImplementation()
+      .mockResolvedValue(body);
   });
 
   test('with required params', async () => {
-    (getInput as jest.Mock).mockImplementation((name: string) => {
+    ;(getInput as jest.Mock).mockImplementation((name: string) => {
       switch (name) {
         case 'draft':
           return draft.toString();
@@ -67,17 +73,25 @@ describe('run', () => {
     });
     const tagPrefix = '';
 
-    const baseTag = 'main';
-    (retrieveLastReleasedVersion as jest.Mock).mockImplementation().mockResolvedValue(undefined);
+    const baseTag = 'main'
+    ;(retrieveLastReleasedVersion as jest.Mock)
+      .mockImplementation()
+      .mockResolvedValue(undefined);
 
     const releaseVersion = '1.0.5';
-    const releaseTag = `${tagPrefix}${releaseVersion}`;
-    (bumpVersion as jest.Mock).mockImplementation(() => releaseTag);
+    const releaseTag = `${tagPrefix}${releaseVersion}`
+    ;(bumpVersion as jest.Mock).mockImplementation(() => releaseTag);
 
     await run();
 
     expect(retrieveLastReleasedVersion).toBeCalledWith(token, tagPrefix);
-    expect(commitParser).toBeCalledWith(token, baseTag, taskPrefix, undefined, undefined);
+    expect(commitParser).toBeCalledWith(
+      token,
+      baseTag,
+      taskPrefix,
+      undefined,
+      undefined
+    );
     expect(renderReleaseBody).toBeCalledWith(
       token,
       templatePath,
@@ -85,7 +99,7 @@ describe('run', () => {
       releaseVersion,
       changes,
       tasks,
-      pullRequests,
+      pullRequests
     );
     expect(bumpVersion).toBeCalledWith(token, tagPrefix, VersionType.patch);
     expect(createGitTag).not.toBeCalled();
@@ -96,7 +110,7 @@ describe('run', () => {
       body,
       draft,
       prerelease,
-      tagPrefix,
+      tagPrefix
     );
     expect(setFailed).not.toBeCalled();
   });
@@ -110,8 +124,8 @@ describe('run', () => {
     const releaseName = 'fake-app';
     const releaseTag = `mycustomprefix-1.0.6`;
     const taskBaseUrl = 'https://myfaketask.url';
-    const withV = true;
-    (getInput as jest.Mock).mockImplementation((name: string) => {
+    const withV = true
+    ;(getInput as jest.Mock).mockImplementation((name: string) => {
       switch (name) {
         case 'app':
           return app;
@@ -142,8 +156,8 @@ describe('run', () => {
         default:
           return undefined;
       }
-    });
-    (getBooleanInput as jest.Mock).mockImplementation((name: string) => {
+    })
+    ;(getBooleanInput as jest.Mock).mockImplementation((name: string) => {
       switch (name) {
         case 'withV':
           return withV;
@@ -155,7 +169,13 @@ describe('run', () => {
     await run();
 
     expect(retrieveLastReleasedVersion).not.toBeCalled();
-    expect(commitParser).toBeCalledWith(token, baseTag, taskPrefix, taskBaseUrl, app);
+    expect(commitParser).toBeCalledWith(
+      token,
+      baseTag,
+      taskPrefix,
+      taskBaseUrl,
+      app
+    );
     expect(renderReleaseBody).toBeCalledWith(
       token,
       templatePath,
@@ -163,7 +183,7 @@ describe('run', () => {
       releaseTag,
       changes,
       tasks,
-      pullRequests,
+      pullRequests
     );
     expect(bumpVersion).not.toBeCalled();
     expect(createGitTag).toBeCalledWith(token, releaseTag);
@@ -174,14 +194,14 @@ describe('run', () => {
       body,
       givenDraft,
       givenPrerelease,
-      `${app}${appTagSeparator}v`,
+      `${app}${appTagSeparator}v`
     );
     expect(setFailed).not.toBeCalled();
   });
 
   test('unexpected error', async () => {
-    const errorMsg = 'fake';
-    (getInput as jest.Mock).mockImplementation(() => {
+    const errorMsg = 'fake'
+    ;(getInput as jest.Mock).mockImplementation(() => {
       throw new Error(errorMsg);
     });
 

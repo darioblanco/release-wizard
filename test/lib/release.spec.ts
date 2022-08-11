@@ -2,18 +2,22 @@ import * as fs from 'fs';
 import { setOutput } from '@actions/core';
 import { getOctokit } from '@actions/github';
 
-import { createGitTag, createGithubRelease, renderReleaseBody } from '@/lib/release';
+import {
+  createGitTag,
+  createGithubRelease,
+  renderReleaseBody
+} from '@/lib/release';
 
 jest.mock('@actions/github', () => ({
   context: {
     repo: {
       owner: 'myorg',
-      repo: 'myrepo',
+      repo: 'myrepo'
     },
     sha: 'mysha',
-    ref: 'myref',
+    ref: 'myref'
   },
-  getOctokit: jest.fn(),
+  getOctokit: jest.fn()
 }));
 jest.mock('@actions/core');
 
@@ -21,8 +25,8 @@ const createReleaseResponse = {
   data: {
     id: 'releaseId',
     html_url: 'htmlUrl',
-    upload_url: 'uploadUrl',
-  },
+    upload_url: 'uploadUrl'
+  }
 };
 
 describe('release', () => {
@@ -41,20 +45,22 @@ describe('release', () => {
       } else {
         getContent = jest.fn().mockResolvedValue({ data: {} });
       }
-      (getOctokit as jest.Mock).mockReturnValueOnce({ rest: { repos: { getContent } } });
+      ;(getOctokit as jest.Mock).mockReturnValueOnce({
+        rest: { repos: { getContent } }
+      });
       return getContent;
     };
 
     test('render release template', async () => {
       const getContent = mockTemplate(`${__dirname}/fixtures/basic.md`);
       expect(
-        await renderReleaseBody(token, 'myTemplatePath.md', app, releaseVersion),
+        await renderReleaseBody(token, 'myTemplatePath.md', app, releaseVersion)
       ).toMatchSnapshot();
       expect(getContent).toBeCalledWith({
         owner: 'myorg',
         path: `.github/${templatePath}`,
         ref: 'myref',
-        repo: 'myrepo',
+        repo: 'myrepo'
       });
     });
 
@@ -83,14 +89,14 @@ describe('release', () => {
           releaseVersion,
           changes,
           tasks,
-          pullRequests,
-        ),
+          pullRequests
+        )
       ).toMatchSnapshot();
       expect(getContent).toBeCalledWith({
         owner: 'myorg',
         path: `.github/${templatePath}`,
         ref: 'myref',
-        repo: 'myrepo',
+        repo: 'myrepo'
       });
     });
 
@@ -98,15 +104,17 @@ describe('release', () => {
       const templatePath = 'not-found.md';
       mockTemplate();
       await expect(
-        renderReleaseBody(token, templatePath, app, releaseVersion),
-      ).rejects.toThrowError(new Error(`Unable to find template in ${templatePath}`));
+        renderReleaseBody(token, templatePath, app, releaseVersion)
+      ).rejects.toThrowError(
+        new Error(`Unable to find template in ${templatePath}`)
+      );
     });
   });
 
   test('create git tag', async () => {
     const tag = 'v1.1.0';
-    const createRef = jest.fn(() => ({ status: 201 }));
-    (getOctokit as jest.Mock).mockReturnValue({ rest: { git: { createRef } } });
+    const createRef = jest.fn(() => ({ status: 201 }))
+    ;(getOctokit as jest.Mock).mockReturnValue({ rest: { git: { createRef } } });
 
     await createGitTag(token, tag);
 
@@ -114,7 +122,7 @@ describe('release', () => {
       owner: 'myorg',
       repo: 'myrepo',
       sha: 'mysha',
-      ref: `refs/tags/${tag}`,
+      ref: `refs/tags/${tag}`
     });
   });
 
@@ -135,29 +143,37 @@ describe('release', () => {
           data: [
             { id: 1, draft: false, tag_name: 'app1/0.0.3' },
             { id: 2, draft: false, tag_name: 'myapp/0.0.1' },
-            { id: 3, draft: false, tag_name: 'app2/0.0.1' },
-          ],
+            { id: 3, draft: false, tag_name: 'app2/0.0.1' }
+          ]
         },
         {
           data: [
             { id: 4, draft: true, tag_name: 'myapp/0.0.2' },
             { id: 5, draft: true, tag_name: `app1/0.1.0` },
-            { id: 6, draft: true, tag_name: `app2/0.1.2` },
-          ],
-        },
-      ]);
-      (getOctokit as jest.Mock).mockReturnValue({
+            { id: 6, draft: true, tag_name: `app2/0.1.2` }
+          ]
+        }
+      ])
+      ;(getOctokit as jest.Mock).mockReturnValue({
         paginate: { iterator: listReleasesIteratorMock },
         rest: {
           repos: {
             createRelease,
             deleteRelease,
-            listReleases: { endpoint: { merge: listReleasesMock } },
-          },
-        },
+            listReleases: { endpoint: { merge: listReleasesMock } }
+          }
+        }
       });
       const draft = true;
-      await createGithubRelease(token, tag, name, body, draft, prerelease, tagPrefix);
+      await createGithubRelease(
+        token,
+        tag,
+        name,
+        body,
+        draft,
+        prerelease,
+        tagPrefix
+      );
 
       expect(createRelease).toBeCalledTimes(1);
       expect(createRelease).toBeCalledWith({
@@ -167,13 +183,13 @@ describe('release', () => {
         prerelease,
         owner: 'myorg',
         repo: 'myrepo',
-        tag_name: tag,
+        tag_name: tag
       });
       expect(deleteRelease).toBeCalledTimes(1);
       expect(deleteRelease).toBeCalledWith({
         owner: 'myorg',
         repo: 'myrepo',
-        release_id: 4,
+        release_id: 4
       });
       expect(setOutput).toBeCalledTimes(3);
       expect(setOutput).toBeCalledWith('release_id', 'releaseId');
@@ -182,16 +198,24 @@ describe('release', () => {
     });
 
     test('published', async () => {
-      (getOctokit as jest.Mock).mockReturnValue({
+      ;(getOctokit as jest.Mock).mockReturnValue({
         rest: {
           repos: {
             createRelease,
-            deleteRelease,
-          },
-        },
+            deleteRelease
+          }
+        }
       });
       const draft = false;
-      await createGithubRelease(token, tag, name, body, draft, prerelease, tagPrefix);
+      await createGithubRelease(
+        token,
+        tag,
+        name,
+        body,
+        draft,
+        prerelease,
+        tagPrefix
+      );
 
       expect(createRelease).toBeCalledTimes(1);
       expect(createRelease).toBeCalledWith({
@@ -201,7 +225,7 @@ describe('release', () => {
         prerelease,
         owner: 'myorg',
         repo: 'myrepo',
-        tag_name: tag,
+        tag_name: tag
       });
       expect(deleteRelease).not.toBeCalled();
       expect(setOutput).toBeCalledTimes(3);
