@@ -44,7 +44,7 @@ jobs:
       - name: Checkout git repository
         uses: actions/checkout@v3
       - name: Create Release
-        uses: darioblanco/release-wizard@v1.1.0
+        uses: darioblanco/release-wizard@main
         with:
           templatePath: RELEASE_DRAFT/default.md
           token: ${{ github.token }}
