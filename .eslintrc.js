@@ -6,10 +6,10 @@ module.exports = {
     sourceType: 'module',
     ecmaFeatures: {
       modules: true,
-      jsx: false
+      jsx: false,
     },
     project: './tsconfig.json',
-    tsconfigRootDir: __dirname
+    tsconfigRootDir: __dirname,
   },
   plugins: ['@typescript-eslint', 'jest'],
   extends: [
@@ -21,7 +21,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:jest/recommended',
     'plugin:node/recommended',
-    'prettier'
+    'prettier',
   ],
   rules: {
     'object-curly-spacing': [2, 'always'],
@@ -34,6 +34,6 @@ module.exports = {
     'node/no-unsupported-features/es-syntax': 'off',
     'node/no-missing-import': 'off',
     'one-var': 'off',
-    semi: ['error', 'always']
-  }
+    semi: ['error', 'always'],
+  },
 };

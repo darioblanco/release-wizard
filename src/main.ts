@@ -5,7 +5,7 @@ import { commitParser } from './lib/commits';
 import {
   createGitTag,
   createGithubRelease,
-  renderReleaseBody
+  renderReleaseBody,
 } from './lib/release';
 import { bumpVersion, retrieveLastReleasedVersion } from './lib/version';
 import { VersionType } from './types';
@@ -14,7 +14,9 @@ export async function run(): Promise<void> {
   try {
     // Global config
     const app = core.getInput('app', { required: false });
-    const appTagSeparator = core.getInput('appTagSeparator', { required: false });
+    const appTagSeparator = core.getInput('appTagSeparator', {
+      required: false,
+    });
     const token = core.getInput('token', { required: true });
     const withV = core.getBooleanInput('withV', { required: false });
     const versionPrefix = withV ? 'v' : '';
@@ -27,7 +29,7 @@ export async function run(): Promise<void> {
         appTagSeparator,
         withV,
         versionPrefix,
-        tagPrefix
+        tagPrefix,
       })}`
     );
 
@@ -43,14 +45,15 @@ export async function run(): Promise<void> {
       `Commit configuration: ${JSON.stringify({
         baseTag,
         taskBaseUrl,
-        taskPrefix
+        taskPrefix,
       })}`
     );
 
     // Release config
     const pushTag = core.getInput('pushTag', { required: false }) === 'true';
     const templatePath = core.getInput('templatePath', { required: false });
-    const draft = core.getInput('draft', { required: false }) === 'true' || false;
+    const draft =
+      core.getInput('draft', { required: false }) === 'true' || false;
     const prerelease =
       core.getInput('prerelease', { required: false }) === 'true' || false;
     core.debug(
@@ -58,7 +61,7 @@ export async function run(): Promise<void> {
         pushTag,
         templatePath,
         draft,
-        prerelease
+        prerelease,
       })}`
     );
 

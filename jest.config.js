@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 
 module.exports = {
   clearMocks: true,
@@ -11,17 +11,17 @@ module.exports = {
     global: {
       branches: 100,
       functions: 100,
-      lines: 100
-    }
+      lines: 100,
+    },
   },
   moduleFileExtensions: ['js', 'ts'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^#/test/(.*)$': '<rootDir>/test/$1'
+    '^#/test/(.*)$': '<rootDir>/test/$1',
   },
   preset: 'ts-jest',
   rootDir: path.resolve(__dirname),
   testEnvironment: require.resolve(`jest-environment-node`),
   testMatch: ['**/*.spec.ts'],
-  verbose: true
-}
+  verbose: true,
+};

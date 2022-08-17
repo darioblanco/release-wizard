@@ -53,53 +53,53 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
             // A new feature
             feat: {
                 title: '## **:zap: Features**',
-                commits: []
+                commits: [],
             },
             // A bug fix
             fix: {
                 title: '## **:wrench: Fixes**',
-                commits: []
+                commits: [],
             },
             // A code change that improves performance
             perf: {
                 title: '## **:runner: Performance**',
-                commits: []
+                commits: [],
             },
             // Documentation only changes
             docs: {
                 title: '## **:books: Documentation**',
-                commits: []
+                commits: [],
             },
             // Changes that do not affect the meaning of the code (lint changes)
             style: {
                 title: '## **:nail_care: Style**',
-                commits: []
+                commits: [],
             },
             // A code change that neither fixes a bug nor adds a feature
             refactor: {
                 title: '## **:mountain: Refactors**',
-                commits: []
+                commits: [],
             },
             // Adding missing tests or correcting existing tests
             test: {
                 title: '## **:traffic_light: Tests**',
-                commits: []
+                commits: [],
             },
             // Changes that affect the build system or external development dependencies
             chore: {
                 title: '## **:construction: Maintenance**',
-                commits: []
+                commits: [],
             },
             // As an alternative to 'chore', but with very similar meaning
             build: {
                 title: '## **:construction_worker: Build**',
-                commits: []
+                commits: [],
             },
             // Changes for CI configuration files and scripts (e.g. Github CI, helm values...)
             ci: {
                 title: '## **:traffic_light: CI**',
-                commits: []
-            }
+                commits: [],
+            },
         };
         const uncategorizedCommits = [];
         const changes = [];
@@ -113,9 +113,9 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
             owner,
             repo,
             base: baseRef,
-            head: github.context.sha
+            head: github.context.sha,
         });
-        const { data: { commits } } = compareCommitsResponse;
+        const { data: { commits }, } = compareCommitsResponse;
         const categorizeCommit = (commit) => {
             const { message } = commit;
             // Skip if scope check is required and commit does not have it
@@ -125,7 +125,7 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
             }
             // Check if commit message matches to any of the defined categories
             let categoryMatch = false;
-            Object.keys(commitGroups).some(category => {
+            Object.keys(commitGroups).some((category) => {
                 // Match with or without scope
                 if (message.startsWith(`${category}:`) ||
                     message.startsWith(`${category}(`)) {
@@ -144,12 +144,11 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
         const prRegExp = new RegExp('(\\(#\\d+\\))', 'gmi');
         const taskRegExp = new RegExp(`\\[${taskPrefix}\\d+\\]`, 'gmi');
         const majorRegExp = new RegExp(`(#MAJOR$)`, 'gmi');
-        commits.forEach(githubCommit => {
-            const { html_url: commitUrl, commit: { message }, sha } = githubCommit;
+        commits.forEach((githubCommit) => {
+            const { html_url: commitUrl, commit: { message }, sha, } = githubCommit;
             let username = '';
             let userUrl = '';
             if (githubCommit.author) {
-                ;
                 ({ login: username, html_url: userUrl } = githubCommit.author);
             }
             const commit = { username, userUrl, commitUrl, message, sha };
@@ -159,12 +158,12 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
                 core.debug('Commit is a Github squash, analyzing content...');
                 const messageLines = message.split('* ');
                 // Categorize all commits except first one
-                messageLines.forEach(messageLine => categorizeCommit({
+                messageLines.forEach((messageLine) => categorizeCommit({
                     username,
                     userUrl,
                     commitUrl,
                     sha,
-                    message: messageLine.trim()
+                    message: messageLine.trim(),
                 }));
             }
             else {
@@ -181,7 +180,7 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
                 core.debug(`Found PRs: ${prMatch.toString()}`);
                 prMatch
                     .slice(1)
-                    .forEach(pr => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
+                    .forEach((pr) => pullRequests.push(pr.replace(/(\(|\)|#)/g, '')));
             }
             // Retrieve specific bump key words
             const majorMatch = majorRegExp.exec(message);
@@ -190,7 +189,6 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
                 nextVersionType = types_1.VersionType.major;
             }
             // Only take into account the commit title
-            ;
             [message] = message.split('\n');
             // Detect if commit message has Angular format
             if (/(\w+\([a-zA-Z_-]+\)|\w+|\([a-zA-Z_-]+\)):/.test(message)) {
@@ -215,7 +213,7 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
             changes.push(sha);
         };
         uncategorizedCommits.forEach(formatCommit);
-        Object.keys(commitGroups).forEach(category => {
+        Object.keys(commitGroups).forEach((category) => {
             const { title, commits: groupCommits } = commitGroups[category];
             if (groupCommits.length !== 0) {
                 changesMd = `${changesMd}\n${title}\n`;
@@ -236,11 +234,11 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
             nextVersionType,
             changes: changesMd.trim(),
             tasks: taskList
-                .map(task => `[${task}](${taskBaseUrl || `https://${owner}.atlassian.net/browse`}/${task})`)
+                .map((task) => `[${task}](${taskBaseUrl || `https://${owner}.atlassian.net/browse`}/${task})`)
                 .join(', '),
             pullRequests: pullRequests
-                .map(pr => `[#${pr}](https://github.com/${owner}/${repo}/pull/${pr})`)
-                .join(', ')
+                .map((pr) => `[#${pr}](https://github.com/${owner}/${repo}/pull/${pr})`)
+                .join(', '),
         };
     });
 }
@@ -309,7 +307,7 @@ function renderReleaseBody(token, templatePath, app, releaseVersion, changes = '
             owner,
             repo,
             path,
-            ref
+            ref,
         });
         let template;
         if ('content' in contentResponse.data) {
@@ -340,7 +338,7 @@ function createGitTag(token, tag) {
             owner,
             repo,
             sha,
-            ref: `refs/tags/${tag}`
+            ref: `refs/tags/${tag}`,
         });
     });
 }
@@ -355,7 +353,7 @@ function createGithubRelease(token, tag, name, body, draft, prerelease, tagPrefi
             // looking for all previous release drafts that matches the given tag prefix
             const listReleasesOptions = octokit.rest.repos.listReleases.endpoint.merge({
                 owner,
-                repo
+                repo,
             });
             try {
                 for (var _b = __asyncValues(octokit.paginate.iterator(listReleasesOptions)), _c; _c = yield _b.next(), !_c.done;) {
@@ -365,7 +363,7 @@ function createGithubRelease(token, tag, name, body, draft, prerelease, tagPrefi
                             yield octokit.rest.repos.deleteRelease({
                                 owner,
                                 repo,
-                                release_id: release.id
+                                release_id: release.id,
                             });
                             core.debug(`Deleted previous draft release "${release.name || 'undefined'}"`);
                         }
@@ -390,11 +388,11 @@ function createGithubRelease(token, tag, name, body, draft, prerelease, tagPrefi
             name,
             body,
             draft,
-            prerelease
+            prerelease,
         });
         core.debug(`Created release "${name}"`);
         // Get the ID, html_url, and upload URL for the created Release from the response
-        const { data: { id: releaseId, html_url: htmlUrl, upload_url: uploadUrl } } = createReleaseResponse;
+        const { data: { id: releaseId, html_url: htmlUrl, upload_url: uploadUrl }, } = createReleaseResponse;
         core.setOutput('release_id', releaseId.toString());
         core.setOutput('html_url', htmlUrl);
         core.setOutput('upload_url', uploadUrl);
@@ -466,7 +464,7 @@ const findReleaseTag = (token, matchFunction) => __awaiter(void 0, void 0, void 
     // Using pagination: https://octokitRest.octokitRest.io/rest.js/v17#pagination
     const listReleasesOptions = octokit.rest.repos.listReleases.endpoint.merge({
         owner,
-        repo
+        repo,
     });
     try {
         // Look for the earliest release that matches the given condition
@@ -526,7 +524,7 @@ function retrieveLastReleasedVersion(token, tagPrefix) {
             const { prerelease, draft, tag_name: tagName } = release;
             core.debug(`Evaluating if "${release.tag_name}" has been released: ${JSON.stringify({
                 prerelease,
-                draft
+                draft,
             })}`);
             return !draft && !prerelease && tagName.startsWith(tagPrefix);
         };
@@ -589,7 +587,9 @@ function run() {
         try {
             // Global config
             const app = core.getInput('app', { required: false });
-            const appTagSeparator = core.getInput('appTagSeparator', { required: false });
+            const appTagSeparator = core.getInput('appTagSeparator', {
+                required: false,
+            });
             const token = core.getInput('token', { required: true });
             const withV = core.getBooleanInput('withV', { required: false });
             const versionPrefix = withV ? 'v' : '';
@@ -601,7 +601,7 @@ function run() {
                 appTagSeparator,
                 withV,
                 versionPrefix,
-                tagPrefix
+                tagPrefix,
             })}`);
             // Commit loading config
             const baseTag = core.getInput('baseTag', { required: false }) ||
@@ -613,7 +613,7 @@ function run() {
             core.debug(`Commit configuration: ${JSON.stringify({
                 baseTag,
                 taskBaseUrl,
-                taskPrefix
+                taskPrefix,
             })}`);
             // Release config
             const pushTag = core.getInput('pushTag', { required: false }) === 'true';
@@ -624,7 +624,7 @@ function run() {
                 pushTag,
                 templatePath,
                 draft,
-                prerelease
+                prerelease,
             })}`);
             core.debug(`Parse commits from ${baseTag} to current sha`);
             const diffInfo = yield (0, commits_1.commitParser)(token, baseTag, taskPrefix, taskBaseUrl, app);

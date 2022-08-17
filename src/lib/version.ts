@@ -17,7 +17,7 @@ const findReleaseTag = async (
   // Using pagination: https://octokitRest.octokitRest.io/rest.js/v17#pagination
   const listReleasesOptions = octokit.rest.repos.listReleases.endpoint.merge({
     owner,
-    repo
+    repo,
   });
 
   // Look for the earliest release that matches the given condition
@@ -80,7 +80,7 @@ export async function retrieveLastReleasedVersion(
     core.debug(
       `Evaluating if "${release.tag_name}" has been released: ${JSON.stringify({
         prerelease,
-        draft
+        draft,
       })}`
     );
     return !draft && !prerelease && tagName.startsWith(tagPrefix);

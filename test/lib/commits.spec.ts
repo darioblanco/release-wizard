@@ -8,16 +8,16 @@ jest.mock('@actions/github', () => ({
   context: {
     repo: {
       owner: 'theowner',
-      repo: 'therepo'
-    }
+      repo: 'therepo',
+    },
   },
-  getOctokit: jest.fn()
+  getOctokit: jest.fn(),
 }));
 jest.mock('@actions/core');
 
 const author = {
   login: 'darioblanco',
-  html_url: 'https://authorurl'
+  html_url: 'https://authorurl',
 };
 
 const html_url = 'https://commiturl';
@@ -32,86 +32,86 @@ describe('commit', () => {
           author,
           html_url,
           sha,
-          commit: { message: 'feat:super feature' }
+          commit: { message: 'feat:super feature' },
         },
         {
           author,
           html_url,
           sha,
-          commit: { message: 'fix: My fix' }
+          commit: { message: 'fix: My fix' },
         },
         {
           author,
           html_url,
           sha,
-          commit: { message: 'perf: set additional performance steps' }
+          commit: { message: 'perf: set additional performance steps' },
         },
         {
           author,
           html_url,
           sha,
-          commit: { message: 'docs(my-app): document everything' }
+          commit: { message: 'docs(my-app): document everything' },
         },
         {
           author,
           html_url,
           sha,
-          commit: { message: 'style: awesome style' }
+          commit: { message: 'style: awesome style' },
         },
         {
           author,
           html_url,
           sha,
-          commit: { message: 'refactor(my-app): one does not simply refactor' }
+          commit: { message: 'refactor(my-app): one does not simply refactor' },
         },
         {
           author,
           html_url,
           sha,
-          commit: { message: 'test: Tests are good' }
+          commit: { message: 'test: Tests are good' },
         },
         {
           author,
           html_url,
           sha,
-          commit: { message: 'chore: somebody has to keep things going' }
+          commit: { message: 'chore: somebody has to keep things going' },
         },
         {
           html_url,
           sha,
-          commit: { message: 'build: like chore but fancier and without author' }
-        },
-        {
-          author,
-          html_url,
-          sha,
-          commit: { message: 'ci: ok this is a CI change' }
+          commit: {
+            message: 'build: like chore but fancier and without author',
+          },
         },
         {
           author,
           html_url,
           sha,
-          commit: { message: 'uncategorized commit' }
-        }
-      ]
-    }
+          commit: { message: 'ci: ok this is a CI change' },
+        },
+        {
+          author,
+          html_url,
+          sha,
+          commit: { message: 'uncategorized commit' },
+        },
+      ],
+    },
   };
   const compareCommits = jest.fn(() => compareCommitsResponse);
 
   beforeEach(() => compareCommits.mockClear());
 
   test('render commits diff for each category', async () => {
-    ;(getOctokit as jest.Mock).mockReturnValue({
-      rest: { repos: { compareCommits } }
+    (getOctokit as jest.Mock).mockReturnValue({
+      rest: { repos: { compareCommits } },
     });
-    const { changes, nextVersionType, tasks, pullRequests } = await commitParser(
-      token,
-      'main'
-    );
+    const { changes, nextVersionType, tasks, pullRequests } =
+      await commitParser(token, 'main');
     expect(setOutput).toBeCalledWith(
       'changes',
       JSON.stringify(
-        compareCommitsResponse.data.commits.map(commit => commit.sha)
+        compareCommitsResponse.data.commits.map((commit) => commit.sha)
       ) // 8 commits
     );
     expect(setOutput).toBeCalledWith('tasks', '[]');
@@ -123,16 +123,11 @@ describe('commit', () => {
   });
 
   test('render commits diff when scope is required', async () => {
-    ;(getOctokit as jest.Mock).mockReturnValue({
-      rest: { repos: { compareCommits } }
+    (getOctokit as jest.Mock).mockReturnValue({
+      rest: { repos: { compareCommits } },
     });
-    const { changes, nextVersionType, tasks, pullRequests } = await commitParser(
-      token,
-      'v1.0.0',
-      'JIRA-',
-      undefined,
-      'my-app'
-    );
+    const { changes, nextVersionType, tasks, pullRequests } =
+      await commitParser(token, 'v1.0.0', 'JIRA-', undefined, 'my-app');
     expect(setOutput).toBeCalledWith(
       'changes',
       '["62ec8ea713fdf14e4abaef3d7d5138194dec49ce","62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]'
@@ -143,8 +138,8 @@ describe('commit', () => {
     expect(nextVersionType).toBe(VersionType.patch);
     expect(tasks).toBe('');
     expect(pullRequests).toBe('');
-  })
-  ;[undefined, 'http://my-task-url'].forEach(taskBaseUrl =>
+  });
+  [undefined, 'http://my-task-url'].forEach((taskBaseUrl) =>
     test(`render gh squashed commits with scope, PRs and tasks for ${
       taskBaseUrl || 'undefined'
     }`, async () => {
@@ -169,16 +164,18 @@ describe('commit', () => {
               html_url,
               sha,
               commit: {
-                message: commitMessage
-              }
-            }
-          ]
-        }
-      }
-      ;(getOctokit as jest.Mock).mockReturnValue({
+                message: commitMessage,
+              },
+            },
+          ],
+        },
+      };
+      (getOctokit as jest.Mock).mockReturnValue({
         rest: {
-          repos: { compareCommits: jest.fn(() => compareSquashedCommitsResponse) }
-        }
+          repos: {
+            compareCommits: jest.fn(() => compareSquashedCommitsResponse),
+          },
+        },
       });
       const { changes, nextVersionType, tasks, pullRequests } =
         await commitParser(token, 'v1.0.0', 'JIRA-', taskBaseUrl, 'auth');
@@ -195,7 +192,8 @@ describe('commit', () => {
       expect(setOutput).toBeCalledWith('pull_requests', '["1716"]');
       expect(changes).toMatchSnapshot();
       expect(nextVersionType).toBe(VersionType.major);
-      const jiraBaseUrl = taskBaseUrl || 'https://theowner.atlassian.net/browse';
+      const jiraBaseUrl =
+        taskBaseUrl || 'https://theowner.atlassian.net/browse';
       expect(tasks).toBe(
         `[JIRA-2772](${jiraBaseUrl}/JIRA-2772), [JIRA-2773](${jiraBaseUrl}/JIRA-2773)`
       );
@@ -218,22 +216,21 @@ describe('commit', () => {
             html_url,
             sha,
             commit: {
-              message: commitMessage
-            }
-          }
-        ]
-      }
-    }
-    ;(getOctokit as jest.Mock).mockReturnValue({
+              message: commitMessage,
+            },
+          },
+        ],
+      },
+    };
+    (getOctokit as jest.Mock).mockReturnValue({
       rest: {
-        repos: { compareCommits: jest.fn(() => compareSquashedCommitsResponse) }
-      }
+        repos: {
+          compareCommits: jest.fn(() => compareSquashedCommitsResponse),
+        },
+      },
     });
-    const { changes, nextVersionType, tasks, pullRequests } = await commitParser(
-      token,
-      'v1.0.0',
-      'JIRA-'
-    );
+    const { changes, nextVersionType, tasks, pullRequests } =
+      await commitParser(token, 'v1.0.0', 'JIRA-');
     expect(setOutput).toBeCalledWith(
       'changes',
       '["62ec8ea713fdf14e4abaef3d7d5138194dec49ce",' +

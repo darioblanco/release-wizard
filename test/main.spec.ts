@@ -4,7 +4,7 @@ import { commitParser } from '@/lib/commits';
 import {
   createGitTag,
   createGithubRelease,
-  renderReleaseBody
+  renderReleaseBody,
 } from '@/lib/release';
 import { bumpVersion, retrieveLastReleasedVersion } from '@/lib/version';
 import { run } from '@/main';
@@ -16,10 +16,10 @@ jest.mock('@actions/github', () => ({
     ref: 'refs/heads/main',
     repo: {
       owner: 'theowner',
-      repo: 'therepo'
-    }
+      repo: 'therepo',
+    },
   },
-  getOctokit: jest.fn()
+  getOctokit: jest.fn(),
 }));
 jest.mock('@/lib/commits');
 jest.mock('@/lib/release');
@@ -41,19 +41,19 @@ describe('run', () => {
   const body = 'releaseBody';
 
   beforeEach(() => {
-    ;(commitParser as jest.Mock).mockImplementation(() => ({
+    (commitParser as jest.Mock).mockImplementation(() => ({
       changes,
       nextVersionType,
       tasks,
-      pullRequests
-    }))
-    ;(renderReleaseBody as jest.Mock)
+      pullRequests,
+    }));
+    (renderReleaseBody as jest.Mock)
       .mockImplementation()
       .mockResolvedValue(body);
   });
 
   test('with required params', async () => {
-    ;(getInput as jest.Mock).mockImplementation((name: string) => {
+    (getInput as jest.Mock).mockImplementation((name: string) => {
       switch (name) {
         case 'draft':
           return draft.toString();
@@ -73,14 +73,14 @@ describe('run', () => {
     });
     const tagPrefix = '';
 
-    const baseTag = 'main'
-    ;(retrieveLastReleasedVersion as jest.Mock)
+    const baseTag = 'main';
+    (retrieveLastReleasedVersion as jest.Mock)
       .mockImplementation()
       .mockResolvedValue(undefined);
 
     const releaseVersion = '1.0.5';
-    const releaseTag = `${tagPrefix}${releaseVersion}`
-    ;(bumpVersion as jest.Mock).mockImplementation(() => releaseTag);
+    const releaseTag = `${tagPrefix}${releaseVersion}`;
+    (bumpVersion as jest.Mock).mockImplementation(() => releaseTag);
 
     await run();
 
@@ -124,8 +124,8 @@ describe('run', () => {
     const releaseName = 'fake-app';
     const releaseTag = `mycustomprefix-1.0.6`;
     const taskBaseUrl = 'https://myfaketask.url';
-    const withV = true
-    ;(getInput as jest.Mock).mockImplementation((name: string) => {
+    const withV = true;
+    (getInput as jest.Mock).mockImplementation((name: string) => {
       switch (name) {
         case 'app':
           return app;
@@ -156,8 +156,8 @@ describe('run', () => {
         default:
           return undefined;
       }
-    })
-    ;(getBooleanInput as jest.Mock).mockImplementation((name: string) => {
+    });
+    (getBooleanInput as jest.Mock).mockImplementation((name: string) => {
       switch (name) {
         case 'withV':
           return withV;
@@ -200,8 +200,8 @@ describe('run', () => {
   });
 
   test('unexpected error', async () => {
-    const errorMsg = 'fake'
-    ;(getInput as jest.Mock).mockImplementation(() => {
+    const errorMsg = 'fake';
+    (getInput as jest.Mock).mockImplementation(() => {
       throw new Error(errorMsg);
     });
 

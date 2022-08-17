@@ -24,7 +24,7 @@ export async function renderReleaseBody(
     owner,
     repo,
     path,
-    ref
+    ref,
   });
   let template: string;
   if ('content' in contentResponse.data) {
@@ -55,7 +55,7 @@ export async function createGitTag(token: string, tag: string): Promise<void> {
     owner,
     repo,
     sha,
-    ref: `refs/tags/${tag}`
+    ref: `refs/tags/${tag}`,
   });
 }
 
@@ -76,7 +76,7 @@ export async function createGithubRelease(
     // looking for all previous release drafts that matches the given tag prefix
     const listReleasesOptions = octokit.rest.repos.listReleases.endpoint.merge({
       owner,
-      repo
+      repo,
     });
     for await (const response of octokit.paginate.iterator<Release>(
       listReleasesOptions
@@ -86,7 +86,7 @@ export async function createGithubRelease(
           await octokit.rest.repos.deleteRelease({
             owner,
             repo,
-            release_id: release.id
+            release_id: release.id,
           });
           core.debug(
             `Deleted previous draft release "${release.name || 'undefined'}"`
@@ -106,13 +106,13 @@ export async function createGithubRelease(
     name,
     body,
     draft,
-    prerelease
+    prerelease,
   });
   core.debug(`Created release "${name}"`);
 
   // Get the ID, html_url, and upload URL for the created Release from the response
   const {
-    data: { id: releaseId, html_url: htmlUrl, upload_url: uploadUrl }
+    data: { id: releaseId, html_url: htmlUrl, upload_url: uploadUrl },
   } = createReleaseResponse;
 
   core.setOutput('release_id', releaseId.toString());
