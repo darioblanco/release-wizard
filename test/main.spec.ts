@@ -33,7 +33,7 @@ describe('run', () => {
   const taskPrefix = 'JIRA-';
   const draft = true;
   const prerelease = false;
-  const releaseTitleTemplate = '$TAG :rocket:';
+  const releaseTitleTemplate = '$TAG 🚀';
   const withV = 'true';
   // Template stubs
   const changes = '';
