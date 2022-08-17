@@ -115,7 +115,7 @@ describe('run', () => {
     expect(createGithubRelease).toBeCalledWith(
       token,
       releaseTag,
-      `${releaseTag} :rocket:`,
+      `${releaseTag} 🚀`,
       body,
       draft,
       prerelease,

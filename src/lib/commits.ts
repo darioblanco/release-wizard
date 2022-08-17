@@ -86,9 +86,7 @@ export async function commitParser(
   const uncategorizedCommits: Commit[] = [];
 
   const changes: string[] = [];
-  const contributors: {
-    [username: string]: { userUrl: string; avatarUrl: string };
-  } = {};
+  const contributors: Set<string> = new Set();
   const tasks: Set<string> = new Set();
   const pullRequests: string[] = [];
   let nextVersionType = VersionType.patch;
@@ -146,16 +144,11 @@ export async function commitParser(
       commit: { message },
       sha,
     } = githubCommit;
-    let avatarUrl = '';
     let username = '';
     let userUrl = '';
     if (githubCommit.author) {
-      ({
-        login: username,
-        html_url: userUrl,
-        avatar_url: avatarUrl,
-      } = githubCommit.author);
-      contributors[username] = { userUrl, avatarUrl };
+      ({ login: username, html_url: userUrl } = githubCommit.author);
+      contributors.add(`@${username}`);
     }
     const commit: Commit = { username, userUrl, commitUrl, message, sha };
 
@@ -248,9 +241,10 @@ export async function commitParser(
     }
   });
 
+  const contributorList = [...contributors];
   const taskList = [...tasks];
   core.setOutput('changes', JSON.stringify(changes));
-  core.setOutput('contributors', JSON.stringify(Object.keys(contributors)));
+  core.setOutput('contributors', JSON.stringify(contributorList));
   core.setOutput('tasks', JSON.stringify(taskList));
   core.setOutput('pull_requests', JSON.stringify(pullRequests));
 
@@ -266,12 +260,7 @@ export async function commitParser(
   return {
     nextVersionType,
     changes: changesMd.trim(),
-    contributors: Object.entries(contributors)
-      .map(
-        ([username, { avatarUrl, userUrl }]) =>
-          `![avatar](${avatarUrl})[${username}](${userUrl})`
-      )
-      .join('\n'),
+    contributors: contributorList.join(', '),
     tasks: taskList
       .map(
         (task) =>

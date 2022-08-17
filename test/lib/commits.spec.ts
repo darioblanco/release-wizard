@@ -114,7 +114,7 @@ describe('commit', () => {
         compareCommitsResponse.data.commits.map((commit) => commit.sha)
       ) // 8 commits
     );
-    expect(setOutput).toBeCalledWith('contributors', '["darioblanco"]');
+    expect(setOutput).toBeCalledWith('contributors', '["@darioblanco"]');
     expect(setOutput).toBeCalledWith('tasks', '[]');
     expect(setOutput).toBeCalledWith('pull_requests', '[]');
     expect(changes).toMatchSnapshot();
@@ -133,7 +133,7 @@ describe('commit', () => {
       'changes',
       '["62ec8ea713fdf14e4abaef3d7d5138194dec49ce","62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]'
     );
-    expect(setOutput).toBeCalledWith('contributors', '["darioblanco"]');
+    expect(setOutput).toBeCalledWith('contributors', '["@darioblanco"]');
     expect(setOutput).toBeCalledWith('tasks', '[]');
     expect(setOutput).toBeCalledWith('pull_requests', '[]');
     expect(changes).toMatchSnapshot();
@@ -190,7 +190,7 @@ describe('commit', () => {
             .map(() => sha)
         ) // 6 commits
       );
-      expect(setOutput).toBeCalledWith('contributors', '["darioblanco"]');
+      expect(setOutput).toBeCalledWith('contributors', '["@darioblanco"]');
       expect(setOutput).toBeCalledWith('tasks', '["JIRA-2772","JIRA-2773"]');
       expect(setOutput).toBeCalledWith('pull_requests', '["1716"]');
       expect(changes).toMatchSnapshot();
@@ -240,7 +240,7 @@ describe('commit', () => {
         '"62ec8ea713fdf14e4abaef3d7d5138194dec49ce",' +
         '"62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]'
     );
-    expect(setOutput).toBeCalledWith('contributors', '["darioblanco"]');
+    expect(setOutput).toBeCalledWith('contributors', '["@darioblanco"]');
     expect(setOutput).toBeCalledWith('tasks', '[]');
     expect(setOutput).toBeCalledWith('pull_requests', '[]');
     expect(changes).toMatchSnapshot();

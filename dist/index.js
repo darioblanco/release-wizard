@@ -103,7 +103,7 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
         };
         const uncategorizedCommits = [];
         const changes = [];
-        const contributors = {};
+        const contributors = new Set();
         const tasks = new Set();
         const pullRequests = [];
         let nextVersionType = types_1.VersionType.patch;
@@ -147,16 +147,14 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
         const majorRegExp = new RegExp(`(#MAJOR$)`, 'gmi');
         commits.forEach((githubCommit) => {
             const { html_url: commitUrl, commit: { message }, sha, } = githubCommit;
-            let avatarUrl = '';
             let username = '';
             let userUrl = '';
             if (githubCommit.author) {
                 ({
                     login: username,
                     html_url: userUrl,
-                    avatar_url: avatarUrl,
                 } = githubCommit.author);
-                contributors[username] = { userUrl, avatarUrl };
+                contributors.add(`@${username}`);
             }
             const commit = { username, userUrl, commitUrl, message, sha };
             // Detect if commit is a Github squash. In that case, convert body
@@ -227,9 +225,10 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
                 groupCommits.forEach(formatCommit);
             }
         });
+        const contributorList = [...contributors];
         const taskList = [...tasks];
         core.setOutput('changes', JSON.stringify(changes));
-        core.setOutput('contributors', JSON.stringify(Object.keys(contributors)));
+        core.setOutput('contributors', JSON.stringify(contributorList));
         core.setOutput('tasks', JSON.stringify(taskList));
         core.setOutput('pull_requests', JSON.stringify(pullRequests));
         // Set bump type to minor if there is at least one 'feat' commit
@@ -241,9 +240,7 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
         return {
             nextVersionType,
             changes: changesMd.trim(),
-            contributors: Object.entries(contributors)
-                .map(([username, { avatarUrl, userUrl }]) => `![avatar](${avatarUrl})[${username}](${userUrl})`)
-                .join('\n'),
+            contributors: contributorList.join(', '),
             tasks: taskList
                 .map((task) => `[${task}](${taskBaseUrl || `https://${owner}.atlassian.net/browse`}/${task})`)
                 .join(', '),
