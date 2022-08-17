@@ -92,8 +92,12 @@ export async function run(): Promise<void> {
 
     // Won't replace it if release tag is given manually
     const releaseVersion = releaseTag.replace(tagPrefix, '');
+    const releaseTemplate = core.getInput('releaseTemplate', {
+      required: false,
+    });
     const releaseName =
-      core.getInput('releaseName', { required: false }) || releaseTag;
+      core.getInput('releaseName', { required: false }) ||
+      releaseTemplate.replace(/\$TAG/g, releaseTag);
     core.debug(`Generate release body from template ${templatePath}`);
     const body = await renderReleaseBody(
       token,

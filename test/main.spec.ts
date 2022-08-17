@@ -33,6 +33,8 @@ describe('run', () => {
   const taskPrefix = 'JIRA-';
   const draft = true;
   const prerelease = false;
+  const releaseTemplate = '$TAG :rocket:';
+  const withV = 'true';
   // Template stubs
   const changes = '';
   const nextVersionType = VersionType.patch;
@@ -63,12 +65,16 @@ describe('run', () => {
           return prerelease.toString();
         case 'pushTag':
           return 'false';
+        case 'releaseTemplate':
+          return releaseTemplate;
         case 'taskPrefix':
           return taskPrefix;
         case 'templatePath':
           return templatePath;
         case 'token':
           return token;
+        case 'withV':
+          return withV;
         default:
           return undefined;
       }
@@ -109,7 +115,7 @@ describe('run', () => {
     expect(createGithubRelease).toBeCalledWith(
       token,
       releaseTag,
-      releaseTag,
+      `${releaseTag} :rocket:`,
       body,
       draft,
       prerelease,

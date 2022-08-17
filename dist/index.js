@@ -151,7 +151,11 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
             let username = '';
             let userUrl = '';
             if (githubCommit.author) {
-                ({ login: username, html_url: userUrl, avatar_url: avatarUrl } = githubCommit.author);
+                ({
+                    login: username,
+                    html_url: userUrl,
+                    avatar_url: avatarUrl,
+                } = githubCommit.author);
                 contributors[username] = { userUrl, avatarUrl };
             }
             const commit = { username, userUrl, commitUrl, message, sha };
@@ -651,7 +655,9 @@ function run() {
             }
             // Won't replace it if release tag is given manually
             const releaseVersion = releaseTag.replace(tagPrefix, '');
-            const releaseName = core.getInput('releaseName', { required: false }) || releaseTag;
+            const releaseTemplate = core.getInput('releaseTemplate', { required: false });
+            const releaseName = core.getInput('releaseName', { required: false }) ||
+                releaseTemplate.replace(/\$TAG/g, releaseTag);
             core.debug(`Generate release body from template ${templatePath}`);
             const body = yield (0, release_1.renderReleaseBody)(token, templatePath, app, releaseVersion, changes, tasks, pullRequests, contributors);
             core.debug(`Create Github release for ${releaseTag} tag with ${releaseName} title`);

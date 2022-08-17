@@ -44,6 +44,10 @@ inputs:
   releaseName:
     description: 'The release title'
     required: false
+  releaseTemplate:
+    description: 'The release template, ignored if releaseName is provided.'
+    required: false
+    default: '$TAG :rocket:'
   releaseTag:
     description: >-
       The git tag that will be linked to the release.

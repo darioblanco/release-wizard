@@ -134,6 +134,7 @@ jobs:
 | prerelease      | no       | `false`                                         | Mark release as prerelease when creating. This will ignore `major`, `minor` and `patch` bump suggestions and propose a [prerelease](https://github.com/npm/node-semver#prerelease-tags).                                                                                              |
 | pushTag         | no       | `false`                                         | Creates and pushes the automatic calculated tag before creating the release. Useful if you want the action to handle tags for you when publishing drafts. By default, a release draft won't create the tag, which only happens when it is published.                                  |
 | releaseName     | no       | `<app?> <$version>`                             | The title of the release                                                                                                                                                                                                                                                              |
+| releaseTemplate | no       | `$TAG :rocket:`                                 | The template to customize how the release title will look like.                                                                                                                                                                                                                       |
 | releaseTag      | no       | `<app?><$appTagSeparator?><withV?v:><$version>` | The git tag that belongs to the release.                                                                                                                                                                                                                                              |
 | taskBaseUrl     | no       | `https://<mygithuborg>.atlassian.net/browse`    | The base url to append for a detected task (do not set a trailing `/`). By default, it will create a url based on your Github organization.                                                                                                                                           |
 | taskPrefix      | no       | `JIR-`                                          | The prefix that identifies task ids in the commits.                                                                                                                                                                                                                                   |
@@ -146,6 +147,7 @@ jobs:
 | Name             | Description                                                                     |
 | ---------------- | ------------------------------------------------------------------------------- |
 | changes          | A JSON array with the list of commit sha that are involved in the release.      |
+| contributors     | A JSON array with the list of Github contributor usernames for the release.     |
 | new_tag          | The newly created tag that will reference the release.                          |
 | new_version      | The newly created version that belongs to the tag.                              |
 | html_url         | The browser url linking to Github's release.                                    |
@@ -195,7 +197,8 @@ $PULL_REQUESTS
 The action will replace the following variables:
 
 - `$APP`: the `app` input.
-- `$VERSION`: the updated version without `tagPrefix`.
+- `$TAG`: the release tag (with `tagPrefix` if applicable).
+- `$VERSION`: the updated version (without `tagPrefix`).
 - `$CHANGES`: the rendered list of commit messages. See [commit format](#commit-format).
   Commits will be detected if a `baseRef` is given or if another previous (and matching) tag was
   pushed to the repository and its release was published (automatic detection).
@@ -298,23 +301,23 @@ should be fully controlled by the user.
 Install dependencies
 
 ```bash
-yarn
+npm i
 ```
 
 Compile typescript
 
 ```bash
-yarn build
+npm run build
 ```
 
 Lint code
 
 ```bash
-yarn lint
+npm run lint
 ```
 
 Run the tests
 
 ```bash
-yarn test
+npm t
 ```
