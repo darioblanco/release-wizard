@@ -97,7 +97,10 @@ export async function run(): Promise<void> {
     });
     const releaseName =
       core.getInput('releaseName', { required: false }) ||
-      releaseTemplate.replace(/\$TAG/g, releaseTag);
+      releaseTemplate
+        .replace(/\$TAG/g, releaseTag)
+        .replace(/\$APP/g, app)
+        .replace(/\$VERSION/g, releaseVersion);
     core.debug(`Generate release body from template ${templatePath}`);
     const body = await renderReleaseBody(
       token,

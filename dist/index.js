@@ -655,9 +655,14 @@ function run() {
             }
             // Won't replace it if release tag is given manually
             const releaseVersion = releaseTag.replace(tagPrefix, '');
-            const releaseTemplate = core.getInput('releaseTemplate', { required: false });
+            const releaseTemplate = core.getInput('releaseTemplate', {
+                required: false,
+            });
             const releaseName = core.getInput('releaseName', { required: false }) ||
-                releaseTemplate.replace(/\$TAG/g, releaseTag);
+                releaseTemplate
+                    .replace(/\$TAG/g, releaseTag)
+                    .replace(/\$APP/g, app)
+                    .replace(/\$VERSION/g, releaseVersion);
             core.debug(`Generate release body from template ${templatePath}`);
             const body = yield (0, release_1.renderReleaseBody)(token, templatePath, app, releaseVersion, changes, tasks, pullRequests, contributors);
             core.debug(`Create Github release for ${releaseTag} tag with ${releaseName} title`);
