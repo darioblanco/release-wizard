@@ -201,6 +201,7 @@ The action will replace the following variables:
   pushed to the repository and its release was published (automatic detection).
 - `$TASKS`: the bullet list of detected tasks. See [task format](#task-format).
 - `$PULL_REQUESTS`: the list of Github PRs. See [PR format](#pr-format).
+- `$CONTRIBUTORS`: the list of authors for the release diff.
 
 #### Commit format
 

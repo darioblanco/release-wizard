@@ -77,6 +77,8 @@ outputs:
     description: 'The semantic type of change: major, minor, patch or prerelease'
   changes:
     description: 'A JSON array with the list of commit sha that are involved in the release'
+  contributors:
+    description: 'A JSON array with Github usernames of the people who contributed to the release'
   new_tag:
     description: 'The newly created tag that will reference the release'
   new_version:

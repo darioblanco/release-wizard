@@ -103,6 +103,7 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
         };
         const uncategorizedCommits = [];
         const changes = [];
+        const contributors = {};
         const tasks = new Set();
         const pullRequests = [];
         let nextVersionType = types_1.VersionType.patch;
@@ -146,10 +147,12 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
         const majorRegExp = new RegExp(`(#MAJOR$)`, 'gmi');
         commits.forEach((githubCommit) => {
             const { html_url: commitUrl, commit: { message }, sha, } = githubCommit;
+            let avatarUrl = '';
             let username = '';
             let userUrl = '';
             if (githubCommit.author) {
-                ({ login: username, html_url: userUrl } = githubCommit.author);
+                ({ login: username, html_url: userUrl, avatar_url: avatarUrl } = githubCommit.author);
+                contributors[username] = { userUrl, avatarUrl };
             }
             const commit = { username, userUrl, commitUrl, message, sha };
             // Detect if commit is a Github squash. In that case, convert body
@@ -222,6 +225,7 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
         });
         const taskList = [...tasks];
         core.setOutput('changes', JSON.stringify(changes));
+        core.setOutput('contributors', JSON.stringify(Object.keys(contributors)));
         core.setOutput('tasks', JSON.stringify(taskList));
         core.setOutput('pull_requests', JSON.stringify(pullRequests));
         // Set bump type to minor if there is at least one 'feat' commit
@@ -233,6 +237,9 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
         return {
             nextVersionType,
             changes: changesMd.trim(),
+            contributors: Object.entries(contributors)
+                .map(([username, { avatarUrl, userUrl }]) => `![avatar](${avatarUrl})[${username}](${userUrl})`)
+                .join('\n'),
             tasks: taskList
                 .map((task) => `[${task}](${taskBaseUrl || `https://${owner}.atlassian.net/browse`}/${task})`)
                 .join(', '),
@@ -296,7 +303,7 @@ exports.createGithubRelease = exports.createGitTag = exports.renderReleaseBody =
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const path_1 = __nccwpck_require__(1017);
-function renderReleaseBody(token, templatePath, app, releaseVersion, changes = '', tasks = '', pullRequests = '') {
+function renderReleaseBody(token, templatePath, app, releaseVersion, changes = '', tasks = '', pullRequests = '', contributors = '') {
     return __awaiter(this, void 0, void 0, function* () {
         const { owner, repo } = github.context.repo;
         const { ref } = github.context;
@@ -323,6 +330,7 @@ function renderReleaseBody(token, templatePath, app, releaseVersion, changes = '
         body = body.replace(/\$CHANGES/g, changes);
         body = body.replace(/\$TASKS/g, tasks);
         body = body.replace(/\$PULL_REQUESTS/g, pullRequests);
+        body = body.replace(/\$CONTRIBUTORS/g, contributors);
         core.setOutput('body', body);
         return body;
     });
@@ -628,7 +636,7 @@ function run() {
             })}`);
             core.debug(`Parse commits from ${baseTag} to current sha`);
             const diffInfo = yield (0, commits_1.commitParser)(token, baseTag, taskPrefix, taskBaseUrl, app);
-            const { changes, tasks, pullRequests } = diffInfo;
+            const { changes, contributors, tasks, pullRequests } = diffInfo;
             let { nextVersionType } = diffInfo;
             // Force next version as release candidate if prerelease draft is created
             if (prerelease) {
@@ -645,7 +653,7 @@ function run() {
             const releaseVersion = releaseTag.replace(tagPrefix, '');
             const releaseName = core.getInput('releaseName', { required: false }) || releaseTag;
             core.debug(`Generate release body from template ${templatePath}`);
-            const body = yield (0, release_1.renderReleaseBody)(token, templatePath, app, releaseVersion, changes, tasks, pullRequests);
+            const body = yield (0, release_1.renderReleaseBody)(token, templatePath, app, releaseVersion, changes, tasks, pullRequests, contributors);
             core.debug(`Create Github release for ${releaseTag} tag with ${releaseName} title`);
             yield (0, release_1.createGithubRelease)(token, releaseTag, releaseName, body, draft, prerelease, tagPrefix);
         }

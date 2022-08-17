@@ -38,11 +38,13 @@ describe('run', () => {
   const nextVersionType = VersionType.patch;
   const tasks = '';
   const pullRequests = '';
+  const contributors = '';
   const body = 'releaseBody';
 
   beforeEach(() => {
     (commitParser as jest.Mock).mockImplementation(() => ({
       changes,
+      contributors,
       nextVersionType,
       tasks,
       pullRequests,
@@ -99,7 +101,8 @@ describe('run', () => {
       releaseVersion,
       changes,
       tasks,
-      pullRequests
+      pullRequests,
+      contributors
     );
     expect(bumpVersion).toBeCalledWith(token, tagPrefix, VersionType.patch);
     expect(createGitTag).not.toBeCalled();
@@ -183,7 +186,8 @@ describe('run', () => {
       releaseTag,
       changes,
       tasks,
-      pullRequests
+      pullRequests,
+      contributors
     );
     expect(bumpVersion).not.toBeCalled();
     expect(createGitTag).toBeCalledWith(token, releaseTag);

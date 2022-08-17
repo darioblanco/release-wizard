@@ -73,7 +73,7 @@ export async function run(): Promise<void> {
       taskBaseUrl,
       app
     );
-    const { changes, tasks, pullRequests } = diffInfo;
+    const { changes, contributors, tasks, pullRequests } = diffInfo;
 
     let { nextVersionType } = diffInfo;
     // Force next version as release candidate if prerelease draft is created
@@ -102,7 +102,8 @@ export async function run(): Promise<void> {
       releaseVersion,
       changes,
       tasks,
-      pullRequests
+      pullRequests,
+      contributors
     );
     core.debug(
       `Create Github release for ${releaseTag} tag with ${releaseName} title`

@@ -11,7 +11,8 @@ export async function renderReleaseBody(
   releaseVersion: string,
   changes = '',
   tasks = '',
-  pullRequests = ''
+  pullRequests = '',
+  contributors = ''
 ): Promise<string> {
   const { owner, repo } = github.context.repo;
   const { ref } = github.context;
@@ -41,6 +42,7 @@ export async function renderReleaseBody(
   body = body.replace(/\$CHANGES/g, changes);
   body = body.replace(/\$TASKS/g, tasks);
   body = body.replace(/\$PULL_REQUESTS/g, pullRequests);
+  body = body.replace(/\$CONTRIBUTORS/g, contributors);
   core.setOutput('body', body);
   return body;
 }
