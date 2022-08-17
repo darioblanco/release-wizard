@@ -223,7 +223,7 @@ export async function commitParser(
     changesMd = `${changesMd}- ${message} - [${sha.substring(
       0,
       8
-    )}](${commitUrl})([@${username}](${userUrl}))\n`;
+    )}](${commitUrl}) ([@${username}](${userUrl}))\n`;
     // Add to global commit sha list
     changes.push(sha);
   };

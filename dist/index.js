@@ -208,7 +208,7 @@ function commitParser(token, baseRef, taskPrefix = 'JIR-', taskBaseUrl, commitSc
                 message = message.replace(rawTask, `[${task}](${taskBaseUrl || `https://${owner}.atlassian.net/browse`}/${task})`);
             }
             // Add to global change markdown
-            changesMd = `${changesMd}- ${message} - [${sha.substring(0, 8)}](${commitUrl})([@${username}](${userUrl}))\n`;
+            changesMd = `${changesMd}- ${message} - [${sha.substring(0, 8)}](${commitUrl}) ([@${username}](${userUrl}))\n`;
             // Add to global commit sha list
             changes.push(sha);
         };
