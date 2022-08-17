@@ -206,6 +206,9 @@ The action will replace the following variables:
 - `$PULL_REQUESTS`: the list of Github PRs. See [PR format](#pr-format).
 - `$CONTRIBUTORS`: the list of authors for the release diff.
 
+The `$APP`, `$TAG` and `$VERSION` variables can also be defined in the `releaseTitleTemplate` input.
+They will be replaced by the calculated values.
+
 #### Commit format
 
 If your commits follow the expected [commit style](#commit-types)

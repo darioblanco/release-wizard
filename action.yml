@@ -44,8 +44,8 @@ inputs:
   releaseName:
     description: 'The release title'
     required: false
-  releaseTemplate:
-    description: 'The release template, ignored if releaseName is provided.'
+  releaseTitleTemplate:
+    description: 'The release title template, ignored if releaseName is provided.'
     required: false
     default: '$TAG :rocket:'
   releaseTag:

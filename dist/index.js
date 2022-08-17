@@ -655,11 +655,11 @@ function run() {
             }
             // Won't replace it if release tag is given manually
             const releaseVersion = releaseTag.replace(tagPrefix, '');
-            const releaseTemplate = core.getInput('releaseTemplate', {
+            const releaseTitleTemplate = core.getInput('releaseTitleTemplate', {
                 required: false,
             });
             const releaseName = core.getInput('releaseName', { required: false }) ||
-                releaseTemplate
+                releaseTitleTemplate
                     .replace(/\$TAG/g, releaseTag)
                     .replace(/\$APP/g, app)
                     .replace(/\$VERSION/g, releaseVersion);

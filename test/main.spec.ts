@@ -33,7 +33,7 @@ describe('run', () => {
   const taskPrefix = 'JIRA-';
   const draft = true;
   const prerelease = false;
-  const releaseTemplate = '$TAG :rocket:';
+  const releaseTitleTemplate = '$TAG :rocket:';
   const withV = 'true';
   // Template stubs
   const changes = '';
@@ -65,8 +65,8 @@ describe('run', () => {
           return prerelease.toString();
         case 'pushTag':
           return 'false';
-        case 'releaseTemplate':
-          return releaseTemplate;
+        case 'releaseTitleTemplate':
+          return releaseTitleTemplate;
         case 'taskPrefix':
           return taskPrefix;
         case 'templatePath':
