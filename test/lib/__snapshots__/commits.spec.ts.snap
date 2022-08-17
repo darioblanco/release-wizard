@@ -3,80 +3,80 @@
 exports[`commit render commits diff for each category 1`] = `
 "- Uncategorized commit - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:zap: Features**
+### **:zap: Features**
 - Super feature - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:wrench: Fixes**
+### **:wrench: Fixes**
 - My fix - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:runner: Performance**
+### **:runner: Performance**
 - Set additional performance steps - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:books: Documentation**
+### **:books: Documentation**
 - Document everything - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:nail_care: Style**
+### **:nail_care: Style**
 - Awesome style - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:mountain: Refactors**
+### **:mountain: Refactors**
 - One does not simply refactor - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:traffic_light: Tests**
+### **:traffic_light: Tests**
 - Tests are good - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:construction: Maintenance**
+### **:construction: Maintenance**
 - Somebody has to keep things going - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:construction_worker: Build**
+### **:construction_worker: Build**
 - Like chore but fancier and without author - [62ec8ea7](https://commiturl) ([@]())
 
-## **:traffic_light: CI**
+### **:traffic_light: CI**
 - Ok this is a CI change - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))"
 `;
 
 exports[`commit render commits diff when scope is required 1`] = `
-"## **:books: Documentation**
+"### **:books: Documentation**
 - Document everything - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:mountain: Refactors**
+### **:mountain: Refactors**
 - One does not simply refactor - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))"
 `;
 
 exports[`commit render gh squashed commits with scope, PRs and tasks for http://my-task-url 1`] = `
 "- Set values for staging and production - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:zap: Features**
+### **:zap: Features**
 - Main commit of my PR [JIRA-2772](http://my-task-url/JIRA-2772) (#1716) - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 - Set login endpoint controller - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 - Set expiration of the cookie to the amount of time of the token - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:wrench: Fixes**
+### **:wrench: Fixes**
 - Set secure and http only options [JIRA-2773](http://my-task-url/JIRA-2773) - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 - Remove joi validation since it does not accept localhost - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:runner: Performance**
+### **:runner: Performance**
 - Add additional fake performance - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:traffic_light: Tests**
+### **:traffic_light: Tests**
 - Add integration test for login endpoint #MAJOR - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))"
 `;
 
 exports[`commit render gh squashed commits with scope, PRs and tasks for undefined 1`] = `
 "- Set values for staging and production - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:zap: Features**
+### **:zap: Features**
 - Main commit of my PR [JIRA-2772](https://theowner.atlassian.net/browse/JIRA-2772) (#1716) - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 - Set login endpoint controller - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 - Set expiration of the cookie to the amount of time of the token - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:wrench: Fixes**
+### **:wrench: Fixes**
 - Set secure and http only options [JIRA-2773](https://theowner.atlassian.net/browse/JIRA-2773) - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 - Remove joi validation since it does not accept localhost - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:runner: Performance**
+### **:runner: Performance**
 - Add additional fake performance - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 
-## **:traffic_light: Tests**
+### **:traffic_light: Tests**
 - Add integration test for login endpoint #MAJOR - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))"
 `;
 
