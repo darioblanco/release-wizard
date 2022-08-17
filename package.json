@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "description": "Create a Github release with parsed commits into a given Markdown template",
-  "main": "lib/main.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/darioblanco/release-wizard.git"
