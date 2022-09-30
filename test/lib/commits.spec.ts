@@ -248,4 +248,38 @@ describe('commit', () => {
     expect(tasks).toBe('');
     expect(pullRequests).toBe('');
   });
+
+  test('skip empty commit message', async () => {
+    const compareEmptyCommitMessageResponse = {
+      data: {
+        commits: [
+          {
+            author,
+            html_url,
+            sha,
+            commit: {
+              message: undefined,
+            },
+          },
+        ],
+      },
+    };
+    (getOctokit as jest.Mock).mockReturnValue({
+      rest: {
+        repos: {
+          compareCommits: jest.fn(() => compareEmptyCommitMessageResponse),
+        },
+      },
+    });
+    const { changes, nextVersionType, tasks, pullRequests } =
+      await commitParser(token, 'v1.0.0', 'JIRA-');
+    expect(setOutput).toBeCalledWith('changes', '[]');
+    expect(setOutput).toBeCalledWith('contributors', '["@darioblanco"]');
+    expect(setOutput).toBeCalledWith('tasks', '[]');
+    expect(setOutput).toBeCalledWith('pull_requests', '[]');
+    expect(changes).toMatchSnapshot();
+    expect(nextVersionType).toBe(VersionType.patch);
+    expect(tasks).toBe('');
+    expect(pullRequests).toBe('');
+  });
 });

@@ -109,6 +109,11 @@ export async function commitParser(
 
   const categorizeCommit = (commit: Commit) => {
     const { message } = commit;
+    // Skip if message is empty
+    if (!message) {
+      core.debug(`Commit has no message`);
+      return;
+    }
     // Skip if scope check is required and commit does not have it
     if (commitScope && !message.includes(`(${commitScope}):`)) {
       core.debug(`Commit has no scope when it is required -> "${message}"`);
