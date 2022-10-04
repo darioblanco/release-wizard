@@ -85,3 +85,5 @@ exports[`commit render github squashed commits without scope, PRs and tasks 1`] 
 - Set login endpoint controller - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))
 - Add integration test for login endpoint - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))"
 `;
+
+exports[`commit skip empty commit message 1`] = `""`;
