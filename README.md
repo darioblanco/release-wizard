@@ -324,3 +324,12 @@ Run the tests
 ```bash
 npm t
 ```
+
+## Collaborators
+
+- @darioblanco
+- @jkrenge
+
+## Contributing
+
+[Contribution guidelines](CONTRIBUTING.md)
