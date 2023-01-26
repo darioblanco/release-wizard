@@ -125,6 +125,7 @@ export async function run(): Promise<void> {
       tagPrefix
     );
   } catch (error) {
+    core.debug(JSON.stringify(error));
     core.setFailed((error as Error).message);
   }
 }

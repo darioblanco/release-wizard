@@ -682,6 +682,7 @@ function run() {
             yield (0, release_1.createGithubRelease)(token, releaseTag, releaseName, body, draft, prerelease, tagPrefix);
         }
         catch (error) {
+            core.debug(JSON.stringify(error));
             core.setFailed(error.message);
         }
     });
