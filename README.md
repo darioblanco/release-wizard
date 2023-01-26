@@ -1,5 +1,7 @@
 # Release Wizard
 
+[![test](https://github.com/darioblanco/release-wizard/actions/workflows/test.yaml/badge.svg)](https://github.com/darioblanco/release-wizard/actions/workflows/test.yaml)
+
 Creates a Github release with parsed commits into a given Markdown template. This project is
 inspired by [Release Drafter](https://github.com/marketplace/actions/release-drafter),
 and a continuation of [MOU Release](https://github.com/minddocdev/mou-release-action).
