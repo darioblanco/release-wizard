@@ -110,7 +110,11 @@ describe('run', () => {
       pullRequests,
       contributors,
     );
-    expect(bumpVersion).toHaveBeenCalledWith(token, tagPrefix, VersionType.patch);
+    expect(bumpVersion).toHaveBeenCalledWith(
+      token,
+      tagPrefix,
+      VersionType.patch,
+    );
     expect(createGitTag).not.toHaveBeenCalled();
     expect(createGithubRelease).toHaveBeenCalledWith(
       token,

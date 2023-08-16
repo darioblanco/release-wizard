@@ -68,7 +68,10 @@ describe('version', () => {
         expect(
           await bumpVersion(token, tagPrefix, versionType as VersionType),
         ).toBe(expectedTag);
-        expect(setOutput).toHaveBeenCalledWith('previous_tag', `${tagPrefix}0.0.0`);
+        expect(setOutput).toHaveBeenCalledWith(
+          'previous_tag',
+          `${tagPrefix}0.0.0`,
+        );
         expect(setOutput).toHaveBeenCalledWith('previous_version', '0.0.0');
         expect(setOutput).toHaveBeenCalledWith('new_tag', expectedTag);
         expect(setOutput).toHaveBeenCalledWith('new_version', expectedVersion);
@@ -126,7 +129,10 @@ describe('version', () => {
           await bumpVersion(token, tagPrefix, versionType as VersionType),
         ).toBe(expectedTag);
         expect(setOutput).toHaveBeenCalledWith('previous_tag', previousTag);
-        expect(setOutput).toHaveBeenCalledWith('previous_version', previousVersion);
+        expect(setOutput).toHaveBeenCalledWith(
+          'previous_version',
+          previousVersion,
+        );
         expect(setOutput).toHaveBeenCalledWith('new_tag', expectedTag);
         expect(setOutput).toHaveBeenCalledWith('new_version', expectedVersion);
         expect(setOutput).toHaveBeenCalledWith('release_type', versionType);
@@ -175,7 +181,10 @@ describe('version', () => {
           await bumpVersion(token, tagPrefix, versionType as VersionType),
         ).toBe(expectedTag);
         expect(setOutput).toHaveBeenCalledWith('previous_tag', previousTag);
-        expect(setOutput).toHaveBeenCalledWith('previous_version', previousVersion);
+        expect(setOutput).toHaveBeenCalledWith(
+          'previous_version',
+          previousVersion,
+        );
         expect(setOutput).toHaveBeenCalledWith('new_tag', expectedTag);
         expect(setOutput).toHaveBeenCalledWith('new_version', expectedVersion);
         expect(setOutput).toHaveBeenCalledWith('release_type', versionType);

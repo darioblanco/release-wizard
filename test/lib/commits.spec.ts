@@ -190,8 +190,14 @@ describe('commit', () => {
             .map(() => sha),
         ), // 6 commits
       );
-      expect(setOutput).toHaveBeenCalledWith('contributors', '["@darioblanco"]');
-      expect(setOutput).toHaveBeenCalledWith('tasks', '["JIRA-2772","JIRA-2773"]');
+      expect(setOutput).toHaveBeenCalledWith(
+        'contributors',
+        '["@darioblanco"]',
+      );
+      expect(setOutput).toHaveBeenCalledWith(
+        'tasks',
+        '["JIRA-2772","JIRA-2773"]',
+      );
       expect(setOutput).toHaveBeenCalledWith('pull_requests', '["1716"]');
       expect(changes).toMatchSnapshot();
       expect(nextVersionType).toBe(VersionType.major);
