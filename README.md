@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create Release
-        uses: darioblanco/release-wizard@main
+        uses: darioblanco/release-wizard@v2
         with:
           token: ${{ github.token }}
 ```
@@ -76,13 +76,13 @@ jobs:
       - name: Checkout git repository
         uses: actions/checkout@master
       - name: Bump version and push tag
-        uses: darioblanco/release-wizard@main
+        uses: darioblanco/release-wizard@v2
         id: bump_version
         with:
           prefix: ${{ env.APP }}@
           token: ${{ github.token }}
       - name: Create Release
-        uses: darioblanco/release-wizard@main
+        uses: darioblanco/release-wizard@v2
         with:
           app: ${{ env.APP }}
           baseTag: my-production-deployed-tag
@@ -115,7 +115,7 @@ jobs:
       - name: Checkout git repository
         uses: actions/checkout@master
       - name: Create Release
-        uses: darioblanco/release-wizard@main
+        uses: darioblanco/release-wizard@v2
         with:
           app: ${{ env.APP }}
           prerelease: true
@@ -233,7 +233,8 @@ all changes will rendered without any fancy categorization:
 
 Tasks are detected with the given `taskPrefix` and the hyperlink is created with `taskBaseUrl`.
 If none of these parameters are given, a default `JIRA-` prefix and
-`https://<REPO_ORG>.atlassian.net/browse` values are used.
+`https://<REPO_ORG>.atlassian.net/browse` values are used. This allows you to link git commits
+to the project planning tool of your choice based on `taskPrefix` alone.
 
 The output is a bullet list:
 
