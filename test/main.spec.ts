@@ -92,15 +92,15 @@ describe('run', () => {
 
     await run();
 
-    expect(retrieveLastReleasedVersion).toBeCalledWith(token, tagPrefix);
-    expect(commitParser).toBeCalledWith(
+    expect(retrieveLastReleasedVersion).toHaveBeenCalledWith(token, tagPrefix);
+    expect(commitParser).toHaveBeenCalledWith(
       token,
       baseTag,
       taskPrefix,
       undefined,
-      undefined
+      undefined,
     );
-    expect(renderReleaseBody).toBeCalledWith(
+    expect(renderReleaseBody).toHaveBeenCalledWith(
       token,
       templatePath,
       undefined,
@@ -108,20 +108,20 @@ describe('run', () => {
       changes,
       tasks,
       pullRequests,
-      contributors
+      contributors,
     );
-    expect(bumpVersion).toBeCalledWith(token, tagPrefix, VersionType.patch);
-    expect(createGitTag).not.toBeCalled();
-    expect(createGithubRelease).toBeCalledWith(
+    expect(bumpVersion).toHaveBeenCalledWith(token, tagPrefix, VersionType.patch);
+    expect(createGitTag).not.toHaveBeenCalled();
+    expect(createGithubRelease).toHaveBeenCalledWith(
       token,
       releaseTag,
       `${releaseTag} 🚀`,
       body,
       draft,
       prerelease,
-      tagPrefix
+      tagPrefix,
     );
-    expect(setFailed).not.toBeCalled();
+    expect(setFailed).not.toHaveBeenCalled();
   });
 
   test('with specific production release and new release tag', async () => {
@@ -177,15 +177,15 @@ describe('run', () => {
 
     await run();
 
-    expect(retrieveLastReleasedVersion).not.toBeCalled();
-    expect(commitParser).toBeCalledWith(
+    expect(retrieveLastReleasedVersion).not.toHaveBeenCalled();
+    expect(commitParser).toHaveBeenCalledWith(
       token,
       baseTag,
       taskPrefix,
       taskBaseUrl,
-      app
+      app,
     );
-    expect(renderReleaseBody).toBeCalledWith(
+    expect(renderReleaseBody).toHaveBeenCalledWith(
       token,
       templatePath,
       app,
@@ -193,20 +193,20 @@ describe('run', () => {
       changes,
       tasks,
       pullRequests,
-      contributors
+      contributors,
     );
-    expect(bumpVersion).not.toBeCalled();
-    expect(createGitTag).toBeCalledWith(token, releaseTag);
-    expect(createGithubRelease).toBeCalledWith(
+    expect(bumpVersion).not.toHaveBeenCalled();
+    expect(createGitTag).toHaveBeenCalledWith(token, releaseTag);
+    expect(createGithubRelease).toHaveBeenCalledWith(
       token,
       releaseTag,
       releaseName,
       body,
       givenDraft,
       givenPrerelease,
-      `${app}${appTagSeparator}v`
+      `${app}${appTagSeparator}v`,
     );
-    expect(setFailed).not.toBeCalled();
+    expect(setFailed).not.toHaveBeenCalled();
   });
 
   test('unexpected error', async () => {
@@ -216,6 +216,6 @@ describe('run', () => {
     });
 
     await run();
-    expect(setFailed).toBeCalledWith(errorMsg);
+    expect(setFailed).toHaveBeenCalledWith(errorMsg);
   });
 });

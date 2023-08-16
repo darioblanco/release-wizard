@@ -30,7 +30,7 @@ export async function run(): Promise<void> {
         withV,
         versionPrefix,
         tagPrefix,
-      })}`
+      })}`,
     );
 
     // Commit loading config
@@ -46,7 +46,7 @@ export async function run(): Promise<void> {
         baseTag,
         taskBaseUrl,
         taskPrefix,
-      })}`
+      })}`,
     );
 
     // Release config
@@ -62,7 +62,7 @@ export async function run(): Promise<void> {
         templatePath,
         draft,
         prerelease,
-      })}`
+      })}`,
     );
 
     core.debug(`Parse commits from ${baseTag} to current sha`);
@@ -71,7 +71,7 @@ export async function run(): Promise<void> {
       baseTag,
       taskPrefix,
       taskBaseUrl,
-      app
+      app,
     );
     const { changes, contributors, tasks, pullRequests } = diffInfo;
 
@@ -110,10 +110,10 @@ export async function run(): Promise<void> {
       changes,
       tasks,
       pullRequests,
-      contributors
+      contributors,
     );
     core.debug(
-      `Create Github release for ${releaseTag} tag with ${releaseName} title`
+      `Create Github release for ${releaseTag} tag with ${releaseName} title`,
     );
     await createGithubRelease(
       token,
@@ -122,7 +122,7 @@ export async function run(): Promise<void> {
       body,
       draft,
       prerelease,
-      tagPrefix
+      tagPrefix,
     );
   } catch (error) {
     core.debug(JSON.stringify(error));

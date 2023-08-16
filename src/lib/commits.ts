@@ -21,7 +21,7 @@ export async function commitParser(
   baseRef: string,
   taskPrefix = 'JIR-',
   taskBaseUrl?: string,
-  commitScope?: string
+  commitScope?: string,
 ): Promise<{
   nextVersionType: VersionType;
   changes: string;
@@ -95,7 +95,7 @@ export async function commitParser(
   const octokit = github.getOctokit(token);
 
   core.debug(
-    `Retrieving commit diff between ${baseRef} and ${github.context.sha}`
+    `Retrieving commit diff between ${baseRef} and ${github.context.sha}`,
   );
   const compareCommitsResponse = await octokit.rest.repos.compareCommits({
     owner,
@@ -170,7 +170,7 @@ export async function commitParser(
           commitUrl,
           sha,
           message: messageLine.trim(),
-        })
+        }),
       );
     } else {
       categorizeCommit(commit);
@@ -223,14 +223,14 @@ export async function commitParser(
         rawTask,
         `[${task}](${
           taskBaseUrl || `https://${owner}.atlassian.net/browse`
-        }/${task})`
+        }/${task})`,
       );
     }
 
     // Add to global change markdown
     changesMd = `${changesMd}- ${message} - [${sha.substring(
       0,
-      8
+      8,
     )}](${commitUrl}) ([@${username}](${userUrl}))\n`;
     // Add to global commit sha list
     changes.push(sha);
@@ -271,7 +271,7 @@ export async function commitParser(
         (task) =>
           `[${task}](${
             taskBaseUrl || `https://${owner}.atlassian.net/browse`
-          }/${task})`
+          }/${task})`,
       )
       .join(', '),
     pullRequests: pullRequests

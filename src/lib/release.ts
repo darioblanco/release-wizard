@@ -12,14 +12,14 @@ export async function renderReleaseBody(
   changes = '',
   tasks = '',
   pullRequests = '',
-  contributors = ''
+  contributors = '',
 ): Promise<string> {
   const { owner, repo } = github.context.repo;
   const { ref } = github.context;
   const octokit = github.getOctokit(token);
   const path = pathJoin('.github', templatePath);
   core.debug(
-    `Retrieving content from repo ${repo} (${ref}) in expected path ${path}`
+    `Retrieving content from repo ${repo} (${ref}) in expected path ${path}`,
   );
   const contentResponse = await octokit.rest.repos.getContent({
     owner,
@@ -30,7 +30,7 @@ export async function renderReleaseBody(
   let template: string;
   if ('content' in contentResponse.data) {
     template = Buffer.from(contentResponse.data.content, 'base64').toString(
-      'utf8'
+      'utf8',
     );
   } else {
     throw new Error(`Unable to find template in ${templatePath}`);
@@ -68,7 +68,7 @@ export async function createGithubRelease(
   body: string,
   draft: boolean,
   prerelease: boolean,
-  tagPrefix: string
+  tagPrefix: string,
 ): Promise<void> {
   const { owner, repo } = github.context.repo;
   const octokit = github.getOctokit(token);
@@ -81,7 +81,7 @@ export async function createGithubRelease(
       repo,
     });
     for await (const response of octokit.paginate.iterator<Release>(
-      listReleasesOptions
+      listReleasesOptions,
     )) {
       for (const release of response.data) {
         if (release.draft && release.tag_name.startsWith(tagPrefix)) {
@@ -91,7 +91,7 @@ export async function createGithubRelease(
             release_id: release.id,
           });
           core.debug(
-            `Deleted previous draft release "${release.name || 'undefined'}"`
+            `Deleted previous draft release "${release.name || 'undefined'}"`,
           );
         }
       }

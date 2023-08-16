@@ -108,15 +108,15 @@ describe('commit', () => {
     });
     const { changes, nextVersionType, tasks, pullRequests } =
       await commitParser(token, 'main');
-    expect(setOutput).toBeCalledWith(
+    expect(setOutput).toHaveBeenCalledWith(
       'changes',
       JSON.stringify(
-        compareCommitsResponse.data.commits.map((commit) => commit.sha)
-      ) // 8 commits
+        compareCommitsResponse.data.commits.map((commit) => commit.sha),
+      ), // 8 commits
     );
-    expect(setOutput).toBeCalledWith('contributors', '["@darioblanco"]');
-    expect(setOutput).toBeCalledWith('tasks', '[]');
-    expect(setOutput).toBeCalledWith('pull_requests', '[]');
+    expect(setOutput).toHaveBeenCalledWith('contributors', '["@darioblanco"]');
+    expect(setOutput).toHaveBeenCalledWith('tasks', '[]');
+    expect(setOutput).toHaveBeenCalledWith('pull_requests', '[]');
     expect(changes).toMatchSnapshot();
     expect(nextVersionType).toBe(VersionType.minor);
     expect(tasks).toBe('');
@@ -129,13 +129,13 @@ describe('commit', () => {
     });
     const { changes, nextVersionType, tasks, pullRequests } =
       await commitParser(token, 'v1.0.0', 'JIRA-', undefined, 'my-app');
-    expect(setOutput).toBeCalledWith(
+    expect(setOutput).toHaveBeenCalledWith(
       'changes',
-      '["62ec8ea713fdf14e4abaef3d7d5138194dec49ce","62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]'
+      '["62ec8ea713fdf14e4abaef3d7d5138194dec49ce","62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]',
     );
-    expect(setOutput).toBeCalledWith('contributors', '["@darioblanco"]');
-    expect(setOutput).toBeCalledWith('tasks', '[]');
-    expect(setOutput).toBeCalledWith('pull_requests', '[]');
+    expect(setOutput).toHaveBeenCalledWith('contributors', '["@darioblanco"]');
+    expect(setOutput).toHaveBeenCalledWith('tasks', '[]');
+    expect(setOutput).toHaveBeenCalledWith('pull_requests', '[]');
     expect(changes).toMatchSnapshot();
     expect(nextVersionType).toBe(VersionType.patch);
     expect(tasks).toBe('');
@@ -181,29 +181,29 @@ describe('commit', () => {
       });
       const { changes, nextVersionType, tasks, pullRequests } =
         await commitParser(token, 'v1.0.0', 'JIRA-', taskBaseUrl, 'auth');
-      expect(setOutput).toBeCalledWith(
+      expect(setOutput).toHaveBeenCalledWith(
         'changes',
         JSON.stringify(
           commitMessage
             .split('* ')
             .slice(1)
-            .map(() => sha)
-        ) // 6 commits
+            .map(() => sha),
+        ), // 6 commits
       );
-      expect(setOutput).toBeCalledWith('contributors', '["@darioblanco"]');
-      expect(setOutput).toBeCalledWith('tasks', '["JIRA-2772","JIRA-2773"]');
-      expect(setOutput).toBeCalledWith('pull_requests', '["1716"]');
+      expect(setOutput).toHaveBeenCalledWith('contributors', '["@darioblanco"]');
+      expect(setOutput).toHaveBeenCalledWith('tasks', '["JIRA-2772","JIRA-2773"]');
+      expect(setOutput).toHaveBeenCalledWith('pull_requests', '["1716"]');
       expect(changes).toMatchSnapshot();
       expect(nextVersionType).toBe(VersionType.major);
       const jiraBaseUrl =
         taskBaseUrl || 'https://theowner.atlassian.net/browse';
       expect(tasks).toBe(
-        `[JIRA-2772](${jiraBaseUrl}/JIRA-2772), [JIRA-2773](${jiraBaseUrl}/JIRA-2773)`
+        `[JIRA-2772](${jiraBaseUrl}/JIRA-2772), [JIRA-2773](${jiraBaseUrl}/JIRA-2773)`,
       );
       expect(pullRequests).toBe(
-        '[#1716](https://github.com/theowner/therepo/pull/1716)'
+        '[#1716](https://github.com/theowner/therepo/pull/1716)',
       );
-    })
+    }),
   );
 
   test('render github squashed commits without scope, PRs and tasks', async () => {
@@ -234,15 +234,15 @@ describe('commit', () => {
     });
     const { changes, nextVersionType, tasks, pullRequests } =
       await commitParser(token, 'v1.0.0', 'JIRA-');
-    expect(setOutput).toBeCalledWith(
+    expect(setOutput).toHaveBeenCalledWith(
       'changes',
       '["62ec8ea713fdf14e4abaef3d7d5138194dec49ce",' +
         '"62ec8ea713fdf14e4abaef3d7d5138194dec49ce",' +
-        '"62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]'
+        '"62ec8ea713fdf14e4abaef3d7d5138194dec49ce"]',
     );
-    expect(setOutput).toBeCalledWith('contributors', '["@darioblanco"]');
-    expect(setOutput).toBeCalledWith('tasks', '[]');
-    expect(setOutput).toBeCalledWith('pull_requests', '[]');
+    expect(setOutput).toHaveBeenCalledWith('contributors', '["@darioblanco"]');
+    expect(setOutput).toHaveBeenCalledWith('tasks', '[]');
+    expect(setOutput).toHaveBeenCalledWith('pull_requests', '[]');
     expect(changes).toMatchSnapshot();
     expect(nextVersionType).toBe(VersionType.patch);
     expect(tasks).toBe('');
@@ -273,10 +273,10 @@ describe('commit', () => {
     });
     const { changes, nextVersionType, tasks, pullRequests } =
       await commitParser(token, 'v1.0.0', 'JIRA-');
-    expect(setOutput).toBeCalledWith('changes', '[]');
-    expect(setOutput).toBeCalledWith('contributors', '["@darioblanco"]');
-    expect(setOutput).toBeCalledWith('tasks', '[]');
-    expect(setOutput).toBeCalledWith('pull_requests', '[]');
+    expect(setOutput).toHaveBeenCalledWith('changes', '[]');
+    expect(setOutput).toHaveBeenCalledWith('contributors', '["@darioblanco"]');
+    expect(setOutput).toHaveBeenCalledWith('tasks', '[]');
+    expect(setOutput).toHaveBeenCalledWith('pull_requests', '[]');
     expect(changes).toMatchSnapshot();
     expect(nextVersionType).toBe(VersionType.patch);
     expect(tasks).toBe('');

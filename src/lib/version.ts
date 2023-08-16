@@ -8,7 +8,7 @@ import { Release, VersionType } from '../types';
 
 const findReleaseTag = async (
   token: string,
-  matchFunction: (release: Release) => unknown
+  matchFunction: (release: Release) => unknown,
 ) => {
   const { owner, repo } = github.context.repo;
 
@@ -23,7 +23,7 @@ const findReleaseTag = async (
   // Look for the earliest release that matches the given condition
   /* eslint-disable no-restricted-syntax */
   for await (const response of octokit.paginate.iterator<Release>(
-    listReleasesOptions
+    listReleasesOptions,
   )) {
     for (const release of response.data) {
       if (matchFunction(release)) return release.tag_name;
@@ -36,7 +36,7 @@ const findReleaseTag = async (
 export async function bumpVersion(
   token: string,
   tagPrefix: string,
-  nextVersionType = VersionType.patch
+  nextVersionType = VersionType.patch,
 ): Promise<string> {
   // Load latest production tag from published releases
   const fallbackVersion = '0.0.0';
@@ -56,7 +56,7 @@ export async function bumpVersion(
     // 'major', 'minor' or 'patch' needs to be bumped
     newVersion = semver.inc(lastVersion, nextVersionType) as string;
     core.debug(
-      `Bump as published release, new calculated version: ${newVersion}`
+      `Bump as published release, new calculated version: ${newVersion}`,
     );
   }
 
@@ -73,7 +73,7 @@ export async function bumpVersion(
 
 export async function retrieveLastReleasedVersion(
   token: string,
-  tagPrefix: string
+  tagPrefix: string,
 ): Promise<string | undefined> {
   const isVersionReleased = (release: Release) => {
     const { prerelease, draft, tag_name: tagName } = release;
@@ -81,12 +81,12 @@ export async function retrieveLastReleasedVersion(
       `Evaluating if "${release.tag_name}" has been released: ${JSON.stringify({
         prerelease,
         draft,
-      })}`
+      })}`,
     );
     return !draft && !prerelease && tagName.startsWith(tagPrefix);
   };
   core.debug(
-    'Discover latest published release, which serves as base tag for commit comparison'
+    'Discover latest published release, which serves as base tag for commit comparison',
   );
   return findReleaseTag(token, isVersionReleased);
 }

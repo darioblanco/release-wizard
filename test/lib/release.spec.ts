@@ -54,9 +54,14 @@ describe('release', () => {
     test('render release template', async () => {
       const getContent = mockTemplate(`${__dirname}/fixtures/basic.md`);
       expect(
-        await renderReleaseBody(token, 'myTemplatePath.md', app, releaseVersion)
+        await renderReleaseBody(
+          token,
+          'myTemplatePath.md',
+          app,
+          releaseVersion,
+        ),
       ).toMatchSnapshot();
-      expect(getContent).toBeCalledWith({
+      expect(getContent).toHaveBeenCalledWith({
         owner: 'myorg',
         path: `.github/${templatePath}`,
         ref: 'myref',
@@ -89,10 +94,10 @@ describe('release', () => {
           releaseVersion,
           changes,
           tasks,
-          pullRequests
-        )
+          pullRequests,
+        ),
       ).toMatchSnapshot();
-      expect(getContent).toBeCalledWith({
+      expect(getContent).toHaveBeenCalledWith({
         owner: 'myorg',
         path: `.github/${templatePath}`,
         ref: 'myref',
@@ -104,9 +109,9 @@ describe('release', () => {
       const templatePath = 'not-found.md';
       mockTemplate();
       await expect(
-        renderReleaseBody(token, templatePath, app, releaseVersion)
-      ).rejects.toThrowError(
-        new Error(`Unable to find template in ${templatePath}`)
+        renderReleaseBody(token, templatePath, app, releaseVersion),
+      ).rejects.toThrow(
+        new Error(`Unable to find template in ${templatePath}`),
       );
     });
   });
@@ -118,7 +123,7 @@ describe('release', () => {
 
     await createGitTag(token, tag);
 
-    expect(createRef).toBeCalledWith({
+    expect(createRef).toHaveBeenCalledWith({
       owner: 'myorg',
       repo: 'myrepo',
       sha: 'mysha',
@@ -172,11 +177,11 @@ describe('release', () => {
         body,
         draft,
         prerelease,
-        tagPrefix
+        tagPrefix,
       );
 
-      expect(createRelease).toBeCalledTimes(1);
-      expect(createRelease).toBeCalledWith({
+      expect(createRelease).toHaveBeenCalledTimes(1);
+      expect(createRelease).toHaveBeenCalledWith({
         body,
         draft,
         name,
@@ -185,16 +190,16 @@ describe('release', () => {
         repo: 'myrepo',
         tag_name: tag,
       });
-      expect(deleteRelease).toBeCalledTimes(1);
-      expect(deleteRelease).toBeCalledWith({
+      expect(deleteRelease).toHaveBeenCalledTimes(1);
+      expect(deleteRelease).toHaveBeenCalledWith({
         owner: 'myorg',
         repo: 'myrepo',
         release_id: 4,
       });
-      expect(setOutput).toBeCalledTimes(3);
-      expect(setOutput).toBeCalledWith('release_id', 'releaseId');
-      expect(setOutput).toBeCalledWith('html_url', 'htmlUrl');
-      expect(setOutput).toBeCalledWith('upload_url', 'uploadUrl');
+      expect(setOutput).toHaveBeenCalledTimes(3);
+      expect(setOutput).toHaveBeenCalledWith('release_id', 'releaseId');
+      expect(setOutput).toHaveBeenCalledWith('html_url', 'htmlUrl');
+      expect(setOutput).toHaveBeenCalledWith('upload_url', 'uploadUrl');
     });
 
     test('published', async () => {
@@ -214,11 +219,11 @@ describe('release', () => {
         body,
         draft,
         prerelease,
-        tagPrefix
+        tagPrefix,
       );
 
-      expect(createRelease).toBeCalledTimes(1);
-      expect(createRelease).toBeCalledWith({
+      expect(createRelease).toHaveBeenCalledTimes(1);
+      expect(createRelease).toHaveBeenCalledWith({
         body,
         draft,
         name,
@@ -227,11 +232,11 @@ describe('release', () => {
         repo: 'myrepo',
         tag_name: tag,
       });
-      expect(deleteRelease).not.toBeCalled();
-      expect(setOutput).toBeCalledTimes(3);
-      expect(setOutput).toBeCalledWith('release_id', 'releaseId');
-      expect(setOutput).toBeCalledWith('html_url', 'htmlUrl');
-      expect(setOutput).toBeCalledWith('upload_url', 'uploadUrl');
+      expect(deleteRelease).not.toHaveBeenCalled();
+      expect(setOutput).toHaveBeenCalledTimes(3);
+      expect(setOutput).toHaveBeenCalledWith('release_id', 'releaseId');
+      expect(setOutput).toHaveBeenCalledWith('html_url', 'htmlUrl');
+      expect(setOutput).toHaveBeenCalledWith('upload_url', 'uploadUrl');
     });
   });
 });

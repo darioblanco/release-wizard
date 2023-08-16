@@ -66,15 +66,15 @@ describe('version', () => {
         const expectedTag = `${tagPrefix}${expectedVersion as string}`;
         mockGithub([{ data: [] }]);
         expect(
-          await bumpVersion(token, tagPrefix, versionType as VersionType)
+          await bumpVersion(token, tagPrefix, versionType as VersionType),
         ).toBe(expectedTag);
-        expect(setOutput).toBeCalledWith('previous_tag', `${tagPrefix}0.0.0`);
-        expect(setOutput).toBeCalledWith('previous_version', '0.0.0');
-        expect(setOutput).toBeCalledWith('new_tag', expectedTag);
-        expect(setOutput).toBeCalledWith('new_version', expectedVersion);
-        expect(setOutput).toBeCalledWith(
+        expect(setOutput).toHaveBeenCalledWith('previous_tag', `${tagPrefix}0.0.0`);
+        expect(setOutput).toHaveBeenCalledWith('previous_version', '0.0.0');
+        expect(setOutput).toHaveBeenCalledWith('new_tag', expectedTag);
+        expect(setOutput).toHaveBeenCalledWith('new_version', expectedVersion);
+        expect(setOutput).toHaveBeenCalledWith(
           'release_type',
-          versionType ? versionType : VersionType.patch
+          versionType ? versionType : VersionType.patch,
         );
       });
     });
@@ -123,13 +123,13 @@ describe('version', () => {
           },
         ]);
         expect(
-          await bumpVersion(token, tagPrefix, versionType as VersionType)
+          await bumpVersion(token, tagPrefix, versionType as VersionType),
         ).toBe(expectedTag);
-        expect(setOutput).toBeCalledWith('previous_tag', previousTag);
-        expect(setOutput).toBeCalledWith('previous_version', previousVersion);
-        expect(setOutput).toBeCalledWith('new_tag', expectedTag);
-        expect(setOutput).toBeCalledWith('new_version', expectedVersion);
-        expect(setOutput).toBeCalledWith('release_type', versionType);
+        expect(setOutput).toHaveBeenCalledWith('previous_tag', previousTag);
+        expect(setOutput).toHaveBeenCalledWith('previous_version', previousVersion);
+        expect(setOutput).toHaveBeenCalledWith('new_tag', expectedTag);
+        expect(setOutput).toHaveBeenCalledWith('new_version', expectedVersion);
+        expect(setOutput).toHaveBeenCalledWith('release_type', versionType);
       });
     });
     [
@@ -172,13 +172,13 @@ describe('version', () => {
           },
         ]);
         expect(
-          await bumpVersion(token, tagPrefix, versionType as VersionType)
+          await bumpVersion(token, tagPrefix, versionType as VersionType),
         ).toBe(expectedTag);
-        expect(setOutput).toBeCalledWith('previous_tag', previousTag);
-        expect(setOutput).toBeCalledWith('previous_version', previousVersion);
-        expect(setOutput).toBeCalledWith('new_tag', expectedTag);
-        expect(setOutput).toBeCalledWith('new_version', expectedVersion);
-        expect(setOutput).toBeCalledWith('release_type', versionType);
+        expect(setOutput).toHaveBeenCalledWith('previous_tag', previousTag);
+        expect(setOutput).toHaveBeenCalledWith('previous_version', previousVersion);
+        expect(setOutput).toHaveBeenCalledWith('new_tag', expectedTag);
+        expect(setOutput).toHaveBeenCalledWith('new_version', expectedVersion);
+        expect(setOutput).toHaveBeenCalledWith('release_type', versionType);
       });
     });
   });
@@ -188,7 +188,7 @@ describe('version', () => {
     mockGithub(releaseResponseFixture);
 
     expect(await retrieveLastReleasedVersion(token, tagPrefix)).toBe(
-      expectedTag
+      expectedTag,
     );
   });
 
