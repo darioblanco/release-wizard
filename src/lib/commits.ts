@@ -140,9 +140,9 @@ export async function commitParser(
     }
   };
 
-  const prRegExp = new RegExp('(\\(#\\d+\\))', 'gmi');
-  const taskRegExp = new RegExp(`\\[${taskPrefix}\\d+\\]`, 'gmi');
-  const majorRegExp = new RegExp(`(#MAJOR$)`, 'gmi');
+  const prRegExp = new RegExp('(\\(#\\d+\\))', 'mi');
+  const taskRegExp = new RegExp(`\\[${taskPrefix}\\d+\\]`, 'mi');
+  const majorRegExp = new RegExp(`(#MAJOR$)`, 'mi');
   commits.forEach((githubCommit) => {
     const {
       html_url: commitUrl,

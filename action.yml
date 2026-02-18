@@ -102,5 +102,5 @@ outputs:
   upload_url:
     description: 'The url used for uploading release artifacts'
 runs:
-  using: 'node16'
+  using: 'node24'
   main: 'dist/index.js'

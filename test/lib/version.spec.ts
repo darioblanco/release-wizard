@@ -26,7 +26,7 @@ describe('version', () => {
   const releaseResponseFixture = [
     {
       data: [
-        { prerelease: false, draft: true, tag_name: `${tagPrefix}0.0.4` }, // Latest version draft
+        { prerelease: false, draft: true, tag_name: `${tagPrefix}0.0.4` },
         { prerelease: false, draft: false, tag_name: 'fake-prefix-0.0.3' },
         { prerelease: false, draft: false, tag_name: 'another-app@0.0.3' },
       ],
@@ -35,7 +35,7 @@ describe('version', () => {
       data: [
         { prerelease: true, draft: false, tag_name: `${tagPrefix}0.0.3` },
         { prerelease: true, draft: false, tag_name: `${tagPrefix}0.0.2` },
-        { prerelease: false, draft: false, tag_name: `${tagPrefix}0.0.1` }, // Production release
+        { prerelease: false, draft: false, tag_name: `${tagPrefix}0.0.1` },
       ],
     },
   ];
@@ -55,7 +55,7 @@ describe('version', () => {
 
   describe('bump version', () => {
     [
-      [undefined, '0.0.1'], // Patch by default
+      [undefined, '0.0.1'],
       [VersionType.minor, '0.1.0'],
       [VersionType.major, '1.0.0'],
       [VersionType.prerelease, '0.0.1-rc.0'],
@@ -99,14 +99,26 @@ describe('version', () => {
                 draft: false,
                 tag_name: 'fake-prefix@0.0.3',
               },
-              { prerelease: false, draft: true, tag_name: '${tagPrefix}0.1.4' }, // Draft
-              { prerelease: false, draft: false, tag_name: 'other-app@0.0.3' },
+              {
+                prerelease: false,
+                draft: true,
+                tag_name: '${tagPrefix}0.1.4',
+              },
+              {
+                prerelease: false,
+                draft: false,
+                tag_name: 'other-app@0.0.3',
+              },
             ],
           },
           {
             data: [
-              { prerelease: false, draft: false, tag_name: 'other-app@0.0.2' },
-              { prerelease: false, draft: false, tag_name: previousTag }, // Latest version
+              {
+                prerelease: false,
+                draft: false,
+                tag_name: 'other-app@0.0.2',
+              },
+              { prerelease: false, draft: false, tag_name: previousTag },
               {
                 prerelease: false,
                 draft: false,
@@ -157,13 +169,21 @@ describe('version', () => {
                 tag_name: 'fake-prefix@0.0.3',
               },
               { prerelease: false, draft: false, tag_name: '0.0.3' },
-              { prerelease: false, draft: false, tag_name: 'other-app@0.0.3' },
+              {
+                prerelease: false,
+                draft: false,
+                tag_name: 'other-app@0.0.3',
+              },
             ],
           },
           {
             data: [
-              { prerelease: false, draft: false, tag_name: 'other-app@0.0.2' },
-              { prerelease: false, draft: false, tag_name: previousTag }, // Latest version
+              {
+                prerelease: false,
+                draft: false,
+                tag_name: 'other-app@0.0.2',
+              },
+              { prerelease: false, draft: false, tag_name: previousTag },
               {
                 prerelease: true,
                 draft: false,
@@ -190,6 +210,24 @@ describe('version', () => {
         expect(setOutput).toHaveBeenCalledWith('release_type', versionType);
       });
     });
+
+    test('skip API call when lastReleasedTag is provided', async () => {
+      const previousVersion = '2.0.0';
+      const previousTag = `${tagPrefix}${previousVersion}`;
+      const expectedTag = `${tagPrefix}2.0.1`;
+      mockGithub([{ data: [] }]);
+
+      expect(
+        await bumpVersion(token, tagPrefix, VersionType.patch, previousTag),
+      ).toBe(expectedTag);
+      expect(setOutput).toHaveBeenCalledWith('previous_tag', previousTag);
+      expect(setOutput).toHaveBeenCalledWith(
+        'previous_version',
+        previousVersion,
+      );
+      expect(setOutput).toHaveBeenCalledWith('new_tag', expectedTag);
+      expect(setOutput).toHaveBeenCalledWith('new_version', '2.0.1');
+    });
   });
 
   test('retrieve last published release', async () => {
@@ -198,6 +236,51 @@ describe('version', () => {
 
     expect(await retrieveLastReleasedVersion(token, tagPrefix)).toBe(
       expectedTag,
+    );
+  });
+
+  test('retrieve highest version regardless of API order', async () => {
+    mockGithub([
+      {
+        data: [
+          { prerelease: false, draft: true, tag_name: `${tagPrefix}2.0.0` },
+          { prerelease: false, draft: false, tag_name: `${tagPrefix}0.146.0` },
+          { prerelease: false, draft: false, tag_name: `${tagPrefix}0.148.0` },
+        ],
+      },
+      {
+        data: [
+          { prerelease: false, draft: false, tag_name: `${tagPrefix}1.0.0` },
+          { prerelease: false, draft: false, tag_name: `${tagPrefix}0.147.0` },
+        ],
+      },
+    ]);
+
+    expect(await retrieveLastReleasedVersion(token, tagPrefix)).toBe(
+      `${tagPrefix}1.0.0`,
+    );
+  });
+
+  test('skip releases with unparseable semver', async () => {
+    mockGithub([
+      {
+        data: [
+          {
+            prerelease: false,
+            draft: false,
+            tag_name: `${tagPrefix}not-a-version`,
+          },
+          {
+            prerelease: false,
+            draft: false,
+            tag_name: `${tagPrefix}0.2.0`,
+          },
+        ],
+      },
+    ]);
+
+    expect(await retrieveLastReleasedVersion(token, tagPrefix)).toBe(
+      `${tagPrefix}0.2.0`,
     );
   });
 

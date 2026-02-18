@@ -114,6 +114,7 @@ describe('run', () => {
       token,
       tagPrefix,
       VersionType.patch,
+      undefined,
     );
     expect(createGitTag).not.toHaveBeenCalled();
     expect(createGithubRelease).toHaveBeenCalledWith(
@@ -178,10 +179,16 @@ describe('run', () => {
           return undefined;
       }
     });
+    (retrieveLastReleasedVersion as jest.Mock)
+      .mockImplementation()
+      .mockResolvedValue(undefined);
 
     await run();
 
-    expect(retrieveLastReleasedVersion).not.toHaveBeenCalled();
+    expect(retrieveLastReleasedVersion).toHaveBeenCalledWith(
+      token,
+      `${app}${appTagSeparator}v`,
+    );
     expect(commitParser).toHaveBeenCalledWith(
       token,
       baseTag,

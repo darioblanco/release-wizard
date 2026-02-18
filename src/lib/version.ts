@@ -4,43 +4,57 @@ import * as github from '@actions/github';
 
 import { Release, VersionType } from '../types';
 
-// See semver.ReleaseType
-
-const findReleaseTag = async (
+const findHighestReleaseTag = async (
   token: string,
+  tagPrefix: string,
   matchFunction: (release: Release) => unknown,
-) => {
+): Promise<string | undefined> => {
   const { owner, repo } = github.context.repo;
 
   const octokit = github.getOctokit(token);
 
-  // Using pagination: https://octokitRest.octokitRest.io/rest.js/v17#pagination
   const listReleasesOptions = octokit.rest.repos.listReleases.endpoint.merge({
     owner,
     repo,
   });
 
-  // Look for the earliest release that matches the given condition
-  /* eslint-disable no-restricted-syntax */
+  let highestTag: string | undefined;
+  let highestVersion: semver.SemVer | null = null;
+
   for await (const response of octokit.paginate.iterator<Release>(
     listReleasesOptions,
   )) {
     for (const release of response.data) {
-      if (matchFunction(release)) return release.tag_name;
+      if (!matchFunction(release)) continue;
+      const version = semver.parse(release.tag_name.replace(tagPrefix, ''));
+      if (!version) {
+        core.debug(
+          `Skipping release "${release.tag_name}": unable to parse semver`,
+        );
+        continue;
+      }
+      if (!highestVersion || semver.gt(version, highestVersion)) {
+        highestVersion = version;
+        highestTag = release.tag_name;
+        core.debug(
+          `New highest version candidate: "${release.tag_name}" (${version.version})`,
+        );
+      }
     }
   }
-  /* eslint-enable no-restricted-syntax */
-  return undefined;
+
+  return highestTag;
 };
 
 export async function bumpVersion(
   token: string,
   tagPrefix: string,
   nextVersionType = VersionType.patch,
+  lastReleasedTag?: string,
 ): Promise<string> {
-  // Load latest production tag from published releases
   const fallbackVersion = '0.0.0';
   const lastTag =
+    lastReleasedTag ||
     (await retrieveLastReleasedVersion(token, tagPrefix)) ||
     `${tagPrefix}${fallbackVersion}`;
   core.debug(`Detected "${lastTag}" as the latest tag`);
@@ -86,7 +100,7 @@ export async function retrieveLastReleasedVersion(
     return !draft && !prerelease && tagName.startsWith(tagPrefix);
   };
   core.debug(
-    'Discover latest published release, which serves as base tag for commit comparison',
+    'Discover latest published release by highest semver, which serves as base tag for commit comparison',
   );
-  return findReleaseTag(token, isVersionReleased);
+  return findHighestReleaseTag(token, tagPrefix, isVersionReleased);
 }

@@ -34,9 +34,10 @@ export async function run(): Promise<void> {
     );
 
     // Commit loading config
+    const lastReleasedTag = await retrieveLastReleasedVersion(token, tagPrefix);
     const baseTag =
       core.getInput('baseTag', { required: false }) ||
-      (await retrieveLastReleasedVersion(token, tagPrefix)) ||
+      lastReleasedTag ||
       (github.context.ref.split('/').pop() as string);
     core.setOutput('base_tag', baseTag);
     const taskBaseUrl = core.getInput('taskBaseUrl', { required: false });
@@ -52,10 +53,9 @@ export async function run(): Promise<void> {
     // Release config
     const pushTag = core.getInput('pushTag', { required: false }) === 'true';
     const templatePath = core.getInput('templatePath', { required: false });
-    const draft =
-      core.getInput('draft', { required: false }) === 'true' || false;
+    const draft = core.getInput('draft', { required: false }) === 'true';
     const prerelease =
-      core.getInput('prerelease', { required: false }) === 'true' || false;
+      core.getInput('prerelease', { required: false }) === 'true';
     core.debug(
       `Release configuration: ${JSON.stringify({
         pushTag,
@@ -84,7 +84,7 @@ export async function run(): Promise<void> {
 
     const releaseTag =
       core.getInput('releaseTag', { required: false }) ||
-      (await bumpVersion(token, tagPrefix, nextVersionType));
+      (await bumpVersion(token, tagPrefix, nextVersionType, lastReleasedTag));
     if (pushTag) {
       core.debug('Automatic push of git tag triggered');
       await createGitTag(token, releaseTag);
