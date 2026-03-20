@@ -86,4 +86,6 @@ exports[`commit render github squashed commits without scope, PRs and tasks 1`] 
 - Add integration test for login endpoint - [62ec8ea7](https://commiturl) ([@darioblanco](https://authorurl))"
 `;
 
+exports[`commit skip commit with empty message after angular format split 1`] = `"### **:zap: Features**"`;
+
 exports[`commit skip empty commit message 1`] = `""`;
