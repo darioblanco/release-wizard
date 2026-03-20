@@ -208,6 +208,11 @@ export async function commitParser(
       message = message.split(':')[1].trim();
     }
 
+    // Skip empty messages (e.g. from squash merge commit lines like "* prefix:")
+    if (!message) {
+      return;
+    }
+
     // Always capitalize commit messages
     message = `${message[0].toUpperCase()}${message.slice(1)}`;
 
