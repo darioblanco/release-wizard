@@ -202,6 +202,10 @@ function commitParser(token_1, baseRef_1) {
                 // Remove group information for changelog (e.g. messages with categories)
                 message = message.split(':')[1].trim();
             }
+            // Skip empty messages (e.g. from squash merge commit lines like "* prefix:")
+            if (!message) {
+                return;
+            }
             // Always capitalize commit messages
             message = `${message[0].toUpperCase()}${message.slice(1)}`;
             // Retrieve task information

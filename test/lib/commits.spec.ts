@@ -255,6 +255,40 @@ describe('commit', () => {
     expect(pullRequests).toBe('');
   });
 
+  test('skip commit with empty message after angular format split', async () => {
+    const compareEmptyAngularResponse = {
+      data: {
+        commits: [
+          {
+            author,
+            html_url,
+            sha,
+            commit: {
+              message: 'feat:',
+            },
+          },
+        ],
+      },
+    };
+    (getOctokit as jest.Mock).mockReturnValue({
+      rest: {
+        repos: {
+          compareCommits: jest.fn(() => compareEmptyAngularResponse),
+        },
+      },
+    });
+    const { changes, nextVersionType, tasks, pullRequests } =
+      await commitParser(token, 'v1.0.0', 'JIRA-');
+    expect(setOutput).toHaveBeenCalledWith('changes', '[]');
+    expect(setOutput).toHaveBeenCalledWith('contributors', '["@darioblanco"]');
+    expect(setOutput).toHaveBeenCalledWith('tasks', '[]');
+    expect(setOutput).toHaveBeenCalledWith('pull_requests', '[]');
+    expect(changes).toMatchSnapshot();
+    expect(nextVersionType).toBe(VersionType.minor);
+    expect(tasks).toBe('');
+    expect(pullRequests).toBe('');
+  });
+
   test('skip empty commit message', async () => {
     const compareEmptyCommitMessageResponse = {
       data: {
